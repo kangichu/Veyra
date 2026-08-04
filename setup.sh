@@ -177,12 +177,14 @@ if [ "$SKIP_SSL" = "true" ]; then
   log "SKIP_SSL=true — leaving HTTP only."
 else
   log "Requesting Let's Encrypt certificate for $DOMAIN and $WWW_DOMAIN"
+  # --expand handles the case of an existing cert covering only some of these domains
+  # (e.g. a prior deploy that only had $DOMAIN, not $WWW_DOMAIN) — safe to pass every run.
   if certbot --nginx -d "$DOMAIN" -d "$WWW_DOMAIN" \
-      --non-interactive --agree-tos -m "$CERTBOT_EMAIL" --redirect; then
+      --non-interactive --agree-tos -m "$CERTBOT_EMAIL" --redirect --expand; then
     echo "HTTPS is live."
   else
     warn "certbot failed — usually means DNS for $DOMAIN/$WWW_DOMAIN isn't pointed at this server's IP yet."
-    warn "Once DNS is correct, re-run: certbot --nginx -d $DOMAIN -d $WWW_DOMAIN --agree-tos -m $CERTBOT_EMAIL --redirect"
+    warn "Once DNS is correct, re-run: certbot --nginx -d $DOMAIN -d $WWW_DOMAIN --agree-tos -m $CERTBOT_EMAIL --redirect --expand"
   fi
 fi
 
