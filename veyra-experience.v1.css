@@ -322,4 +322,15 @@ h1,h2,h3,h4{font-weight:inherit;}
   #scene6 { min-height: auto; padding-top: 48px; padding-bottom: 48px; }
   #scene7 { min-height: 150vh; padding-top: 48px; padding-bottom: 48px; }
   #scene8 { min-height: auto; padding-top: 48px; padding-bottom: 56px; }
+
+  /* #eng's sticky wrapper (.x196) centers its whole content stack (heading + the
+     6-item mobile list + closing paragraph) inside a fixed height:100vh box with no
+     overflow clipping. That stack is taller than one mobile screen, so the centered
+     overflow bleeds symmetrically above AND below the box — into #veyra-arch and
+     #capabilities respectively. The sticky/scrub effect it exists for only animates
+     #engDesktop's SVG, which is already hidden on mobile (#engMobile shows instead),
+     so there's nothing lost by just turning the pinning off here and letting it flow
+     like a normal section. */
+  .x196 { position: static; height: auto; justify-content: flex-start; }
+  #eng { min-height: auto; padding-top: 48px; padding-bottom: 48px; }
 }
