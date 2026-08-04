@@ -309,4 +309,17 @@ h1,h2,h3,h4{font-weight:inherit;}
 @media (max-width: 760px) {
   #who { padding-top: 72px; padding-bottom: 72px; }
   #veyra { padding-top: 56px; padding-bottom: 72px; min-height: 115vh; }
+
+  /* Demo scenes: min-height:100vh+ was forcing a full screen of empty space around
+     modest content on mobile. #scene2/#scene7 keep real height because their
+     position:sticky reveal effect needs scroll runway to play out; the rest don't
+     have any scroll-linked animation tied to their height, so just let content size
+     them. */
+  #scene2 { min-height: 160vh; padding-top: 48px; padding-bottom: 48px; }
+  #scene3 { min-height: auto; padding-top: 48px; padding-bottom: 48px; }
+  #scene4 { min-height: auto; padding-top: 48px; padding-bottom: 48px; }
+  #scene5 { min-height: auto; padding-top: 48px; padding-bottom: 48px; }
+  #scene6 { min-height: auto; padding-top: 48px; padding-bottom: 48px; }
+  #scene7 { min-height: 150vh; padding-top: 48px; padding-bottom: 48px; }
+  #scene8 { min-height: auto; padding-top: 48px; padding-bottom: 56px; }
 }
