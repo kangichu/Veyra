@@ -141,9 +141,15 @@ server {
         proxy_set_header X-Forwarded-Proto \$scheme;
     }
 
+    # NOTE: filenames here are a hand-managed "v1" suffix, not per-deploy content hashes —
+    # so caching must always revalidate, or fixes silently won't reach returning visitors.
+    # (add_header in a location block replaces, not merges with, the server-level ones above —
+    # so the security headers have to be repeated here too.)
     location ~* \.(?:css|js)\$ {
-        expires 30d;
-        add_header Cache-Control "public, immutable";
+        add_header Cache-Control "no-cache";
+        add_header X-Content-Type-Options nosniff always;
+        add_header X-Frame-Options SAMEORIGIN always;
+        add_header Referrer-Policy strict-origin-when-cross-origin always;
         try_files \$uri =404;
     }
 
