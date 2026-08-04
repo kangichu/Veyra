@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
-# One-shot server setup for the Veyra/Tandish static site + waitlist API.
+# One-shot server setup for the Veyra/Tandish static site.
 # Run as root (sudo ./setup.sh) from wherever this repo lives on the server.
 # Safe to re-run: every step checks current state before changing anything.
+#
+# waitlist-service/ still exists in the repo (mailto: link replaced its form for now,
+# see git history) but is intentionally NOT provisioned here — this script actively
+# tears down any previously-installed instance of it. To bring it back later, restore
+# the Node/systemd/nginx-/api/ steps from an earlier revision of this file.
 
 set -euo pipefail
 
@@ -9,11 +14,9 @@ DOMAIN="${DOMAIN:-tandish.com}"
 WWW_DOMAIN="${WWW_DOMAIN:-www.tandish.com}"
 CERTBOT_EMAIL="${CERTBOT_EMAIL:-hello@tandish.com}"
 SKIP_SSL="${SKIP_SSL:-false}"
-SERVICE_USER="${SERVICE_USER:-www-data}"
-NODE_MAJOR="${NODE_MAJOR:-20}"
 
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WAITLIST_DIR="$APP_DIR/waitlist-service"
+SERVICE_USER="${SERVICE_USER:-www-data}"
 SERVICE_NAME="tandish-waitlist"
 
 log() { echo -e "\n\033[1;36m==> $*\033[0m"; }
@@ -44,76 +47,22 @@ else
   echo "nginx, curl, certbot, gnupg already present — skipping apt install."
 fi
 
-# ---- 2. Node.js (only install/upgrade if missing or too old) ----
-log "Checking Node.js"
-CURRENT_NODE_MAJOR=0
-if command -v node >/dev/null 2>&1; then
-  CURRENT_NODE_MAJOR="$(node -v | sed 's/^v//' | cut -d. -f1)"
+# ---- 2. Tear down waitlist-service if a previous run installed it ----
+if systemctl list-unit-files "${SERVICE_NAME}.service" >/dev/null 2>&1 && \
+   systemctl list-unit-files "${SERVICE_NAME}.service" | grep -q "${SERVICE_NAME}.service"; then
+  log "Removing previously-installed ${SERVICE_NAME} service"
+  systemctl stop "$SERVICE_NAME" 2>/dev/null || true
+  systemctl disable "$SERVICE_NAME" 2>/dev/null || true
+  rm -f "/etc/systemd/system/${SERVICE_NAME}.service"
+  systemctl daemon-reload
+  echo "Stopped, disabled, and removed ${SERVICE_NAME}.service."
 fi
-if [ "$CURRENT_NODE_MAJOR" -lt "$NODE_MAJOR" ]; then
-  echo "Installing Node.js ${NODE_MAJOR}.x via NodeSource"
-  curl -fsSL "https://deb.nodesource.com/setup_${NODE_MAJOR}.x" | bash -
-  apt-get install -y nodejs
-else
-  echo "Node.js v$CURRENT_NODE_MAJOR already installed — skipping."
-fi
-NODE_BIN="$(command -v node)"
 
-# ---- 3. App env file ----
-log "Checking waitlist-service/.env"
-if [ ! -f "$WAITLIST_DIR/.env" ]; then
-  warn "No .env found — copying from .env.example. You MUST edit $WAITLIST_DIR/.env (SMTP_PASS etc.) before signups will actually send mail."
-  cp "$WAITLIST_DIR/.env.example" "$WAITLIST_DIR/.env"
-else
-  echo ".env already present — leaving it untouched."
-fi
-APP_PORT="$(grep -E '^PORT=' "$WAITLIST_DIR/.env" | cut -d= -f2 || true)"
-APP_PORT="${APP_PORT:-8787}"
-
-# ---- 4. App dependencies ----
-log "Installing waitlist-service dependencies"
-if [ -d "$WAITLIST_DIR/node_modules" ]; then
-  echo "node_modules already present — running npm ci to sync with lockfile."
-fi
-( cd "$WAITLIST_DIR" && npm ci --omit=dev )
-
-# ---- 5. Ownership ----
+# ---- 3. Ownership ----
 log "Setting ownership to $SERVICE_USER"
 chown -R "$SERVICE_USER":"$SERVICE_USER" "$APP_DIR"
 
-# ---- 6. systemd service ----
-log "Writing systemd unit"
-UNIT_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
-cat > "$UNIT_FILE" <<EOF
-[Unit]
-Description=Tandish Veyra waitlist service
-After=network.target
-
-[Service]
-Type=simple
-User=$SERVICE_USER
-WorkingDirectory=$WAITLIST_DIR
-ExecStart=$NODE_BIN server.js
-Restart=always
-RestartSec=5
-NoNewPrivileges=true
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl daemon-reload
-systemctl enable "$SERVICE_NAME" >/dev/null
-systemctl restart "$SERVICE_NAME"
-
-sleep 1
-if curl -sf "http://127.0.0.1:${APP_PORT}/api/health" >/dev/null; then
-  echo "waitlist-service is up and answering on :${APP_PORT}."
-else
-  warn "waitlist-service did not respond on :${APP_PORT}. Check: journalctl -u ${SERVICE_NAME} -n 50"
-fi
-
-# ---- 7. nginx site config ----
+# ---- 4. nginx site config ----
 log "Writing nginx site config"
 NGINX_SITE="/etc/nginx/sites-available/tandish.conf"
 cat > "$NGINX_SITE" <<EOF
@@ -140,14 +89,6 @@ server {
     location ~ /\.(?!well-known) {
         deny all;
         return 404;
-    }
-
-    location /api/ {
-        proxy_pass http://127.0.0.1:${APP_PORT}/api/;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
     }
 
     # Cache-busted via the ?v=N in index.html's href/src (bump it by hand whenever
@@ -197,7 +138,7 @@ else
   warn "nginx did not return 200 for $DOMAIN on port 80. Check: nginx -t / journalctl -u nginx"
 fi
 
-# ---- 8. TLS via Let's Encrypt ----
+# ---- 5. TLS via Let's Encrypt ----
 if [ "$SKIP_SSL" = "true" ]; then
   log "SKIP_SSL=true — leaving HTTP only."
 else
@@ -215,9 +156,4 @@ fi
 
 log "Done"
 echo "Site root:         $APP_DIR"
-echo "Waitlist service:  systemctl status $SERVICE_NAME"
-echo "Waitlist logs:     journalctl -u $SERVICE_NAME -f"
 echo "nginx site config: $NGINX_SITE"
-if ! grep -qE '^SMTP_PASS=.+' "$WAITLIST_DIR/.env"; then
-  warn "SMTP_PASS is empty in $WAITLIST_DIR/.env — waitlist signups will fail to send mail until you set it and run: systemctl restart $SERVICE_NAME"
-fi
