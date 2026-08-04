@@ -327,6 +327,11 @@
   function initGsap(){
     if (!window.gsap || !window.ScrollTrigger) { return setTimeout(initGsap, 100); }
     gsap.registerPlugin(ScrollTrigger);
+    // Mobile browsers fire resize events as the address bar shows/hides mid-scroll;
+    // without this, ScrollTrigger re-measures pin spacers mid-gesture, which is what
+    // makes pinned sections jump/pull neighboring sections around on mobile.
+    ScrollTrigger.config({ ignoreMobileResize: true });
+    if ('ontouchstart' in window) ScrollTrigger.normalizeScroll(true);
     gsap.from('#heroFoot', {opacity:0, duration:1, delay:.9});
     gsap.timeline({ scrollTrigger: { trigger:'#who', start:'top top', end:'+=120%', scrub:.4, pin:true, anticipatePin:1 } })
       .to('.who-word', { color: () => cssVar('--white'), stagger:.08 })
