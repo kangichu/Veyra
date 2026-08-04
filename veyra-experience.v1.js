@@ -397,4 +397,45 @@
     setTimeout(()=> ScrollTrigger.refresh(), 800);
   }
   initGsap();
+
+  // ---- TEMP diagnostic overlay for the mobile pin/sticky bleed-through bug ----
+  // Visit with ?debug=1. Remove once diagnosed — not meant to ship long-term.
+  if (location.search.indexOf('debug=1') !== -1) {
+    const dbg = document.createElement('div');
+    dbg.style.cssText = 'position:fixed;top:56px;left:6px;right:6px;z-index:999999;background:rgba(0,0,0,.88);color:#4f8;font:10px/1.45 monospace;padding:8px;border-radius:6px;max-height:65vh;overflow:auto;pointer-events:none;white-space:pre-wrap;';
+    document.body.appendChild(dbg);
+    const ids = ['veyra-arch', 'eng', 'capabilities'];
+    function fmtRect(el) {
+      if (!el) return 'no el';
+      const r = el.getBoundingClientRect();
+      return `top:${r.top.toFixed(0)} bot:${r.bottom.toFixed(0)} h:${r.height.toFixed(0)}`;
+    }
+    function fmtSpacer(el) {
+      if (!el || !el.parentNode || !el.parentNode.classList || !el.parentNode.classList.contains('pin-spacer')) return 'no spacer';
+      const r = el.parentNode.getBoundingClientRect();
+      return `spacerTop:${r.top.toFixed(0)} spacerBot:${r.bottom.toFixed(0)} spacerH:${r.height.toFixed(0)}`;
+    }
+    function fmtST(el) {
+      if (!window.ScrollTrigger) return 'no ScrollTrigger';
+      const st = ScrollTrigger.getAll().find((t) => t.trigger === el);
+      if (!st) return 'no trigger';
+      return `start:${st.start.toFixed(0)} end:${st.end.toFixed(0)} prog:${st.progress.toFixed(2)} active:${st.isActive}`;
+    }
+    function update() {
+      const lines = [];
+      lines.push(
+        `vw:${window.innerWidth} vh:${window.innerHeight} vvh:${window.visualViewport ? window.visualViewport.height.toFixed(0) : 'n/a'} scrollY:${window.scrollY.toFixed(0)}`
+      );
+      ids.forEach((id) => {
+        const el = document.getElementById(id);
+        lines.push(`#${id}`);
+        lines.push(`  rect: ${fmtRect(el)}`);
+        lines.push(`  ${fmtSpacer(el)}`);
+        lines.push(`  st:   ${fmtST(el)}`);
+      });
+      dbg.textContent = lines.join('\n');
+      requestAnimationFrame(update);
+    }
+    update();
+  }
 })();
