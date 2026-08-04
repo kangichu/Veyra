@@ -1,9 +1,6 @@
 # Dependencies
 node_modules/
 
-# Generated at deploy time by setup.sh (see step 5)
-dist/
-
 # Environment / secrets
 .env
 .env.local
