@@ -130,7 +130,7 @@ h1,h2,h3,h4{font-weight:inherit;}
 .x77{display:flex;gap:12px;flex-wrap:wrap;}
 .x78{padding:11px 22px;background:var(--ember);border-radius:9px;font-size:13px;font-weight:600;color:var(--ink);}
 .x79{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);padding:1px;margin-top:8px;}
-.x80{min-height:220vh;padding:clamp(60px,12vw,120px) clamp(16px,5vw,48px);display:flex;flex-direction:column;align-items:center;position:relative;}
+.x80{min-height:170vh;padding:clamp(48px,8vw,90px) clamp(16px,5vw,48px);display:flex;flex-direction:column;align-items:center;position:relative;}
 .x81{position:sticky;top:clamp(70px,14vw,120px);width:100%;max-width:1180px;display:flex;flex-direction:column;align-items:center;}
 .x82{max-width:640px;text-align:center;margin-bottom:56px;}
 .x83{font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,4.2vw,50px);line-height:1.14;font-weight:600;letter-spacing:-0.02em;}
@@ -139,15 +139,15 @@ h1,h2,h3,h4{font-weight:inherit;}
 .x86{width:100%;max-width:560px;padding:18px 24px;border-radius:12px;background:var(--charcoal-2);border:1px solid rgba(255,143,94,0.15);transition:border .05s linear, box-shadow .05s linear;}
 .x87{color:var(--fog-dim);font-size:15px;}
 .x88{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;width:100%;margin-top:32px;}
-.x89{min-height:100vh;padding:clamp(60px,12vw,120px) clamp(16px,5vw,48px);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.x89{min-height:auto;padding:clamp(48px,8vw,90px) clamp(16px,5vw,48px);display:flex;flex-direction:column;align-items:center;justify-content:center;}
 .x90{width:100%;max-width:840px;min-height:220px;border-radius:16px;border:1px solid var(--line-strong);background:var(--ink-2);padding:clamp(20px,5vw,36px) clamp(16px,5vw,40px);position:relative;overflow:hidden;}
 .x91{font-size:19px;line-height:1.5;color:var(--white);min-height:60px;}
 .x92{display:inline-block;width:2px;height:20px;background:var(--ember);vertical-align:-3px;margin-left:2px;animation:caretBlink 1s step-end infinite;}
 .x93{position:relative;height:110px;margin-top:20px;}
-.x94{min-height:100vh;padding:clamp(60px,12vw,120px) clamp(16px,5vw,48px);display:flex;flex-direction:column;align-items:center;}
+.x94{min-height:auto;padding:clamp(48px,8vw,90px) clamp(16px,5vw,48px);display:flex;flex-direction:column;align-items:center;}
 .x95{max-width:680px;text-align:center;margin-bottom:56px;}
 .x96{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;width:100%;max-width:1180px;}
-.x97{min-height:100vh;padding:clamp(60px,12vw,120px) 0;display:flex;flex-direction:column;align-items:center;overflow:hidden;}
+.x97{min-height:auto;padding:clamp(48px,8vw,90px) 0;display:flex;flex-direction:column;align-items:center;overflow:hidden;}
 .x98{max-width:680px;text-align:center;margin-bottom:16px;padding:0 clamp(16px,5vw,48px);}
 .x99{font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,4.2vw,50px);line-height:1.14;font-weight:600;letter-spacing:-0.02em;margin-bottom:16px;}
 .x100{font-size:15px;color:var(--fog);}
@@ -175,7 +175,7 @@ h1,h2,h3,h4{font-weight:inherit;}
 .x122{width:100%;height:60px;}
 .x123{padding:18px 20px;border-radius:12px;background:var(--charcoal);border:1px solid var(--line);opacity:0;transform:translateY(20px);transition:opacity .7s ease .35s, transform .7s cubic-bezier(.22,1,.36,1) .35s;}
 .x124{display:flex;gap:10px;}
-.x125{min-height:200vh;padding:clamp(60px,12vw,120px) clamp(16px,5vw,48px);display:flex;flex-direction:column;align-items:center;}
+.x125{min-height:160vh;padding:clamp(48px,8vw,90px) clamp(16px,5vw,48px);display:flex;flex-direction:column;align-items:center;}
 .x126{position:sticky;top:clamp(80px,16vw,140px);width:100%;max-width:960px;display:flex;flex-direction:column;align-items:center;}
 .x127{max-width:640px;text-align:center;margin-bottom:64px;}
 .x128{display:flex;flex-wrap:wrap;gap:40px;width:100%;}
@@ -183,12 +183,12 @@ h1,h2,h3,h4{font-weight:inherit;}
 .x130{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fog-dim);margin-bottom:18px;}
 .x131{display:flex;flex-direction:column;flex:1 1 240px;border-left:1px solid var(--line-strong);padding-left:32px;}
 .x132{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ember);margin-bottom:18px;}
-.x133{min-height:100vh;padding:clamp(60px,12vw,120px) clamp(16px,5vw,48px) clamp(100px,20vw,180px);display:flex;flex-direction:column;align-items:center;}
+.x133{min-height:auto;padding:clamp(48px,8vw,90px) clamp(16px,5vw,48px) clamp(60px,8vw,100px);display:flex;flex-direction:column;align-items:center;}
 .x134{max-width:640px;text-align:center;margin-bottom:72px;}
 .x135{display:flex;flex-direction:column;align-items:center;margin-bottom:64px;}
 .x136{display:flex;flex-direction:column;gap:8px;align-items:center;margin-bottom:32px;}
 .x137{font-size:14px;color:var(--fog-dim);opacity:0;transition:opacity .6s ease 1.1s;}
-.x138{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 clamp(20px,6vw,40px);position:relative;overflow:hidden;}
+.x138{min-height:auto;padding-top:clamp(48px,8vw,90px);padding-bottom:clamp(48px,8vw,90px);display:flex;flex-direction:column;justify-content:center;padding-left:clamp(20px,6vw,40px);padding-right:clamp(20px,6vw,40px);position:relative;overflow:hidden;}
 .x139{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);display:flex;align-items:center;gap:10px;margin-bottom:18px;}
 .x140{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.04em;font-size:clamp(64px,15vw,260px);line-height:.88;color:var(--white);}
 .x141{margin-top:36px;font-size:clamp(16px,1.9vw,22px);line-height:1.55;color:var(--fog);max-width:680px;}
@@ -333,4 +333,8 @@ h1,h2,h3,h4{font-weight:inherit;}
      like a normal section. */
   .x196 { position: static; height: auto; justify-content: flex-start; }
   #eng { min-height: auto; padding-top: 48px; padding-bottom: 48px; }
+
+  /* #eng no longer centers/pins on mobile (see above), so it now flows straight into
+     #capabilities with no built-in gap — .x211 has zero top padding by default. */
+  .x211 { padding-top: 64px; }
 }
