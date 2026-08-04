@@ -77,11 +77,31 @@ if [ -d "$WAITLIST_DIR/node_modules" ]; then
 fi
 ( cd "$WAITLIST_DIR" && npm ci --omit=dev )
 
-# ---- 5. Ownership ----
+# ---- 5. Build versioned static assets ----
+# CSS/JS filenames don't change per deploy, so we cache-bust with a content-hash query
+# string instead: index.html is rewritten (into dist/, never touching the git-tracked
+# copy) to reference veyra-experience.v1.css?v=<hash> etc. That lets nginx cache the
+# actual css/js responses aggressively while guaranteeing a content change always
+# produces a new URL.
+log "Building versioned static assets"
+DIST_DIR="$APP_DIR/dist"
+rm -rf "$DIST_DIR"
+mkdir -p "$DIST_DIR"
+CSS_HASH="$(sha256sum "$APP_DIR/veyra-experience.v1.css" | cut -c1-10)"
+JS_HASH="$(sha256sum "$APP_DIR/veyra-experience.v1.js" | cut -c1-10)"
+cp "$APP_DIR/veyra-experience.v1.css" "$DIST_DIR/veyra-experience.v1.css"
+cp "$APP_DIR/veyra-experience.v1.js" "$DIST_DIR/veyra-experience.v1.js"
+sed \
+  -e "s|veyra-experience\.v1\.css|veyra-experience.v1.css?v=${CSS_HASH}|" \
+  -e "s|veyra-experience\.v1\.js|veyra-experience.v1.js?v=${JS_HASH}|" \
+  "$APP_DIR/index.html" > "$DIST_DIR/index.html"
+echo "css v=$CSS_HASH, js v=$JS_HASH"
+
+# ---- 6. Ownership ----
 log "Setting ownership to $SERVICE_USER"
 chown -R "$SERVICE_USER":"$SERVICE_USER" "$APP_DIR"
 
-# ---- 6. systemd service ----
+# ---- 7. systemd service ----
 log "Writing systemd unit"
 UNIT_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 cat > "$UNIT_FILE" <<EOF
@@ -113,7 +133,7 @@ else
   warn "waitlist-service did not respond on :${APP_PORT}. Check: journalctl -u ${SERVICE_NAME} -n 50"
 fi
 
-# ---- 7. nginx site config ----
+# ---- 8. nginx site config ----
 log "Writing nginx site config"
 NGINX_SITE="/etc/nginx/sites-available/tandish.conf"
 cat > "$NGINX_SITE" <<EOF
@@ -122,7 +142,7 @@ server {
     listen [::]:80;
     server_name $DOMAIN $WWW_DOMAIN;
 
-    root $APP_DIR;
+    root $DIST_DIR;
     index index.html;
 
     gzip on;
@@ -141,11 +161,21 @@ server {
         proxy_set_header X-Forwarded-Proto \$scheme;
     }
 
-    # NOTE: filenames here are a hand-managed "v1" suffix, not per-deploy content hashes —
-    # so caching must always revalidate, or fixes silently won't reach returning visitors.
-    # (add_header in a location block replaces, not merges with, the server-level ones above —
-    # so the security headers have to be repeated here too.)
+    # Cache-busted via ?v=<content-hash> in dist/index.html (see step 5), so it's safe
+    # to cache these hard: a content change always produces a new URL.
+    # (add_header in a location block replaces, not merges with, the server-level ones
+    # above — so the security headers have to be repeated here too.)
     location ~* \.(?:css|js)\$ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        add_header X-Content-Type-Options nosniff always;
+        add_header X-Frame-Options SAMEORIGIN always;
+        add_header Referrer-Policy strict-origin-when-cross-origin always;
+        try_files \$uri =404;
+    }
+
+    # index.html is the one file that must always be fetched fresh — it's what carries
+    # the current ?v= references.
+    location ~* \.html\$ {
         add_header Cache-Control "no-cache";
         add_header X-Content-Type-Options nosniff always;
         add_header X-Frame-Options SAMEORIGIN always;
@@ -178,7 +208,7 @@ else
   warn "nginx did not return 200 for $DOMAIN on port 80. Check: nginx -t / journalctl -u nginx"
 fi
 
-# ---- 8. TLS via Let's Encrypt ----
+# ---- 9. TLS via Let's Encrypt ----
 if [ "$SKIP_SSL" = "true" ]; then
   log "SKIP_SSL=true — leaving HTTP only."
 else
@@ -195,7 +225,8 @@ else
 fi
 
 log "Done"
-echo "Site root:        $APP_DIR"
+echo "Site root (built): $DIST_DIR"
+echo "Site source:       $APP_DIR"
 echo "Waitlist service:  systemctl status $SERVICE_NAME"
 echo "Waitlist logs:     journalctl -u $SERVICE_NAME -f"
 echo "nginx site config: $NGINX_SITE"
