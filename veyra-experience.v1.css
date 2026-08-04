@@ -308,7 +308,7 @@ h1,h2,h3,h4{font-weight:inherit;}
 
 @media (max-width: 760px) {
   #who { padding-top: 72px; padding-bottom: 72px; }
-  #veyra { padding-top: 56px; padding-bottom: 72px; min-height: 115vh; }
+  #veyra { padding-top: 56px; padding-bottom: 56px; min-height: auto; }
 
   /* Demo scenes: min-height:100vh+ was forcing a full screen of empty space around
      modest content on mobile. #scene2/#scene7 keep real height because their
