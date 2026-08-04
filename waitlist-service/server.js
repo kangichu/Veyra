@@ -23,7 +23,13 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS
-  }
+  },
+  // Without these, a blocked/unreachable SMTP port hangs on nodemailer's own long
+  // defaults — well past nginx's proxy_read_timeout, so the client just sees a dead
+  // request instead of the actual error.
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 15000
 });
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

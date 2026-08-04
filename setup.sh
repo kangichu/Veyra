@@ -133,6 +133,15 @@ server {
     add_header X-Frame-Options SAMEORIGIN always;
     add_header Referrer-Policy strict-origin-when-cross-origin always;
 
+    # root is the git working tree itself, so without this, individual files under
+    # .git/ (history, objects, refs) are directly fetchable even though directory
+    # listing is blocked by default. Excludes .well-known so certbot's HTTP-01
+    # renewal challenge keeps working.
+    location ~ /\.(?!well-known) {
+        deny all;
+        return 404;
+    }
+
     location /api/ {
         proxy_pass http://127.0.0.1:${APP_PORT}/api/;
         proxy_set_header Host \$host;
