@@ -225,40 +225,6 @@
   const whoWords = "Enterprise AI should work where your business already operates. Organizations should not have to surrender ownership of their infrastructure or operational data simply to adopt AI. Veyra exists because of that belief.".split(' ');
   document.getElementById('whoText').innerHTML = whoWords.map(w=>`<span class="who-word" style="color:var(--fog-dim);transition:color .2s;">${w} </span>`).join('');
 
-  // ---- Waitlist ----
-  const WAITLIST_API_URL = '/api/waitlist';
-  document.getElementById('waitlistForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const form = this;
-    const submitBtn = form.querySelector('button[type=submit]');
-    const errorEl = document.getElementById('waitlistError');
-    const email = form.querySelector('input[type=email]').value.trim();
-    if (!email) return;
-
-    errorEl.style.display = 'none';
-    submitBtn.disabled = true;
-    const originalLabel = submitBtn.textContent;
-    submitBtn.textContent = 'Joining…';
-
-    fetch(WAITLIST_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    })
-      .then(async (res) => {
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
-        document.getElementById('waitlistDone').style.display = 'block';
-        form.style.display = 'none';
-      })
-      .catch((err) => {
-        errorEl.textContent = err.message || 'Something went wrong. Please try again.';
-        errorEl.style.display = 'block';
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalLabel;
-      });
-  });
-
   // ---- Custom cursor ----
   const cursor = document.getElementById('cursor');
   function cursorVisible(){ return window.innerWidth > 860; }
