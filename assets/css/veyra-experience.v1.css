@@ -334,4 +334,14 @@ h1,h2,h3,h4{font-weight:inherit;}
   /* #eng no longer centers/pins on mobile (see above), so it now flows straight into
      #capabilities with no built-in gap — .x211 has zero top padding by default. */
   .x211 { padding-top: 64px; }
+
+  /* .x233 (progress line) and .x235 ("Built for real estate operations.") are
+     position:absolute at a fixed distance from #capabilities' bottom edge, totally
+     independent of the cards above them. On mobile, .x211's justify-content:center
+     pushes the (taller, wrapped) card content down toward the bottom of the screen,
+     so it crowds right up against them. Taking them out of absolute positioning so
+     they always sit after the cards with real margin, regardless of card height. */
+  .x211 { height: auto; justify-content: flex-start; padding-bottom: 48px; }
+  .x233 { position: static; margin: 40px clamp(20px,6vw,40px) 0; }
+  .x235 { position: static; margin: 16px clamp(20px,6vw,40px) 0; text-align: right; }
 }
