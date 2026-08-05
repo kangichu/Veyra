@@ -344,4 +344,10 @@ h1,h2,h3,h4{font-weight:inherit;}
   .x211 { height: auto; justify-content: flex-start; padding-bottom: 48px; }
   .x233 { position: static; margin: 40px clamp(20px,6vw,40px) 0; }
   .x235 { position: static; margin: 16px clamp(20px,6vw,40px) 0; text-align: right; }
+
+  /* .x241 ("About Tandish" / waitlist section): min-height:100vh + justify-content:
+     center with short actual content meant that scrolling far enough to reveal the
+     footer below it left the viewport's top edge sitting mid-way through that
+     centered content — landing right on the heading, under the fixed nav. */
+  .x241 { min-height: auto; padding-top: 90px; padding-bottom: 64px; }
 }
