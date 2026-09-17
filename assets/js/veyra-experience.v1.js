@@ -326,7 +326,7 @@
     });
 
     const engSteps = [
-      {t:'Embeddings', d:'Listings & docs → vectors'},{t:'Vector Search', d:'FAISS nearest matches'},
+      {t:'Embeddings', d:'Listings → vectors'},{t:'Vector Search', d:'FAISS nearest matches'},
       {t:'Hybrid Ranking', d:'Vector + keyword signals'},{t:'Relevance Models', d:'Learned re-ranking'},
       {t:'Runtime', d:'Inside your network'},{t:'API Response', d:'Results to your tools'}
     ];

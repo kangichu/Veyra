@@ -302,6 +302,7 @@ h1,h2,h3,h4{font-weight:inherit;}
 .x251{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;}
 .x252{display:flex;gap:26px;font-size:13px;color:var(--fog-dim);}
 .x253{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--fog-dim);}
+.x254{position: absolute;top: 28px;right: 150px;font-family: 'JetBrains Mono', monospace;font-size: 12px;letter-spacing: .12em;color: var(--white);background: none;border: none;cursor: pointer;}
 
 @media (max-width: 760px) {
   #who { padding-top: 72px; padding-bottom: 72px; }
