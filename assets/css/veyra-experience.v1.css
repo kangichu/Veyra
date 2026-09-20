@@ -376,3 +376,30 @@ h1,h2,h3,h4{font-weight:inherit;}
      centered content — landing right on the heading, under the fixed nav. */
   .x241 { min-height: auto; padding-top: 90px; padding-bottom: 64px; }
 }
+
+/* Static alternatives keep every panel accessible without scroll animation. */
+.motion-static #whoPillars{opacity:1;}
+.motion-static #archTrack{width:100%;height:auto;flex-direction:column;}
+.motion-static #veyra-arch{height:auto;}
+.motion-static .arch-panel{width:100%;min-height:650px;height:auto;padding-top:100px;padding-bottom:100px;}
+.motion-static #veyra-arch > .x188,.motion-static #archDots,.motion-static #veyra-arch > .x192{display:none;}
+.motion-static #eng{min-height:0;padding-top:64px;padding-bottom:64px;}
+.motion-static #eng .x196{position:static;height:auto;}
+.motion-static #engDesktop{display:none !important;}
+.motion-static #engMobile{display:flex !important;}
+.motion-static #capabilities .x211{height:auto;padding-top:64px;padding-bottom:48px;}
+.motion-static #capTrack{flex-wrap:wrap;transform:none !important;}
+.motion-static #capTrack > *{flex:1 1 280px;min-width:0;}
+.motion-static #capabilities .x233{display:none;}
+.motion-static #capabilities .x235{position:static;margin:32px 40px 0;}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+  #cursor{display:none !important;}
+  #heroContent,#heroOrbTop,#heroOrbMain,#veyraFloat{transform:none !important;}
+  #scene2,#scene7{min-height:0;padding-top:64px;padding-bottom:64px;}
+  #scene2 .x81,#scene7 .x126{position:static;}
+  .s2f,.s2c,.s7old,.s7new,.s4c,.s5chip,#s6Left,.s6r,.s8node,.s8emph,#s8Trust{opacity:1 !important;transform:none !important;}
+  #s2SearchBar{transform:none !important;}
+  #s3Tokens{display:none;}
+  #s5Marquee{animation:none !important;overflow-x:auto;max-width:100%;}
+}

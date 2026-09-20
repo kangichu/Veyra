@@ -1,4 +1,7 @@
 (function(){
+  const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+  const reducedMotion = () => motionPreference.matches;
+  const staticMotion = () => document.documentElement.classList.contains('motion-static');
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   function stepIn(p,s,e){return clamp((p-s)/(e-s),0,1);}
   const hoods=['Westlands','Kilimani','Lavington','Karen','Runda','Kileleshwa','Muthaiga','Riverside'];
@@ -97,7 +100,7 @@
   }
   let raf = null;
   function onScroll(){
-    if (raf) return;
+    if (reducedMotion() || raf) return;
     raf = requestAnimationFrame(()=>{
       raf = null;
       const p2 = progressOf(scene2);
@@ -125,6 +128,7 @@
   function revealOnce(selector, cb){
     const el = document.querySelector(selector);
     if (!el) return;
+    if (reducedMotion() || !('IntersectionObserver' in window)) { cb(); return; }
     const obs = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if (e.isIntersecting){ cb(); obs.disconnect(); } });
     }, {threshold:0.25});
@@ -148,12 +152,14 @@
     const typedEl = document.getElementById('typedText');
     let i = 0;
     function type(){
+      if (reducedMotion()) { typedEl.textContent = query; return; }
       i += (Math.random() < 0.15 ? 2 : 1);
       typedEl.textContent = query.slice(0, i);
       if (i < query.length){
         setTimeout(type, 22 + Math.random()*45);
       } else {
         setTimeout(()=>{
+          if (reducedMotion()) return;
           s3Tokens.forEach(el=>{ el.style.opacity=1; el.style.transform=`translateX(-50%) translate(${el.dataset.dx}px,${parseInt(el.dataset.dy)+20}px) scale(1)`; });
         }, 700);
         setTimeout(()=>{ s3Tokens.forEach(el=>{ el.style.opacity=0.6; el.style.transform='translateX(-50%) translate(0px,20px) scale(0.3)'; }); }, 700+1900);
@@ -175,12 +181,12 @@
   const faqList = document.getElementById('faqList');
   faqList.innerHTML = faqs.map((f,i)=>`
     <div style="border-bottom:1px solid var(--line);">
-      <button class="faq-btn" data-i="${i}" style="width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:24px;padding:28px 0;text-align:left;transition:padding-left .2s;">
+      <button class="faq-btn" data-i="${i}" id="faq-question-${i}" aria-expanded="false" aria-controls="faq-answer-${i}" style="width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:24px;padding:28px 0;text-align:left;transition:padding-left .2s;">
         <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--fog-dim);width:32px;flex-shrink:0;">${String(i+1).padStart(2,'0')}</span>
         <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(19px,2.2vw,25px);flex:1;">${f.q}</h3>
         <span class="faq-plus" style="font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--fog-dim);transition:transform .3s;">+</span>
       </button>
-      <div class="faq-panel" style="max-height:0px;opacity:0;overflow:hidden;transition:max-height .35s ease,opacity .3s;">
+      <div class="faq-panel" id="faq-answer-${i}" role="region" aria-labelledby="faq-question-${i}" aria-hidden="true" inert style="max-height:0px;opacity:0;overflow:hidden;transition:max-height .35s ease,opacity .3s;">
         <p style="font-size:15px;color:var(--fog-dim);max-width:620px;line-height:1.6;padding:0 clamp(12px,4vw,20px) 28px clamp(30px,10vw,78px);">${f.a}</p>
       </div>
     </div>`).join('');
@@ -189,28 +195,76 @@
       const wrap = btn.parentElement;
       const panel = wrap.querySelector('.faq-panel');
       const plus = wrap.querySelector('.faq-plus');
-      const open = panel.style.maxHeight !== '0px' && panel.style.maxHeight !== '';
-      panel.style.maxHeight = open ? '0px' : '200px';
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      panel.setAttribute('aria-hidden', String(open));
+      panel.inert = open;
+      panel.style.maxHeight = open ? '0px' : panel.scrollHeight + 'px';
       panel.style.opacity = open ? 0 : 1;
       plus.style.transform = open ? 'rotate(0deg)' : 'rotate(45deg)';
     });
   });
+
+  const faqResize = new ResizeObserver(entries => entries.forEach(({target}) => {
+    const panel = target.parentElement;
+    if (panel.getAttribute('aria-hidden') === 'false') panel.style.maxHeight = panel.scrollHeight + 'px';
+  }));
+  faqList.querySelectorAll('.faq-panel p').forEach(p => faqResize.observe(p));
 
   // ---- Theme ----
   const themeBtn = document.getElementById('themeToggle');
   function applyTheme(t){
     document.documentElement.setAttribute('data-theme', t);
     themeBtn.textContent = t === 'dark' ? 'LIGHT' : 'DARK';
-    localStorage.setItem('veyra-theme', t);
+    try { localStorage.setItem('veyra-theme', t); } catch (_) { /* Storage may be unavailable. */ }
   }
-  applyTheme(localStorage.getItem('veyra-theme') || 'light');
+  let savedTheme = 'light';
+  try { savedTheme = localStorage.getItem('veyra-theme') || 'light'; } catch (_) {}
+  applyTheme(savedTheme);
   themeBtn.addEventListener('click', ()=> applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 
   // ---- Menu ----
   const menuOverlay = document.getElementById('menuOverlay');
-  document.getElementById('menuOpenBtn').addEventListener('click', ()=> menuOverlay.style.transform = 'translateY(0)');
-  document.getElementById('menuCloseBtn').addEventListener('click', ()=> menuOverlay.style.transform = 'translateY(-100%)');
-  menuOverlay.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> menuOverlay.style.transform = 'translateY(-100%)'));
+  const menuOpenBtn = document.getElementById('menuOpenBtn');
+  let previousOverflow = '';
+  let inertBackground = [];
+  function setMenu(open){
+    menuOpenBtn.setAttribute('aria-expanded', String(open));
+    menuOverlay.inert = !open;
+    menuOverlay.setAttribute('aria-hidden', String(!open));
+    menuOverlay.style.transform = open ? 'translateY(0)' : 'translateY(-100%)';
+    if (open) {
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      inertBackground = [...document.body.children].filter(el => el !== menuOverlay && !el.inert);
+      inertBackground.forEach(el => el.inert = true);
+      document.getElementById('menuCloseBtn').focus({preventScroll:true});
+    } else {
+      inertBackground.forEach(el => el.inert = false);
+      document.body.style.overflow = previousOverflow;
+      menuOpenBtn.focus({preventScroll:true});
+    }
+  }
+  menuOpenBtn.addEventListener('click', () => setMenu(true));
+  document.getElementById('menuCloseBtn').addEventListener('click', () => setMenu(false));
+  menuOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  menuOverlay.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { e.preventDefault(); setMenu(false); }
+    if (e.key !== 'Tab') return;
+    const items = [...menuOverlay.querySelectorAll('button,a[href]')];
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  // Contact intent only: opening an email client does not confirm an enquiry.
+  document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+    link.addEventListener('click', () => {
+      if (typeof window.gtag === 'function') window.gtag('event',
+        link.classList.contains('waitlist-submit') ? 'technical_walkthrough_click' : 'contact_email_click',
+        { contact_method: 'email', location: 'contact_section' });
+    });
+  });
 
   // ---- Scroll-to-top + who-words scrub trigger point ----
   const scrollTopBtn = document.getElementById('scrollTop');
@@ -219,11 +273,27 @@
     scrollTopBtn.style.opacity = show ? 1 : 0;
     scrollTopBtn.style.pointerEvents = show ? 'auto' : 'none';
   }, {passive:true});
-  scrollTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  scrollTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:reducedMotion() ? 'auto' : 'smooth'}));
 
   // ---- Who words (build markup) ----
   const whoWords = "Enterprise AI should work where your business already operates. Organizations should not have to surrender ownership of their infrastructure or operational data simply to adopt AI. Veyra exists because of that belief.".split(' ');
   document.getElementById('whoText').innerHTML = whoWords.map(w=>`<span class="who-word" style="color:var(--fog-dim);transition:color .2s;">${w} </span>`).join('');
+
+  // Pause decorative frames on small screens, hidden tabs and reduced motion.
+  function motionLoop(callback, enabled){
+    let frame = null;
+    function tick(){
+      frame = null;
+      if (document.hidden || reducedMotion() || !enabled()) return;
+      callback();
+      frame = requestAnimationFrame(tick);
+    }
+    function restart(){ if (frame === null) tick(); }
+    window.addEventListener('resize', restart);
+    document.addEventListener('visibilitychange', restart);
+    motionPreference.addEventListener('change', restart);
+    restart();
+  }
 
   // ---- Custom cursor ----
   const cursor = document.getElementById('cursor');
@@ -231,11 +301,10 @@
   cursor.style.display = cursorVisible() ? 'block' : 'none';
   let mx = innerWidth/2, my = innerHeight/2, cx = mx, cy = my;
   window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  (function loop(){
+  motionLoop(()=>{
     cx += (mx-cx)*.18; cy += (my-cy)*.18;
     cursor.style.left = cx+'px'; cursor.style.top = cy+'px';
-    requestAnimationFrame(loop);
-  })();
+  }, cursorVisible);
   function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
   document.querySelectorAll('a,button').forEach(el => {
     el.addEventListener('mouseenter', () => { cursor.style.width='44px'; cursor.style.height='44px'; cursor.style.background=cssVar('--white'); });
@@ -259,16 +328,16 @@
         scale = 1+(1-dist/radius)*0.18;
       } else { tx=0; ty=0; scale=1; }
     });
-    (function loop(){
+    motionLoop(()=>{
       cx += (tx-cx)*.08; cy += (ty-cy)*.08; cs += (scale-cs)*.08;
       orb.style.transform = `translate(${cx}px, ${cy}px) scale(${cs})`;
-      requestAnimationFrame(loop);
-    })();
+    }, () => innerWidth > 760 && innerHeight >= 700);
   }
   setupOrbMagnet('heroOrbTop', 480, 60);
   setupOrbMagnet('heroOrbMain', 520, 65);
   const heroContent = document.getElementById('heroContent');
   window.addEventListener('mousemove', (e)=>{
+    if (reducedMotion()) return;
     const relX = e.clientX/window.innerWidth-0.5, relY = e.clientY/window.innerHeight-0.5;
     heroContent.style.transform = `translate(${relX*-18}px, ${relY*-10}px)`;
   });
@@ -291,7 +360,7 @@
 
   // ---- GSAP scroll-driven pieces (progressive enhancement) ----
   function initGsap(){
-    if (!window.gsap || !window.ScrollTrigger) { return setTimeout(initGsap, 100); }
+
     gsap.registerPlugin(ScrollTrigger);
     // Mobile browsers fire resize events as the address bar shows/hides mid-scroll;
     // without this, ScrollTrigger re-measures pin spacers mid-gesture, which is what
@@ -358,11 +427,27 @@
           onUpdate: (self)=>{ capFill.style.width = (self.progress*100)+'%'; } }
       });
     }
-    window.addEventListener('load', ()=> ScrollTrigger.refresh());
+    window.addEventListener('load', ()=> { if (!staticMotion()) ScrollTrigger.refresh(); }, {once:true});
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(()=> ScrollTrigger.refresh());
-    setTimeout(()=> ScrollTrigger.refresh(), 800);
+    const refreshTimer = setTimeout(()=> ScrollTrigger.refresh(), 800);
+    return () => clearTimeout(refreshTimer);
   }
-  initGsap();
+  let animationContext;
+  function updateMotion(){
+    if (animationContext) { animationContext.revert(); animationContext = null; }
+    if (window.ScrollTrigger) ScrollTrigger.normalizeScroll(false);
+    document.getElementById('engNodes').replaceChildren();
+    document.documentElement.classList.add('motion-static');
+    heroContent.style.transform = '';
+    if (!reducedMotion() && window.gsap && window.ScrollTrigger) {
+      document.documentElement.classList.remove('motion-static');
+      animationContext = gsap.context(initGsap);
+    }
+    if (reducedMotion()) document.getElementById('typedText').textContent = "I'm looking for a modern three-bedroom apartment in Westlands under KES 18M near international schools.";
+    onScroll();
+  }
+  motionPreference.addEventListener('change', updateMotion);
+  updateMotion();
 
   // ---- TEMP diagnostic overlay for the mobile pin/sticky bleed-through bug ----
   // Visit with ?debug=1. Remove once diagnosed — not meant to ship long-term.
