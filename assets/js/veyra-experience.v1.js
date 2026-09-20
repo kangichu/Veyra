@@ -37,13 +37,13 @@
   const s3Tokens = [...s3TokensEl.children];
 
   // ---- Scene 4: intelligent results ----
-  const matches=['95%','91%','88%','86%','83%','79%'];
-  const insights=['Matches your budget','Close to international schools','Walkable neighbourhood','Quiet residential area','Similar buyers viewed this','Within your commute radius'];
+  const matches=['Sample','Sample','Sample','Sample','Sample','Sample'];
+  const insights=['Example listing details','Example school proximity','Example neighbourhood context','Example location details','Example related property','Example commute context'];
   const s4Cards = document.getElementById('s4Cards');
   s4Cards.innerHTML = hoods.slice(0,6).map((h,i)=>`
     <div class="s4c" style="border-radius:12px;overflow:hidden;background:var(--charcoal);border:1px solid var(--line);opacity:0;transform:translateY(28px);transition:opacity .7s ease ${i*0.09}s, transform .7s cubic-bezier(.22,1,.36,1) ${i*0.09}s;">
       <div style="${imgCss(i)}display:flex;">
-        <div style="position:absolute;top:12px;left:12px;background:var(--ember);color:var(--ink);font-size:11px;font-weight:700;padding:4px 9px;border-radius:20px;">${matches[i]} Match</div>
+        <div style="position:absolute;top:12px;left:12px;background:var(--ember);color:var(--ink);font-size:11px;font-weight:700;padding:4px 9px;border-radius:20px;">${matches[i]} listing</div>
       </div>
       <div style="padding:16px 18px 20px;">
         <div style="font-size:15px;font-weight:600;margin-bottom:2px;">KES ${prices[i]}</div>
@@ -165,12 +165,12 @@
 
   // ---- FAQ accordion ----
   const faqs = [
-    {q:'Where does the data live?', a:'Inside infrastructure you already own—your cloud account, private cloud, or on-premises environment. We never require data to leave your boundary.'},
-    {q:'How is it deployed?', a:'Most organizations start with a single environment, connect existing data sources, and expand once the first use cases prove value. Typical first production use cases are live within weeks, not quarters.'},
-    {q:'Who operates it day to day?', a:'Your team. The Operator Layer and Admin Console give them the tools to provision, monitor, rotate keys and apply updates without constant vendor involvement.'},
-    {q:'What about security and audit?', a:'Access control, usage logs, model inventory and change history are available to the people accountable for the data. Built to the controls your security and compliance teams already use.'},
-    {q:'How do developers integrate?', a:'A single public API with clear contracts, versioning and authentication. Your existing tools and internal systems call the same surface.'},
-    {q:'Why start with real estate?', a:'We deliberately chose one industry with complex operational data and high ownership requirements. Domain focus produces better results than trying to serve every vertical at once.'}
+    {q:'Where does the data live?', a:'Customer property data is processed locally in the customer-controlled Veyra environment. Review external connections, support access and data handling for your deployment.'},
+    {q:'How is it deployed?', a:'Veyra is packaged for customer infrastructure. Deployment timelines depend on your environment, integration scope and security requirements.'},
+    {q:'Who operates it day to day?', a:'Your team controls the hosting environment. Agree operational responsibilities, available administration tools and support arrangements with Tandish for your deployment.'},
+    {q:'What about security and audit?', a:'Review available access controls, logging and update processes with your security team. Self-hosting gives you infrastructure control; it does not by itself establish compliance.'},
+    {q:'How do developers integrate?', a:'Veyra exposes search through an API for integration with websites and internal tools. Review supported endpoints, authentication and data formats during a technical walkthrough.'},
+    {q:'Why start with real estate?', a:'Real estate combines detailed listing data with specific discovery workflows and ownership requirements. Veyra is focused on those needs.'}
   ];
   const faqList = document.getElementById('faqList');
   faqList.innerHTML = faqs.map((f,i)=>`
@@ -326,8 +326,8 @@
     });
 
     const engSteps = [
-      {t:'Embeddings', d:'Listings → vectors'},{t:'Vector Search', d:'FAISS nearest matches'},
-      {t:'Hybrid Ranking', d:'Vector + keyword signals'},{t:'Relevance Models', d:'Learned re-ranking'},
+      {t:'Embeddings', d:'Listings → vectors'},{t:'Vector Search', d:'Similar listings'},
+      {t:'Multi-signal Retrieval', d:'Semantic + structured'},{t:'Relevance Ranking', d:'Order by relevance'},
       {t:'Runtime', d:'Inside your network'},{t:'API Response', d:'Results to your tools'}
     ];
     const engPath = document.getElementById('engPath'), engNodes = document.getElementById('engNodes');

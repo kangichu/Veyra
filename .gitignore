@@ -18,3 +18,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Local website review reports
+/COMPANY_INTRO_REVIEW.md
+/COPY_REVIEW.md
