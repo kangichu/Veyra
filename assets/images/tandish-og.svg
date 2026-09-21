@@ -1,0 +1,17 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#FAF8F4"/>
+  <path d="M64 65h24" stroke="#3745C4" stroke-width="2"/>
+  <text x="103" y="72" font-family="Arial,sans-serif" font-size="20" fill="#3745C4" letter-spacing="3">TANDISH GROUP</text>
+  <g font-family="Arial,sans-serif" font-size="78" font-weight="700" letter-spacing="-3">
+    <text x="64" y="230" fill="#141210">Built around the problem,</text>
+    <text x="64" y="323" fill="#8D897B">not the trend.</text>
+  </g>
+  <text x="67" y="385" font-family="Arial,sans-serif" font-size="23" fill="#5C5A50">Focused software products for real-world problems.</text>
+  <path d="M64 459h1072" stroke="#D9D5CC"/>
+  <g font-family="Arial,sans-serif">
+    <rect x="64" y="496" width="3" height="53" fill="#3745C4"/>
+    <text x="85" y="517" font-size="27" fill="#141210">Veyra</text>
+    <text x="85" y="546" font-size="17" fill="#5C5A50">Real-estate intelligence</text>
+    <text x="1136" y="546" text-anchor="end" font-size="18" fill="#5C5A50">tandish.com</text>
+  </g>
+</svg>

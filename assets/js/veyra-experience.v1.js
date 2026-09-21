@@ -241,36 +241,38 @@
   // ---- Menu ----
   const menuOverlay = document.getElementById('menuOverlay');
   const menuOpenBtn = document.getElementById('menuOpenBtn');
-  let previousOverflow = '';
-  let inertBackground = [];
-  function setMenu(open){
-    menuOpenBtn.setAttribute('aria-expanded', String(open));
-    menuOverlay.inert = !open;
-    menuOverlay.setAttribute('aria-hidden', String(!open));
-    menuOverlay.style.transform = open ? 'translateY(0)' : 'translateY(-100%)';
-    if (open) {
-      previousOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      inertBackground = [...document.body.children].filter(el => el !== menuOverlay && !el.inert);
-      inertBackground.forEach(el => el.inert = true);
-      document.getElementById('menuCloseBtn').focus({preventScroll:true});
-    } else {
-      inertBackground.forEach(el => el.inert = false);
-      document.body.style.overflow = previousOverflow;
-      menuOpenBtn.focus({preventScroll:true});
+  if (menuOverlay && menuOpenBtn) {
+    let previousOverflow = '';
+    let inertBackground = [];
+    function setMenu(open){
+      menuOpenBtn.setAttribute('aria-expanded', String(open));
+      menuOverlay.inert = !open;
+      menuOverlay.setAttribute('aria-hidden', String(!open));
+      menuOverlay.style.transform = open ? 'translateY(0)' : 'translateY(-100%)';
+      if (open) {
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        inertBackground = [...document.body.children].filter(el => el !== menuOverlay && !el.inert);
+        inertBackground.forEach(el => el.inert = true);
+        document.getElementById('menuCloseBtn').focus({preventScroll:true});
+      } else {
+        inertBackground.forEach(el => el.inert = false);
+        document.body.style.overflow = previousOverflow;
+        menuOpenBtn.focus({preventScroll:true});
+      }
     }
+    menuOpenBtn.addEventListener('click', () => setMenu(true));
+    document.getElementById('menuCloseBtn').addEventListener('click', () => setMenu(false));
+    menuOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    menuOverlay.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.preventDefault(); setMenu(false); }
+      if (e.key !== 'Tab') return;
+      const items = [...menuOverlay.querySelectorAll('button,a[href]')];
+      const first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
   }
-  menuOpenBtn.addEventListener('click', () => setMenu(true));
-  document.getElementById('menuCloseBtn').addEventListener('click', () => setMenu(false));
-  menuOverlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-  menuOverlay.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { e.preventDefault(); setMenu(false); }
-    if (e.key !== 'Tab') return;
-    const items = [...menuOverlay.querySelectorAll('button,a[href]')];
-    const first = items[0], last = items[items.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-  });
 
   // Contact intent only: opening an email client does not confirm an enquiry.
   document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
