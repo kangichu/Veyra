@@ -401,3 +401,43 @@ h1,h2,h3,h4{font-weight:inherit;}
 
 /* The contour field is contained by the hero and stays below its foreground. */
 .hero-contours{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+
+/* Product detail pages reuse the site's typography, colours and spacing. */
+.product-page #hero{height:auto;min-height:100vh;min-height:100svh;padding:clamp(190px,25vh,290px) 0 44px;justify-content:space-between;gap:64px;}
+.product-page #heroFoot{position:relative;inset:auto;margin:0 clamp(20px,5vw,40px);}
+.product-page #heroFoot .x43{max-width:580px;}
+.product-hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,6.8vw,104px);font-weight:600;letter-spacing:-.035em;line-height:1.04;max-width:20ch;}
+.product-hero-title span{color:var(--fog-dim);}
+.product-section{padding:clamp(64px,9vw,128px) clamp(20px,5vw,48px);border-top:1px solid var(--line);scroll-margin-top:80px;}
+.product-section-alt{background:var(--ink-2);}
+.product-section-inner{max-width:1180px;margin:0 auto;}
+.product-eyebrow,.product-number{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--signal);}
+.product-eyebrow{text-transform:uppercase;margin-bottom:24px;}
+.product-section h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4.6vw,64px);font-weight:600;line-height:1.06;letter-spacing:-.025em;}
+.product-lead{font-size:clamp(16px,1.5vw,19px);line-height:1.65;color:var(--fog);max-width:780px;margin-top:28px;}
+.product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-top:52px;}
+.product-grid-two{grid-template-columns:repeat(2,minmax(0,1fr));}
+.product-grid article{border-top:1px solid var(--line-strong);padding-top:24px;}
+.product-grid h3{font-family:'Space Grotesk',sans-serif;font-size:23px;font-weight:500;line-height:1.25;margin-bottom:16px;}
+.product-grid .product-number{display:block;margin-bottom:20px;}
+.product-grid p,.product-grid li,.product-note p{font-size:15px;color:var(--fog);line-height:1.7;}
+.product-grid ul{padding-left:20px;}
+.product-grid li+li{margin-top:10px;}
+.product-note{margin-top:44px;padding:24px 28px;border-left:2px solid var(--ember);background:var(--card-bg);}
+.product-note strong{font-weight:500;display:block;margin-bottom:10px;}
+.product-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:44px 0 0;padding:0;list-style:none;counter-reset:flow;}
+.product-flow li{counter-increment:flow;padding:20px;border:1px solid var(--line-strong);border-radius:8px;font-size:14px;line-height:1.5;}
+.product-flow li::before{content:'0' counter(flow) ' / ';display:block;font-family:'JetBrains Mono',monospace;color:var(--ember);font-size:11px;margin-bottom:12px;}
+.product-link{display:inline-flex;align-self:flex-start;border-bottom:1px solid var(--signal);color:var(--signal);font-size:15px;padding:12px 0;margin-top:22px;position:relative;z-index:2;}
+.product-link:hover{opacity:.7;}
+.product-faq-item{border-bottom:1px solid var(--line);}
+.product-faq-button{width:100%;background:none;border:none;color:var(--white);cursor:pointer;display:flex;align-items:center;gap:24px;padding:28px 0;text-align:left;transition:padding-left .2s;}
+.product-faq-button .product-number{width:32px;flex-shrink:0;color:var(--fog-dim);}
+.product-faq-question{flex:1;font-family:'Space Grotesk',sans-serif;font-size:clamp(19px,2.2vw,25px);font-weight:500;}
+.product-faq-button .faq-plus{font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--fog-dim);transition:transform .3s;}
+.product-faq-panel{overflow:hidden;transition:max-height .35s ease,opacity .3s;}
+.product-faq-panel p{font-size:15px;color:var(--fog);max-width:720px;line-height:1.6;padding:0 clamp(12px,4vw,20px) 28px clamp(30px,10vw,78px);}
+@media(max-width:760px){.product-grid,.product-grid-two{grid-template-columns:1fr;gap:32px;}.product-flow{grid-template-columns:repeat(2,minmax(0,1fr));}.product-page #hero{padding-top:160px;gap:64px;}.product-page #heroFoot{margin-bottom:0;}.product-note{padding:20px;}}
+
+/* Homepage CTA follows the company introduction without a full-screen spacer. */
+.home-product-cta{min-height:0;padding-top:clamp(48px,6vw,80px);padding-bottom:clamp(64px,7vw,96px);}

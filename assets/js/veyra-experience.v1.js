@@ -1,4 +1,11 @@
 (function(){
+  // Preserve previously shared homepage links after moving product sections.
+  const productHashes = ['#veyra','#who','#story','#veyra-arch','#eng','#capabilities','#future'];
+  if (!document.body.classList.contains('product-page') && productHashes.includes(location.hash)) {
+    const productPath = location.protocol === 'file:' ? 'veyra/index.html' : '/veyra/';
+    location.replace(productPath + location.hash);
+    return;
+  }
   const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
   const reducedMotion = () => motionPreference.matches;
   const staticMotion = () => document.documentElement.classList.contains('motion-static');
@@ -10,6 +17,7 @@
   const imgCss=(idx)=>`height:150px;background:repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) ${8+idx%3*2}px, rgba(255,255,255,0.02) ${8+idx%3*2}px, rgba(255,255,255,0.02) ${16+idx%3*4}px);background-color:#181818;position:relative;`;
   const filters=[{label:'Location',value:'Westlands'},{label:'Type',value:'Apartment'},{label:'Bedrooms',value:'3+'},{label:'Bathrooms',value:'2+'},{label:'Price',value:'Up to 20M'}];
 
+  function initProductDemo(){
   // ---- Scene 1: traditional site ----
   document.getElementById('s1Filters').innerHTML = filters.map(f=>`
     <div style="display:flex;align-items:center;gap:8px;padding:11px 16px;background:var(--charcoal-2);border:1px solid var(--line);border-radius:9px;font-size:13px;color:var(--fog);">
@@ -169,30 +177,25 @@
     setTimeout(type, 500);
   });
 
+    return onScroll;
+  }
+  const updateDemoScroll = document.getElementById('story') ? initProductDemo() : () => {};
+
   // ---- FAQ accordion ----
-  const faqs = [
-    {q:'Where does the data live?', a:'Customer property data is processed locally in the customer-controlled Veyra environment. Review external connections, support access and data handling for your deployment.'},
-    {q:'How is it deployed?', a:'Veyra is packaged for customer infrastructure. Deployment timelines depend on your environment, integration scope and security requirements.'},
-    {q:'Who operates it day to day?', a:'Your team controls the hosting environment. Agree operational responsibilities, available administration tools and support arrangements with Tandish for your deployment.'},
-    {q:'What about security and audit?', a:'Review available access controls, logging and update processes with your security team. Self-hosting gives you infrastructure control; it does not by itself establish compliance.'},
-    {q:'How do developers integrate?', a:'Veyra exposes search through an API for integration with websites and internal tools. Review supported endpoints, authentication and data formats during a technical walkthrough.'},
-    {q:'Why start with real estate?', a:'Real estate combines detailed listing data with specific discovery workflows and ownership requirements. Veyra is focused on those needs.'}
-  ];
   const faqList = document.getElementById('faqList');
-  faqList.innerHTML = faqs.map((f,i)=>`
-    <div style="border-bottom:1px solid var(--line);">
-      <button class="faq-btn" data-i="${i}" id="faq-question-${i}" aria-expanded="false" aria-controls="faq-answer-${i}" style="width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:24px;padding:28px 0;text-align:left;transition:padding-left .2s;">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--fog-dim);width:32px;flex-shrink:0;">${String(i+1).padStart(2,'0')}</span>
-        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(19px,2.2vw,25px);flex:1;">${f.q}</h3>
-        <span class="faq-plus" style="font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--fog-dim);transition:transform .3s;">+</span>
-      </button>
-      <div class="faq-panel" id="faq-answer-${i}" role="region" aria-labelledby="faq-question-${i}" aria-hidden="true" inert style="max-height:0px;opacity:0;overflow:hidden;transition:max-height .35s ease,opacity .3s;">
-        <p style="font-size:15px;color:var(--fog-dim);max-width:620px;line-height:1.6;padding:0 clamp(12px,4vw,20px) 28px clamp(30px,10vw,78px);">${f.a}</p>
-      </div>
-    </div>`).join('');
+  if (faqList) {
+  // Answers are readable in the HTML; JavaScript enhances them into an accordion.
+  faqList.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.setAttribute('aria-expanded', 'false');
+    const panel = document.getElementById(btn.getAttribute('aria-controls'));
+    panel.setAttribute('aria-hidden', 'true');
+    panel.inert = true;
+    panel.style.maxHeight = '0px';
+    panel.style.opacity = '0';
+  });
   faqList.querySelectorAll('.faq-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      const wrap = btn.parentElement;
+      const wrap = btn.closest('.product-faq-item') || btn.parentElement;
       const panel = wrap.querySelector('.faq-panel');
       const plus = wrap.querySelector('.faq-plus');
       const open = btn.getAttribute('aria-expanded') === 'true';
@@ -210,6 +213,8 @@
     if (panel.getAttribute('aria-hidden') === 'false') panel.style.maxHeight = panel.scrollHeight + 'px';
   }));
   faqList.querySelectorAll('.faq-panel p').forEach(p => faqResize.observe(p));
+
+  }
 
   // ---- Theme ----
   const themeBtn = document.getElementById('themeToggle');
@@ -276,8 +281,11 @@
   scrollTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:reducedMotion() ? 'auto' : 'smooth'}));
 
   // ---- Who words (build markup) ----
-  const whoWords = "Enterprise AI should work where your business already operates. Organizations should not have to surrender ownership of their infrastructure or operational data simply to adopt AI. Veyra exists because of that belief.".split(' ');
+  if (document.getElementById('whoText')) {
+  const whoWords = document.getElementById('whoText').textContent.trim().split(/\s+/);
   document.getElementById('whoText').innerHTML = whoWords.map(w=>`<span class="who-word" style="color:var(--fog-dim);transition:color .2s;">${w} </span>`).join('');
+
+  }
 
   // Pause decorative frames on small screens, hidden tabs and reduced motion.
   function motionLoop(callback, enabled){
@@ -426,10 +434,14 @@
     cursor.style.display = vw<=860 ? 'none':'block';
     document.getElementById('heroStatus').style.display = vw<=760 ? 'none':'flex';
     document.getElementById('heroStats').style.display = vw<=900 ? 'none':'flex';
-    document.getElementById('veyraFloat').style.display = vw<=900 ? 'none':'block';
-    document.getElementById('veyraBadge').style.display = vw<=900 ? 'none':'block';
-    document.getElementById('engDesktop').style.display = vw<=768 ? 'none':'block';
-    document.getElementById('engMobile').style.display = vw<=768 ? 'flex':'none';
+    const veyraFloat = document.getElementById('veyraFloat');
+    if (veyraFloat) veyraFloat.style.display = vw<=900 ? 'none':'block';
+    const veyraBadge = document.getElementById('veyraBadge');
+    if (veyraBadge) veyraBadge.style.display = vw<=900 ? 'none':'block';
+    const engDesktop = document.getElementById('engDesktop');
+    if (engDesktop) engDesktop.style.display = vw<=768 ? 'none':'block';
+    const engMobile = document.getElementById('engMobile');
+    if (engMobile) engMobile.style.display = vw<=768 ? 'flex':'none';
   }
   window.addEventListener('resize', applyResponsive);
   applyResponsive();
@@ -444,14 +456,20 @@
     ScrollTrigger.config({ ignoreMobileResize: true });
     if ('ontouchstart' in window) ScrollTrigger.normalizeScroll(true);
     gsap.from('#heroFoot', {opacity:0, duration:1, delay:.9});
+    if (document.getElementById('who')) {
     gsap.timeline({ scrollTrigger: { trigger:'#who', start:'top top', end:'+=120%', scrub:.4, pin:true, anticipatePin:1 } })
       .to('.who-word', { color: () => cssVar('--white'), stagger:.08 })
       .to('#whoPillars', { opacity: 1 }, 0.4);
+    }
+    if (document.getElementById('veyra')) {
     gsap.from('#veyraBig', {scale:1.25, opacity:0, duration:1.1, ease:'power3.out', scrollTrigger:{trigger:'#veyra', start:'top 70%'}});
     gsap.from('#veyraSub', {opacity:0, y:24, duration:.9, delay:.15, scrollTrigger:{trigger:'#veyra', start:'top 60%'}});
     gsap.to('#veyraFloat', {y:-50, scrollTrigger:{trigger:'#veyra', start:'top bottom', end:'bottom top', scrub:1}});
 
+    }
+
     const archTrack = document.getElementById('archTrack');
+    if (archTrack) {
     const archPanels = gsap.utils.toArray('.arch-panel');
     const archFill = document.getElementById('archFill');
     const totalPanels = archPanels.length;
@@ -469,6 +487,8 @@
         }
       }
     });
+
+    }
 
     const engSteps = [
       {t:'Embeddings', d:'Listings → vectors'},{t:'Vector Search', d:'Similar listings'},
@@ -512,15 +532,15 @@
   function updateMotion(){
     if (animationContext) { animationContext.revert(); animationContext = null; }
     if (window.ScrollTrigger) ScrollTrigger.normalizeScroll(false);
-    document.getElementById('engNodes').replaceChildren();
+    document.getElementById('engNodes')?.replaceChildren();
     document.documentElement.classList.add('motion-static');
     heroContent.style.transform = '';
     if (!reducedMotion() && window.gsap && window.ScrollTrigger) {
       document.documentElement.classList.remove('motion-static');
       animationContext = gsap.context(initGsap);
     }
-    if (reducedMotion()) document.getElementById('typedText').textContent = "I'm looking for a modern three-bedroom apartment in Westlands under KES 18M near international schools.";
-    onScroll();
+    if (reducedMotion() && document.getElementById('typedText')) document.getElementById('typedText').textContent = "I'm looking for a modern three-bedroom apartment in Westlands under KES 18M near international schools.";
+    updateDemoScroll();
   }
   motionPreference.addEventListener('change', updateMotion);
   updateMotion();
