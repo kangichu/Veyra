@@ -1,4 +1,14 @@
 (function(){
+  // Keep published links canonical; adapt only direct-from-disk previews.
+  if (location.protocol === 'file:') {
+    const root = new URL(document.body.classList.contains('product-page') ? '../' : './', location.href);
+    document.querySelectorAll('a[href^="/"]').forEach(link => {
+      const target = new URL(link.getAttribute('href'), 'https://tandish.com');
+      if (target.pathname === '/' || target.pathname === '/veyra/') {
+        link.href = new URL(target.pathname.slice(1) + 'index.html' + target.search + target.hash, root).href;
+      }
+    });
+  }
   // Preserve previously shared homepage links after moving product sections.
   const productHashes = ['#veyra','#who','#story','#veyra-arch','#eng','#capabilities','#future'];
   if (!document.body.classList.contains('product-page') && productHashes.includes(location.hash)) {
