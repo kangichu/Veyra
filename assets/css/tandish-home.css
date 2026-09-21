@@ -27,7 +27,7 @@
   .home-approach-content{gap:24px;}
   .home-company-grid,.home-portfolio{grid-template-columns:minmax(0,1fr);}
   .home-portfolio{gap:0;margin-top:32px;}
-  .tandish-home #hero{height:auto;min-height:100vh;min-height:100dvh;padding:140px 0 max(28px,env(safe-area-inset-bottom));gap:40px;justify-content:flex-start;}
+  .tandish-home #hero{height:auto;min-height:100vh;min-height:100lvh;padding:140px 0 max(28px,env(safe-area-inset-bottom));padding-bottom:calc(max(28px,env(safe-area-inset-bottom)) + 100lvh - 100dvh);gap:40px;justify-content:flex-start;}
   .tandish-home #heroContent{margin-block:auto;}
   .tandish-home #heroFoot{position:relative;left:auto;right:auto;bottom:auto;margin:0 20px;flex-shrink:0;display:grid;grid-template-columns:minmax(0,1fr) 42px;gap:20px;align-items:end;}
   .tandish-home #heroFoot .x43{max-width:none;}
