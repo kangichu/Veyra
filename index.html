@@ -51,7 +51,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <link rel="stylesheet" href="assets/css/veyra-experience.v1.css?v=20">
-<link rel="stylesheet" href="assets/css/tandish-home.css?v=8">
+<link rel="stylesheet" href="assets/css/tandish-home.css?v=11">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -166,7 +166,7 @@
       <h2 id="productsTitle" class="company-title">What we're building.</h2>
       <div class="home-portfolio">
         <article class="home-product home-product-veyra" aria-labelledby="homeVeyraTitle">
-          <p class="home-product-category">01 / Real-estate intelligence</p>
+          <p class="home-product-category"><span class="home-product-number">01</span> Real-estate intelligence</p>
           <h3 id="homeVeyraTitle">Veyra</h3>
           <p class="home-body">Self-hosted intelligence for real-estate organizations, designed to make property discovery, search and recommendations more natural while keeping the intelligence environment under customer control.</p>
           <a href="/veyra/" class="home-product-link">Explore Veyra <span aria-hidden="true">&#8599;</span></a>
@@ -175,8 +175,12 @@
           <div class="home-approach-content">
             <h3 id="approachTitle" class="home-kicker">How we build</h3>
             <div>
-              <p class="home-approach-statement">We start with the problem, understand the people and systems around it, then build a focused product for that context.</p>
-              <p class="home-body home-approach-note">The technology can change.<br>The reason for the product should not.</p>
+              <ol class="home-build-steps">
+                <li><span class="home-step-number" aria-hidden="true">01</span><div><h4>Start with the problem.</h4><p>Find the specific problem worth solving.</p></div></li>
+                <li><span class="home-step-number" aria-hidden="true">02</span><div><h4>Understand the context.</h4><p>The people, workflows and systems around it.</p></div></li>
+                <li><span class="home-step-number" aria-hidden="true">03</span><div><h4>Build with focus.</h4><p>A product designed for that context.</p></div></li>
+              </ol>
+              <p class="home-body home-approach-note">The technology can change.<br><strong>The reason for the product should not.</strong></p>
             </div>
           </div>
         </section>

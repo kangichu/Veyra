@@ -8,17 +8,16 @@
 .home-company-grid > .home-body{padding-top:6px;}
 .home-products{background:var(--ink-2);}
 .home-portfolio{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);margin-top:40px;border:1px solid var(--line-strong);border-radius:16px;overflow:hidden;}
-.home-product{display:flex;flex-direction:column;align-items:flex-start;padding:clamp(28px,4vw,56px);background:var(--ink);position:relative;}
-.home-product::before{content:'';position:absolute;top:0;left:clamp(28px,4vw,56px);width:48px;height:3px;background:var(--signal);}
+.home-product{display:flex;flex-direction:column;align-items:flex-start;padding:clamp(28px,4vw,56px);background:transparent;position:relative;}
 .home-product-category,.home-kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--signal);line-height:1.6;}
-.home-product h3{font-family:'Space Grotesk',sans-serif;font-size:clamp(56px,6.5vw,88px);font-weight:600;letter-spacing:-.04em;line-height:1;margin:32px 0 24px;}
+.home-product h3{font-family:'Space Grotesk',sans-serif;font-size:clamp(56px,6.5vw,88px);font-weight:600;letter-spacing:-.04em;line-height:1;margin:28px 0 20px;}
 .home-product .home-body{margin-bottom:32px;max-width:520px;}
 .home-product-link{display:inline-flex;gap:32px;align-items:center;margin-top:auto;padding:14px 20px;font-size:14px;font-weight:500;color:var(--ink);background:var(--white);border-radius:100px;transition:background .2s,color .2s;}
 .home-product-link:hover{background:var(--signal);color:#fff;}
 .tandish-home #approach{padding:clamp(28px,4vw,56px);border-left:1px solid var(--line-strong);scroll-margin-top:80px;}
-.home-approach-content{height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:36px;}
+.home-approach-content{height:100%;display:flex;flex-direction:column;justify-content:flex-start;gap:28px;}
 .home-kicker{color:var(--fog);}
-.home-approach-statement{font-family:'Space Grotesk',sans-serif;font-size:clamp(23px,2.1vw,30px);line-height:1.35;letter-spacing:-.02em;}
+
 .home-approach-note{margin-top:28px;padding-top:24px;border-top:1px solid var(--line);font-size:14px;}
 .tandish-home #contact{border-top:1px solid var(--line);scroll-margin-top:80px;}
 .home-contact-button:hover{background:var(--signal);border-color:var(--signal);color:var(--white);transform:translateY(-2px);}
@@ -40,3 +39,16 @@
 
 .tandish-home .home-hero-title .x35{margin-right:clamp(8px,1.3vw,18px);}
 
+
+/* Product identity and a compact, readable company process. */
+.home-product-category{display:flex;align-items:center;gap:12px;}
+.home-product-number{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;flex-shrink:0;border:1px solid var(--line-strong);border-radius:8px;letter-spacing:0;}
+.home-build-steps{list-style:none;display:grid;gap:24px;}
+.home-build-steps li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:14px;align-items:start;}
+.home-step-number{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--signal);line-height:28px;}
+.home-build-steps h4{font-family:'Space Grotesk',sans-serif;font-size:clamp(19px,1.7vw,23px);font-weight:500;letter-spacing:-.02em;line-height:1.25;}
+.home-build-steps p{font-size:14px;line-height:1.6;color:var(--fog);margin-top:6px;}
+.home-approach-note strong{font-weight:500;color:var(--white);}
+.home-product-link span{transition:transform .2s;}
+.home-product-link:hover span{transform:translate(2px,-2px);}
+@media(prefers-reduced-motion:reduce){.home-product-link span{transition:none;}.home-product-link:hover span{transform:none;}}
