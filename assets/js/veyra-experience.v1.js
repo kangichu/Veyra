@@ -341,9 +341,28 @@
     let width = 0, height = 0, ratio = 1, frame = null, lastTime = 0, elapsed = 0;
     let visible = true, pointerX = 0, pointerY = 0, offsetX = 0, offsetY = 0;
     let signal, ember, dark;
+    let ribbonGradients = [], highlightGradients = [];
+    function cacheContourGradients(){
+      contourContext.setTransform(ratio,0,0,ratio,0,0);
+      ribbonGradients = []; highlightGradients = [];
+      for (let ribbon = 0; ribbon < 2; ribbon++) {
+        const lower = ribbon === 1;
+        const color = contourContext.createLinearGradient(0,0,width,0);
+        color.addColorStop(0,'transparent');
+        color.addColorStop(.45,lower ? ember : signal);
+        color.addColorStop(1,signal);
+        ribbonGradients.push(color);
+        const highlight = contourContext.createLinearGradient(0,0,width,0);
+        highlight.addColorStop(0,'transparent');
+        highlight.addColorStop(.35,lower ? signal : ember);
+        highlight.addColorStop(1,'transparent');
+        highlightGradients.push(highlight);
+      }
+    }
     function contourColors(){
       signal = cssVar('--signal'); ember = cssVar('--ember');
       dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      cacheContourGradients();
     }
     function paintContours(time){
       const ctx = contourContext;
@@ -354,11 +373,7 @@
       // The quieter centre band leaves the existing headline unobstructed.
       for (let ribbon=0;ribbon<2;ribbon++) {
         const lower = ribbon === 1;
-        const color = ctx.createLinearGradient(0,0,width,0);
-        color.addColorStop(0,'transparent');
-        color.addColorStop(.45,lower ? ember : signal);
-        color.addColorStop(1,signal);
-        ctx.strokeStyle = color;
+        ctx.strokeStyle = ribbonGradients[ribbon];
         for(let i=0;i<count;i++) {
           const n = i/(count-1), spread = (n-.5);
           const wave = Math.sin(time*.28 + n*1.8);
@@ -379,11 +394,7 @@
         // A restrained highlight travels along a few contours, suggesting flow.
         if (!reducedMotion()) {
           ctx.globalAlpha = dark ? .34 : .22;
-          const highlight = ctx.createLinearGradient(0,0,width,0);
-          highlight.addColorStop(0,'transparent');
-          highlight.addColorStop(.35,lower ? signal : ember);
-          highlight.addColorStop(1,'transparent');
-          ctx.strokeStyle = highlight;
+          ctx.strokeStyle = highlightGradients[ribbon];
           ctx.lineWidth = 1.3;
           ctx.setLineDash([width*.055,width*1.8]);
           ctx.lineDashOffset = -((time*28) % (width*1.855));
@@ -412,9 +423,13 @@
       else if (visible && !document.hidden) { paintContours(elapsed); frame = requestAnimationFrame(tickContours); }
     }
     function resizeContours(){
-      width = hero.clientWidth; height = hero.clientHeight;
+      const nextWidth = hero.clientWidth, nextHeight = hero.clientHeight;
+      const nextRatio = Math.min(devicePixelRatio || 1,1.5);
+      if (width === nextWidth && height === nextHeight && ratio === nextRatio) return;
+      width = nextWidth; height = nextHeight;
       ratio = Math.min(devicePixelRatio || 1,1.5);
       contourCanvas.width = Math.round(width*ratio); contourCanvas.height = Math.round(height*ratio);
+      cacheContourGradients();
       syncContours();
     }
     hero.addEventListener('pointermove', e => {

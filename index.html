@@ -12,6 +12,11 @@
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  try {
+    if (localStorage.getItem('veyra-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  } catch (_) {}
+</script>
 <title>Tandish Group | Focused Software Products for Real Problems</title>
 <meta name="description" content="Tandish builds focused software products around real-world problems. Explore Veyra, our self-hosted real-estate intelligence product.">
 <meta name="author" content="Tandish Group">
@@ -45,12 +50,13 @@
 <meta name="twitter:image" content="https://tandish.com/assets/images/tandish-og.png?v=2">
 <meta name="twitter:image:alt" content="Tandish Group. Built around the problem, not the trend. Focused software products for real-world problems.">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<link rel="stylesheet" href="assets/css/veyra-experience.v1.css?v=20">
+<link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/fonts.css?v=1">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<link rel="stylesheet" href="assets/css/veyra-experience.v1.css?v=21">
 <link rel="stylesheet" href="assets/css/tandish-home.css?v=17">
 <script type="application/ld+json">
 {
@@ -246,7 +252,7 @@
   <div class="x253">© 2026 Tandish Group</div>
 </footer>
 
-<script src="assets/js/veyra-experience.v1.js?v=21"></script>
-<script src="assets/js/tandish-products.js?v=1"></script>
+<script defer src="assets/js/veyra-experience.v1.js?v=22"></script>
+<script defer src="assets/js/tandish-products.js?v=1"></script>
 </body>
 </html>
