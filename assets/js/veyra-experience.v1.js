@@ -233,8 +233,8 @@
     themeBtn.textContent = t === 'dark' ? 'LIGHT' : 'DARK';
     try { localStorage.setItem('veyra-theme', t); } catch (_) { /* Storage may be unavailable. */ }
   }
-  let savedTheme = 'light';
-  try { savedTheme = localStorage.getItem('veyra-theme') || 'light'; } catch (_) {}
+  let savedTheme = 'dark';
+  try { savedTheme = localStorage.getItem('veyra-theme') || 'dark'; } catch (_) {}
   applyTheme(savedTheme);
   themeBtn.addEventListener('click', ()=> applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 
