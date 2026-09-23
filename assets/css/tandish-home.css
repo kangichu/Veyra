@@ -71,3 +71,5 @@
 .home-story-outcome .home-body{max-width:620px;}
 .home-story-outcome .product-slider-controls{margin:0 0 4px;}
 @media(max-width:900px){.home-story-steps{grid-template-columns:minmax(0,1fr);}.home-story-outcome .home-product{display:flex;}.home-story-outcome{grid-template-columns:minmax(0,1fr);}.home-story-outcome .product-slider-controls{margin-top:0;}}
+
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth;}}
