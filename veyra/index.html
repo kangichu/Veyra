@@ -57,7 +57,7 @@
 <link rel="stylesheet" href="../assets/css/fonts.css?v=3">
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<link rel="stylesheet" href="../assets/css/veyra-experience.v1.css?v=22">
+<link rel="stylesheet" href="../assets/css/veyra-experience.v1.css?v=23">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -67,12 +67,18 @@
   "alternateName": "Tandish",
   "url": "https://tandish.com/",
   "email": "hello@tandish.com",
-  "description": "Tandish builds focused software products for complex industries. Veyra is its self-hosted real estate intelligence product.",
+  "description": "Tandish builds focused software products around real-world problems, designed for the way people and businesses actually work.",
   "sameAs": [
     "https://x.com/tandish",
     "https://www.facebook.com/tandishgroup/",
     "https://www.linkedin.com/company/tandish/"
-  ]
+  ],
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://tandish.com/assets/icons/icon-512.png",
+    "width": 512,
+    "height": 512
+  }
 }
 </script>
 <script type="application/ld+json">
@@ -145,7 +151,7 @@
       "name": "How does our application integrate?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Your application backend calls the local Veyra /v1 API using Veyra Project/API-key mechanisms. Search and recommendations are public V1 product surfaces; price intelligence is available where configured and licensed. Projects, resource bindings and local configuration belong to Veyra."
+        "text": "Your application backend connects to the local Veyra /v1 API using project API keys. It can request search results and recommendations, plus price intelligence where configured and licensed. Veyra manages the project resources and local configuration."
       }
     },
     {
@@ -153,7 +159,7 @@
       "name": "What is the current product status?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Veyra is functional and in active development and hardening before broader production rollout. Search quality and query coverage continue to be refined. Core query parsing is rule and gazetteer based; it does not depend on an external LLM."
+        "text": "Veyra is functional and in active development, with reliability, search quality and query coverage being refined before broader production rollout. Core query parsing uses rules and location dictionaries; it does not depend on an external LLM."
       }
     },
     {
@@ -208,6 +214,7 @@
   <button id="themeToggle" aria-label="Toggle light and dark theme" class="x254">LIGHT</button>
   <a href="/#tandish" class="menu-link x15">Tandish</a>
   <a href="#audience" class="menu-link x16">Overview</a>
+  <a href="#walkthrough" class="menu-link x16">Request a walkthrough</a>
   <a href="#story" class="menu-link x16">Demo</a>
   <a href="#veyra-arch" class="menu-link x16">Architecture</a>
   <a href="#deployment" class="menu-link x16">Deployment</a>
@@ -245,8 +252,14 @@
       <p class="product-lead">Veyra is built for real-estate companies, agencies, developers and institutional property operators with property data and digital systems already in place.</p>
       <div class="product-grid">
         <article><span class="product-number">01 / Your data</span><h3>A meaningful property dataset.</h3><p>Bring intelligence to the listings your organization already maintains. Your source data stays authoritative.</p></article>
-        <article><span class="product-number">02 / Your experience</span><h3>Your website. Your application.</h3><p>Integrate search and recommendations into the websites, portals and internal systems your team already operates.</p></article>
+        <article><span class="product-number">02 / Your experience</span><h3>Your website. Your application.</h3><p>Add natural-language property search, retrieval and recommendations to the websites, portals and internal systems your team already operates.</p></article>
         <article><span class="product-number">03 / Your infrastructure</span><h3>Control where intelligence runs.</h3><p>Deploy into your own environment, with hosting, networking and storage under your team's control.</p></article>
+      </div>
+      <div class="product-note buyer-summary">
+        <strong>Self-hosted. Functional today. In active development.</strong>
+        <p>Veyra runs in infrastructure your organization controls. It is being refined before broader production rollout.</p>
+        <p>A walkthrough is a discussion of your property workflow, data and existing systems, followed by integration and deployment requirements and next steps if there is a fit.</p>
+        <a href="#walkthrough" class="buyer-walkthrough-link">Request a walkthrough <span aria-hidden="true">&#8594;</span></a>
       </div>
     </div>
   </section>
@@ -625,7 +638,7 @@
       <ol class="product-flow" aria-label="Integration flow"><li>Your website or app</li><li>Your backend</li><li>Local Veyra API</li><li>Property results</li></ol>
       <div class="product-grid product-grid-two">
         <article><h3>Project-scoped resources</h3><p>Projects, API keys, datasets, index bindings and local product configuration belong to Veyra. Search and recommendations use the relevant project resources.</p></article>
-        <article><h3>Bring your listing data</h3><p>The V1 ingestion direction supports REST, JSON and CSV. Discuss your data structure and update workflow during a walkthrough; a generic direct database connector is not currently available.</p></article>
+        <article><h3>Bring your listing data</h3><p>The V1 data-import approach is based on REST, JSON and CSV. Discuss your data structure and update workflow during a walkthrough; a generic direct database connector is not currently available.</p></article>
       </div>
     </div>
   </section>
@@ -635,8 +648,8 @@
       <h2>Functional today.<br>Continuing to improve.</h2>
       <p class="product-lead">Natural-language querying, semantic and structured retrieval, result ranking and diversification, and property recommendations are implemented. Search quality and query coverage continue to be refined.</p>
       <div class="product-grid product-grid-two">
-        <article><h3>Price intelligence</h3><p>Price-model and price-intelligence capability are part of the supported V1 API surface where licensed and configured. Discuss availability for your deployment.</p></article>
-        <article><h3>A focused product scope</h3><p>Veyra enhances property discovery in existing systems. Public conversational AI, generic enterprise document intelligence and arbitrary workflow automation are not current verified product offerings.</p></article>
+        <article><h3>Price intelligence</h3><p>Price intelligence is available through the V1 API where licensed and configured. Discuss availability for your deployment.</p></article>
+        <article><h3>A focused product scope</h3><p>Veyra focuses on property search, retrieval and recommendations within existing systems. General-purpose chat, enterprise document analysis and workflow automation are outside its current scope.</p></article>
       </div>
     </div>
   </section>
@@ -646,8 +659,8 @@
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-0" aria-expanded="true" aria-controls="faq-answer-0"><span class="product-number">01</span><span class="product-faq-question">Where does property data live?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-0" role="region" aria-labelledby="faq-question-0" aria-hidden="false" style="max-height:none;opacity:1;"><p>Customer property data and local intelligence are processed in the customer-controlled Veyra environment. Your source data remains authoritative; Veyra maintains its own local representations and indexes. Review access, external connections and operational arrangements for your deployment.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-1" aria-expanded="true" aria-controls="faq-answer-1"><span class="product-number">02</span><span class="product-faq-question">Is Veyra fully air-gapped?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" aria-hidden="false" style="max-height:none;opacity:1;"><p>No. Periodic communication with the Tandish control plane is part of commercial licensing and rights validation. An offline grace mechanism exists, but Veyra is not designed for permanent disconnection. Supported local models run locally after acquisition.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-2" aria-expanded="true" aria-controls="faq-answer-2"><span class="product-number">03</span><span class="product-faq-question">How is Veyra deployed?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra uses a containerized customer deployment with Docker. V1 assumes one active engine-platform replica per installation. Your team configures TLS and controls hosting, networking and storage; logs use the customer or container environment.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-3" aria-expanded="true" aria-controls="faq-answer-3"><span class="product-number">04</span><span class="product-faq-question">How does our application integrate?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="false" style="max-height:none;opacity:1;"><p>Your application backend calls the local Veyra /v1 API using Veyra Project/API-key mechanisms. Search and recommendations are public V1 product surfaces; price intelligence is available where configured and licensed. Projects, resource bindings and local configuration belong to Veyra.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-4" aria-expanded="true" aria-controls="faq-answer-4"><span class="product-number">05</span><span class="product-faq-question">What is the current product status?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra is functional and in active development and hardening before broader production rollout. Search quality and query coverage continue to be refined. Core query parsing is rule and gazetteer based; it does not depend on an external LLM.</p></div></div>
+      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-3" aria-expanded="true" aria-controls="faq-answer-3"><span class="product-number">04</span><span class="product-faq-question">How does our application integrate?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="false" style="max-height:none;opacity:1;"><p>Your application backend connects to the local Veyra /v1 API using project API keys. It can request search results and recommendations, plus price intelligence where configured and licensed. Veyra manages the project resources and local configuration.</p></div></div>
+      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-4" aria-expanded="true" aria-controls="faq-answer-4"><span class="product-number">05</span><span class="product-faq-question">What is the current product status?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra is functional and in active development, with reliability, search quality and query coverage being refined before broader production rollout. Core query parsing uses rules and location dictionaries; it does not depend on an external LLM.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-5" aria-expanded="true" aria-controls="faq-answer-5"><span class="product-number">06</span><span class="product-faq-question">Who handles operation and support?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-5" role="region" aria-labelledby="faq-question-5" aria-hidden="false" style="max-height:none;opacity:1;"><p>Your team retains control of its infrastructure. Deployment requirements and operational responsibilities are discussed with Tandish for your environment. Tandish controls licensed releases and update authority; no public support SLA or fixed deployment timeline is currently defined.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-6" aria-expanded="true" aria-controls="faq-answer-6"><span class="product-number">07</span><span class="product-faq-question">What happens after a walkthrough request?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-6" role="region" aria-labelledby="faq-question-6" aria-hidden="false" style="max-height:none;opacity:1;"><p>Tandish can discuss your property workflow, data, existing systems, desired discovery experience, integration approach and deployment environment. Security and operational requirements help establish appropriate next steps if there is a fit.</p></div></div>
     </div>
