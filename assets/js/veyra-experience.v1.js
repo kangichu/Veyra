@@ -337,6 +337,7 @@
   const hero = document.getElementById('hero');
   const contourCanvas = document.getElementById('heroContours');
   const contourContext = contourCanvas.getContext('2d');
+  const scrollContours = document.body.classList.contains('tandish-home');
   if (contourContext) {
     let width = 0, height = 0, ratio = 1, frame = null, lastTime = 0, elapsed = 0;
     let visible = true, pointerX = 0, pointerY = 0, offsetX = 0, offsetY = 0;
@@ -365,6 +366,10 @@
       cacheContourGradients();
     }
     function paintContours(time){
+      // Let the homepage ribbons respond to scrolling within the hero.
+      const scroll = scrollContours && !reducedMotion()
+        ? clamp((window.scrollY - hero.offsetTop) / Math.max(height, 1), 0, 1) : 0;
+      time += scroll * 1.5;
       const ctx = contourContext;
       ctx.setTransform(ratio,0,0,ratio,0,0);
       ctx.clearRect(0,0,width,height);
@@ -378,7 +383,7 @@
           const n = i/(count-1), spread = (n-.5);
           const wave = Math.sin(time*.28 + n*1.8);
           const drift = Math.cos(time*.2 + n*1.2);
-          const base = height*(lower ? .77 : .15);
+          const base = height*(lower ? .77 : .15) + scroll*height*(lower ? -.025 : .025);
           const band = height*(lower ? .075 : .14);
           ctx.globalAlpha = (dark ? .38 : .24) * (lower ? .7 : 1) * (.45+.55*Math.sin(n*Math.PI));
           ctx.lineWidth = i%6===0 ? 1.2 : .65;
@@ -575,28 +580,30 @@
   // Reading progress follows actual page length, including GSAP pin spacers.
   // Direct updates also work with reduced motion, without easing or decorative motion.
   const readingProgress = document.getElementById('readingProgress');
-  let progressFrame = null;
-  let scrollableHeight = 0;
-  function drawReadingProgress(){
-    progressFrame = null;
-    const progress = scrollableHeight > 0 ? clamp(scrollY / scrollableHeight, 0, 1) : 0;
-    readingProgress.style.setProperty('--reading-progress', String(progress));
+  if (readingProgress) {
+    let progressFrame = null;
+    let scrollableHeight = 0;
+    function drawReadingProgress(){
+      progressFrame = null;
+      const progress = scrollableHeight > 0 ? clamp(scrollY / scrollableHeight, 0, 1) : 0;
+      readingProgress.style.setProperty('--reading-progress', String(progress));
+    }
+    function requestProgressDraw(){
+      if (progressFrame === null && !document.hidden) progressFrame = requestAnimationFrame(drawReadingProgress);
+    }
+    function measureReadingProgress(){
+      scrollableHeight = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+      requestProgressDraw();
+    }
+    window.addEventListener('scroll', requestProgressDraw, {passive:true});
+    window.addEventListener('resize', measureReadingProgress);
+    window.addEventListener('load', measureReadingProgress, {once:true});
+    document.addEventListener('visibilitychange', measureReadingProgress);
+    motionPreference.addEventListener('change', measureReadingProgress);
+    new ResizeObserver(measureReadingProgress).observe(document.body);
+    if (window.ScrollTrigger) ScrollTrigger.addEventListener('refresh', measureReadingProgress);
+    measureReadingProgress();
   }
-  function requestProgressDraw(){
-    if (progressFrame === null && !document.hidden) progressFrame = requestAnimationFrame(drawReadingProgress);
-  }
-  function measureReadingProgress(){
-    scrollableHeight = Math.max(0, document.documentElement.scrollHeight - innerHeight);
-    requestProgressDraw();
-  }
-  window.addEventListener('scroll', requestProgressDraw, {passive:true});
-  window.addEventListener('resize', measureReadingProgress);
-  window.addEventListener('load', measureReadingProgress, {once:true});
-  document.addEventListener('visibilitychange', measureReadingProgress);
-  motionPreference.addEventListener('change', measureReadingProgress);
-  new ResizeObserver(measureReadingProgress).observe(document.body);
-  if (window.ScrollTrigger) ScrollTrigger.addEventListener('refresh', measureReadingProgress);
-  measureReadingProgress();
 
   // ---- TEMP diagnostic overlay for the mobile pin/sticky bleed-through bug ----
   // Visit with ?debug=1. Remove once diagnosed — not meant to ship long-term.
