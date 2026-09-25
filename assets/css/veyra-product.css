@@ -48,3 +48,12 @@
 @media(max-width:760px){.product-page > .x5{background:var(--ink);}.product-page #hero{min-height:auto;padding-top:144px;gap:48px;}.product-page .hero-summary{margin-top:24px;}.product-page #heroFoot{gap:24px;}.demo-step{grid-template-columns:minmax(0,1fr);gap:24px;padding:28px 0;}.demo-step-heading p{max-width:36ch;}.demo-request{padding:24px;}.demo-footer{align-items:flex-start;flex-direction:column;gap:12px;}}
 @media(max-width:480px){.demo-results{grid-template-columns:minmax(0,1fr);}.hero-actions{align-items:flex-start;flex-direction:column;gap:10px;}.demo-examples > span{flex-basis:100%;margin-bottom:4px;}}
 @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth;}}
+
+/* Make integration requirements easy to scan without crowding the buyer overview. */
+.integration-details{margin-top:36px;border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);}
+.integration-details summary{padding:20px 0;cursor:pointer;font-size:15px;color:var(--white);line-height:1.5;}
+.integration-details > div{padding:0 0 24px;max-width:780px;}
+.integration-details p{font-size:14px;color:var(--fog);line-height:1.75;}
+.integration-details p + p{margin-top:12px;}
+
+@media(max-width:760px){.product-page #heroFoot{display:grid;grid-template-columns:minmax(0,1fr) auto;}.product-page #heroStats{display:none;}}

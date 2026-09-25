@@ -10,15 +10,23 @@
     });
   }
   // Preserve previously shared homepage links after moving product sections.
+  const legacySections = {'#who':'#audience','#veyra':'#hero','#veyra-arch':'#deployment','#eng':'#integration','#capabilities':'#integration'};
   const productHashes = ['#veyra','#who','#story','#veyra-arch','#eng','#capabilities','#future'];
   if (!document.body.classList.contains('product-page') && productHashes.includes(location.hash)) {
     const productPath = location.protocol === 'file:' ? 'veyra/index.html' : '/veyra/';
-    location.replace(productPath + location.hash);
+    location.replace(productPath + (legacySections[location.hash] || location.hash));
     return;
+  }
+  // Keep old Veyra section links useful after consolidating the page.
+  if (document.body.classList.contains('product-page')) {
+    const resolveLegacySection = () => {
+      if (legacySections[location.hash]) location.replace(legacySections[location.hash]);
+    };
+    window.addEventListener('hashchange', resolveLegacySection);
+    resolveLegacySection();
   }
   const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
   const reducedMotion = () => motionPreference.matches;
-  const staticMotion = () => document.documentElement.classList.contains('motion-static');
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   // ---- FAQ accordion ----
   const faqList = document.getElementById('faqList');
@@ -112,7 +120,7 @@
     });
   });
 
-  // ---- Scroll-to-top + who-words scrub trigger point ----
+  // ---- Scroll-to-top ----
   const scrollTopBtn = document.getElementById('scrollTop');
   window.addEventListener('scroll', ()=>{
     const show = window.scrollY > 600;
@@ -120,13 +128,6 @@
     scrollTopBtn.style.pointerEvents = show ? 'auto' : 'none';
   }, {passive:true});
   scrollTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:reducedMotion() ? 'auto' : 'smooth'}));
-
-  // ---- Who words (build markup) ----
-  if (document.getElementById('whoText')) {
-  const whoWords = document.getElementById('whoText').textContent.trim().split(/\s+/);
-  document.getElementById('whoText').innerHTML = whoWords.map(w=>`<span class="who-word" style="color:var(--fog-dim);transition:color .2s;">${w} </span>`).join('');
-
-  }
 
   // Pause decorative frames on small screens, hidden tabs and reduced motion.
   function motionLoop(callback, enabled){
@@ -295,181 +296,10 @@
     cursor.style.display = vw<=860 ? 'none':'block';
     document.getElementById('heroStatus').style.display = vw<=760 ? 'none':'flex';
     document.getElementById('heroStats').style.display = vw<=900 ? 'none':'flex';
-    const veyraFloat = document.getElementById('veyraFloat');
-    if (veyraFloat) veyraFloat.style.display = vw<=900 ? 'none':'block';
-    const veyraBadge = document.getElementById('veyraBadge');
-    if (veyraBadge) veyraBadge.style.display = vw<=900 ? 'none':'block';
-    const engDesktop = document.getElementById('engDesktop');
-    if (engDesktop) engDesktop.style.display = vw<=768 ? 'none':'block';
-    const engMobile = document.getElementById('engMobile');
-    if (engMobile) engMobile.style.display = vw<=768 ? 'flex':'none';
+
   }
   window.addEventListener('resize', applyResponsive);
   applyResponsive();
 
-  // ---- GSAP scroll-driven pieces (progressive enhancement) ----
-  function initGsap(){
-
-    gsap.registerPlugin(ScrollTrigger);
-    // Mobile browsers fire resize events as the address bar shows/hides mid-scroll;
-    // without this, ScrollTrigger re-measures pin spacers mid-gesture, which is what
-    // makes pinned sections jump/pull neighboring sections around on mobile.
-    ScrollTrigger.config({ ignoreMobileResize: true });
-    if ('ontouchstart' in window) ScrollTrigger.normalizeScroll(true);
-    gsap.from('#heroFoot', {opacity:0, duration:1, delay:.9});
-    if (document.getElementById('who')) {
-    gsap.timeline({ scrollTrigger: { trigger:'#who', start:'top top', end:'+=120%', scrub:.4, pin:true, anticipatePin:1 } })
-      .to('.who-word', { color: () => cssVar('--white'), stagger:.08 })
-      .to('#whoPillars', { opacity: 1 }, 0.4);
-    }
-    if (document.getElementById('veyra')) {
-    gsap.from('#veyraBig', {scale:1.25, opacity:0, duration:1.1, ease:'power3.out', scrollTrigger:{trigger:'#veyra', start:'top 70%'}});
-    gsap.from('#veyraSub', {opacity:0, y:24, duration:.9, delay:.15, scrollTrigger:{trigger:'#veyra', start:'top 60%'}});
-    gsap.to('#veyraFloat', {y:-50, scrollTrigger:{trigger:'#veyra', start:'top bottom', end:'bottom top', scrub:1}});
-
-    }
-
-    const archTrack = document.getElementById('archTrack');
-    if (archTrack) {
-    const archPanels = gsap.utils.toArray('.arch-panel');
-    const archFill = document.getElementById('archFill');
-    const totalPanels = archPanels.length;
-    gsap.to(archPanels, {
-      xPercent: -100*(totalPanels-1), ease:'none',
-      scrollTrigger: { trigger:'#veyra-arch', pin:true, scrub:1, snap:1/(totalPanels-1), anticipatePin:1,
-        end: () => '+=' + (archTrack.scrollWidth - window.innerWidth), invalidateOnRefresh:true,
-        onUpdate: (self)=>{
-          archFill.style.width = (self.progress*100)+'%';
-          const idx = Math.round(self.progress*(totalPanels-1));
-          document.querySelectorAll('#archDots span').forEach((d,i)=>{
-            d.style.background = i===idx ? cssVar('--signal') : cssVar('--line-strong');
-            d.style.transform = i===idx ? 'scale(1.5)' : 'scale(1)';
-          });
-        }
-      }
-    });
-
-    }
-
-    const engSteps = [
-      {t:'Embeddings', d:'Listings → vectors'},{t:'Vector Search', d:'Similar listings'},
-      {t:'Multi-signal Retrieval', d:'Semantic + structured'},{t:'Relevance Ranking', d:'Order by relevance'},
-      {t:'Runtime', d:'Inside your network'},{t:'API Response', d:'Results to your tools'}
-    ];
-    const engPath = document.getElementById('engPath'), engNodes = document.getElementById('engNodes');
-    if (engPath && engNodes){
-      const pathLen = engPath.getTotalLength();
-      engPath.style.strokeDasharray = pathLen; engPath.style.strokeDashoffset = pathLen;
-      engSteps.forEach((s,i)=>{
-        const pt = engPath.getPointAtLength((i/(engSteps.length-1))*pathLen);
-        const g = document.createElementNS('http://www.w3.org/2000/svg','g');
-        g.innerHTML = `<circle cx="${pt.x}" cy="${pt.y}" r="4" fill="${cssVar('--ink-2')}" stroke="${cssVar('--line-strong')}" stroke-width="1.5" class="eng-dot"/>
-          <text x="${pt.x}" y="${pt.y-48}" text-anchor="middle" style="font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:500;fill:${cssVar('--fog-dim')}" class="eng-node-title">${s.t}</text>
-          <text x="${pt.x}" y="${pt.y-30}" text-anchor="middle" style="font-family:'JetBrains Mono',monospace;font-size:10.5px;fill:${cssVar('--fog-dim')}" class="eng-node-label">${s.d}</text>`;
-        engNodes.appendChild(g);
-      });
-      gsap.timeline({ scrollTrigger:{ trigger:'#eng', start:'top top', end:'bottom bottom', scrub:.6 } })
-        .to(engPath, {strokeDashoffset:0, ease:'none', stroke: () => cssVar('--signal')})
-        .to('.eng-node-title', {fill: () => cssVar('--white'), stagger:.15}, 0)
-        .to('.eng-node-label', {fill: () => cssVar('--fog'), stagger:.15}, 0)
-        .to('.eng-dot', {fill: () => cssVar('--signal'), stagger:.15}, 0);
-    }
-
-    const capTrack = document.getElementById('capTrack'), capFill = document.getElementById('capFill');
-    if (capTrack){
-      gsap.to(capTrack, {
-        x: () => -(capTrack.scrollWidth - window.innerWidth + 80), ease:'none',
-        scrollTrigger: { trigger:'#capabilities', pin:true, scrub:1, start:'top top', anticipatePin:1,
-          end: () => '+=' + (capTrack.scrollWidth - window.innerWidth), invalidateOnRefresh:true,
-          onUpdate: (self)=>{ capFill.style.width = (self.progress*100)+'%'; } }
-      });
-    }
-    window.addEventListener('load', ()=> { if (!staticMotion()) ScrollTrigger.refresh(); }, {once:true});
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(()=> ScrollTrigger.refresh());
-    const refreshTimer = setTimeout(()=> ScrollTrigger.refresh(), 800);
-    return () => clearTimeout(refreshTimer);
-  }
-  let animationContext;
-  function updateMotion(){
-    if (animationContext) { animationContext.revert(); animationContext = null; }
-    if (window.ScrollTrigger) ScrollTrigger.normalizeScroll(false);
-    document.getElementById('engNodes')?.replaceChildren();
-    document.documentElement.classList.add('motion-static');
-    heroContent.style.transform = '';
-    if (!reducedMotion() && window.gsap && window.ScrollTrigger) {
-      document.documentElement.classList.remove('motion-static');
-      animationContext = gsap.context(initGsap);
-    }
-  }
-  motionPreference.addEventListener('change', updateMotion);
-  updateMotion();
-
-  // Reading progress follows actual page length, including GSAP pin spacers.
-  // Direct updates also work with reduced motion, without easing or decorative motion.
-  const readingProgress = document.getElementById('readingProgress');
-  if (readingProgress) {
-    let progressFrame = null;
-    let scrollableHeight = 0;
-    function drawReadingProgress(){
-      progressFrame = null;
-      const progress = scrollableHeight > 0 ? clamp(scrollY / scrollableHeight, 0, 1) : 0;
-      readingProgress.style.setProperty('--reading-progress', String(progress));
-    }
-    function requestProgressDraw(){
-      if (progressFrame === null && !document.hidden) progressFrame = requestAnimationFrame(drawReadingProgress);
-    }
-    function measureReadingProgress(){
-      scrollableHeight = Math.max(0, document.documentElement.scrollHeight - innerHeight);
-      requestProgressDraw();
-    }
-    window.addEventListener('scroll', requestProgressDraw, {passive:true});
-    window.addEventListener('resize', measureReadingProgress);
-    window.addEventListener('load', measureReadingProgress, {once:true});
-    document.addEventListener('visibilitychange', measureReadingProgress);
-    motionPreference.addEventListener('change', measureReadingProgress);
-    new ResizeObserver(measureReadingProgress).observe(document.body);
-    if (window.ScrollTrigger) ScrollTrigger.addEventListener('refresh', measureReadingProgress);
-    measureReadingProgress();
-  }
-
-  // ---- TEMP diagnostic overlay for the mobile pin/sticky bleed-through bug ----
-  // Visit with ?debug=1. Remove once diagnosed — not meant to ship long-term.
-  if (location.search.indexOf('debug=1') !== -1) {
-    const dbg = document.createElement('div');
-    dbg.style.cssText = 'position:fixed;top:56px;left:6px;right:6px;z-index:999999;background:rgba(0,0,0,.88);color:#4f8;font:10px/1.45 monospace;padding:8px;border-radius:6px;max-height:65vh;overflow:auto;pointer-events:none;white-space:pre-wrap;';
-    document.body.appendChild(dbg);
-    const ids = ['veyra-arch', 'eng', 'capabilities'];
-    function fmtRect(el) {
-      if (!el) return 'no el';
-      const r = el.getBoundingClientRect();
-      return `top:${r.top.toFixed(0)} bot:${r.bottom.toFixed(0)} h:${r.height.toFixed(0)}`;
-    }
-    function fmtSpacer(el) {
-      if (!el || !el.parentNode || !el.parentNode.classList || !el.parentNode.classList.contains('pin-spacer')) return 'no spacer';
-      const r = el.parentNode.getBoundingClientRect();
-      return `spacerTop:${r.top.toFixed(0)} spacerBot:${r.bottom.toFixed(0)} spacerH:${r.height.toFixed(0)}`;
-    }
-    function fmtST(el) {
-      if (!window.ScrollTrigger) return 'no ScrollTrigger';
-      const st = ScrollTrigger.getAll().find((t) => t.trigger === el);
-      if (!st) return 'no trigger';
-      return `start:${st.start.toFixed(0)} end:${st.end.toFixed(0)} prog:${st.progress.toFixed(2)} active:${st.isActive}`;
-    }
-    function update() {
-      const lines = [];
-      lines.push(
-        `vw:${window.innerWidth} vh:${window.innerHeight} vvh:${window.visualViewport ? window.visualViewport.height.toFixed(0) : 'n/a'} scrollY:${window.scrollY.toFixed(0)}`
-      );
-      ids.forEach((id) => {
-        const el = document.getElementById(id);
-        lines.push(`#${id}`);
-        lines.push(`  rect: ${fmtRect(el)}`);
-        lines.push(`  ${fmtSpacer(el)}`);
-        lines.push(`  st:   ${fmtST(el)}`);
-      });
-      dbg.textContent = lines.join('\n');
-      requestAnimationFrame(update);
-    }
-    update();
-  }
+  motionPreference.addEventListener('change', () => { heroContent.style.transform = ''; });
 })();

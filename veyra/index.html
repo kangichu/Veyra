@@ -1,5 +1,5 @@
 <!DOCTYPE html> 
-<html lang="en" class="motion-static" data-theme="dark">
+<html lang="en" data-theme="dark">
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HL6HNDN540"></script>
@@ -17,8 +17,8 @@
     if (localStorage.getItem('veyra-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
   } catch (_) {}
 </script>
-<title>Veyra | Self-Hosted Real Estate Intelligence by Tandish</title>
-<meta name="description" content="Integrate natural-language property search, semantic retrieval and recommendations into your systems with Veyra, deployed on infrastructure you control.">
+<title>Veyra | Self-Hosted Property Search and Recommendations</title>
+<meta name="description" content="Add natural-language property search and recommendations to your real-estate website or internal tools with Veyra, running on infrastructure you control.">
 <meta name="author" content="Tandish Group">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#08090C" media="(prefers-color-scheme: dark)">
@@ -34,8 +34,8 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Tandish">
-<meta property="og:title" content="Veyra | Self-Hosted Real Estate Intelligence by Tandish">
-<meta property="og:description" content="Integrate natural-language property search, semantic retrieval and recommendations into your systems with Veyra, deployed on infrastructure you control.">
+<meta property="og:title" content="Veyra | Self-Hosted Property Search and Recommendations">
+<meta property="og:description" content="Add natural-language property search and recommendations to your real-estate website or internal tools with Veyra, running on infrastructure you control.">
 <meta property="og:url" content="https://tandish.com/veyra/">
 <meta property="og:image" content="https://tandish.com/assets/images/og-image-v2.png">
 <meta property="og:image:type" content="image/png">
@@ -46,8 +46,8 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@tandish">
-<meta name="twitter:title" content="Veyra | Self-Hosted Real Estate Intelligence by Tandish">
-<meta name="twitter:description" content="Integrate natural-language property search, semantic retrieval and recommendations into your systems with Veyra, deployed on infrastructure you control.">
+<meta name="twitter:title" content="Veyra | Self-Hosted Property Search and Recommendations">
+<meta name="twitter:description" content="Add natural-language property search and recommendations to your real-estate website or internal tools with Veyra, running on infrastructure you control.">
 <meta name="twitter:image" content="https://tandish.com/assets/images/og-image-v2.png">
 <meta name="twitter:image:alt" content="Veyra by Tandish: AI that runs where your data lives, beside an architectural floor plan with an ember courtyard.">
 
@@ -55,10 +55,8 @@
 <link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/css/fonts.css?v=3">
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<link rel="stylesheet" href="../assets/css/veyra-experience.v1.css?v=24">
-<link rel="stylesheet" href="../assets/css/veyra-product.css?v=1">
+<link rel="stylesheet" href="../assets/css/veyra-experience.v1.css?v=25">
+<link rel="stylesheet" href="../assets/css/veyra-product.css?v=3">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -68,7 +66,7 @@
   "alternateName": "Tandish",
   "url": "https://tandish.com/",
   "email": "hello@tandish.com",
-  "description": "Tandish builds focused software products around real-world problems, designed for the way people and businesses actually work.",
+  "description": "Tandish is a software product company building products for business and everyday life. Veyra adds self-hosted property search and recommendations to existing business systems. Saelis is an upcoming social discovery app built around shared interests and real-world experiences.",
   "sameAs": [
     "https://x.com/tandish",
     "https://www.facebook.com/tandishgroup/",
@@ -90,7 +88,7 @@
   "name": "Veyra",
   "url": "https://tandish.com/veyra/",
   "applicationCategory": "BusinessApplication",
-  "description": "Veyra is Tandish's self-hosted real estate intelligence product, with semantic search, structured retrieval and property recommendations. In active development.",
+  "description": "Veyra adds natural-language property search, structured retrieval and recommendations to real-estate websites, portals and internal tools. It uses customer listing data and runs on customer-controlled infrastructure. Functional and in active development.",
   "featureList": [
     "Semantic property search",
     "Structured property retrieval",
@@ -105,6 +103,10 @@
   },
   "brand": {
     "@id": "https://tandish.com/#organization"
+  },
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Real-estate companies, agencies, developers and institutional property operators with listing data and existing applications"
   }
 }
 </script>
@@ -114,7 +116,7 @@
   "@type": "FAQPage",
   "@id": "https://tandish.com/veyra/#webpage",
   "url": "https://tandish.com/veyra/",
-  "name": "Veyra | Self-Hosted Real Estate Intelligence by Tandish",
+  "name": "Veyra | Self-Hosted Property Search and Recommendations",
   "inLanguage": "en",
   "isPartOf": {
     "@id": "https://tandish.com/#website"
@@ -152,7 +154,7 @@
       "name": "How does our application integrate?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Your application backend connects to the local Veyra /v1 API using project API keys. It can request search results and recommendations, plus price intelligence where configured and licensed. Veyra manages the project resources and local configuration."
+        "text": "Your application backend connects to the local Veyra /v1 API using project API keys, then presents the returned search results or recommendations in your own interface. Your team maps listing data, manages imports and makes the required application changes. Price intelligence is available where configured and licensed."
       }
     },
     {
@@ -176,10 +178,19 @@
       "name": "What happens after a walkthrough request?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Tandish can discuss your property workflow, data, existing systems, desired discovery experience, integration approach and deployment environment. Security and operational requirements help establish appropriate next steps if there is a fit."
+        "text": "Tandish discusses the property search experience you want to improve, your listing data and the application your team already runs. The walkthrough covers product fit, integration work, hosting and operational requirements, with next steps agreed if there is a fit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Veyra replace our website or property management system?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Veyra adds property search and recommendations behind your existing application. Your team keeps its website, listing system and customer workflows, and integrates Veyra where search or recommendations are needed. It is not a complete website, CRM or property management system."
       }
     }
-  ]
+  ],
+  "description": "Add natural-language property search and recommendations to your real-estate website or internal tools with Veyra, running on infrastructure you control."
 }
 </script>
 </head><body class="product-page">
@@ -208,13 +219,12 @@
   <button id="menuCloseBtn" class="x14">CLOSE ✕</button>
   <button id="themeToggle" aria-label="Toggle light and dark theme" class="x254">LIGHT</button>
   <a href="/#tandish" class="menu-link x15">Tandish</a>
-  <a href="#audience" class="menu-link x16">Overview</a>
+  <a href="#audience" class="menu-link x16">Who it helps</a>
   <a href="#walkthrough" class="menu-link x16">Request a walkthrough</a>
   <a href="#story" class="menu-link x16">Demo</a>
-  <a href="#veyra-arch" class="menu-link x16">Architecture</a>
   <a href="#deployment" class="menu-link x16">Deployment</a>
-  <a href="#capabilities" class="menu-link x16">Capabilities</a>
-  <a href="#integration" class="menu-link x16">Integration</a>
+  <a href="#integration" class="menu-link x16">How it fits</a>
+  <a href="#future" class="menu-link x16">FAQs</a>
 </div>
 
 <main id="top">
@@ -226,14 +236,14 @@
     <div id="heroContent" class="x30">
       <div class="x31"><span class="x32"></span>Veyra by Tandish</div>
       <h1 class="product-hero-title">Property intelligence.<br><span>On your infrastructure.</span></h1>
-      <p class="hero-summary">Add natural-language property search and recommendations to your existing systems, running on infrastructure you control.</p>
+      <p class="hero-summary">Veyra adds natural-language property search and recommendations to your website, portal or internal tools. Built for property businesses, it uses your listing data and runs on infrastructure you control.</p>
       <div class="hero-actions">
         <a href="#story" class="veyra-primary-link">See the demo <span aria-hidden="true">&#8595;</span></a>
         <a href="#walkthrough" class="veyra-text-link">Request a walkthrough <span aria-hidden="true">&#8599;</span></a>
       </div>
     </div>
     <div id="heroFoot" class="x42">
-      <p class="hero-footnote">For teams building property discovery.</p>
+      <p class="hero-footnote">For property companies, agencies and developers.</p>
       <div id="heroStats" class="x44">
         <div class="x45"><span class="x46">Real Estate</span><span class="x47">FOCUS</span></div>
         <div class="x45"><span class="x46">Self-hosted</span><span class="x47">DEPLOYMENT</span></div>
@@ -292,224 +302,41 @@
 
   <section id="audience" class="product-section">
     <div class="product-section-inner">
-      <p class="product-eyebrow">Built for your existing systems</p>
-      <h2>For the teams behind<br>property discovery.</h2>
-      <p class="product-lead">Veyra is built for real-estate companies, agencies, developers and institutional property operators with property data and digital systems already in place.</p>
+      <p class="product-eyebrow">Who Veyra helps</p>
+      <h2>Better property discovery.<br>Across your existing systems.</h2>
+      <p class="product-lead">For real-estate companies, agencies, developers and institutional property operators that already maintain listing data and run a website, portal or internal application.</p>
       <div class="product-grid">
-        <article><span class="product-number">01 / Your data</span><h3>A meaningful property dataset.</h3><p>Bring intelligence to the listings your organization already maintains. Your source data stays authoritative.</p></article>
-        <article><span class="product-number">02 / Your experience</span><h3>Your website. Your application.</h3><p>Add natural-language property search, retrieval and recommendations to the websites, portals and internal systems your team already operates.</p></article>
-        <article><span class="product-number">03 / Your infrastructure</span><h3>Control where intelligence runs.</h3><p>Deploy into your own environment, with hosting, networking and storage under your team's control.</p></article>
+        <article><span class="product-number">01 / Your customers</span><h3>Let people describe what they need.</h3><p>Add a natural-language search experience to your website or portal, helping visitors find relevant listings from a written request.</p></article>
+        <article><span class="product-number">02 / Your team</span><h3>Help agents build a shortlist.</h3><p>Bring search by meaning and supported property criteria into internal tools so teams can explore listings against a client's requirements.</p></article>
+        <article><span class="product-number">03 / Your listings</span><h3>Give people relevant alternatives.</h3><p>Show property recommendations alongside search, giving customers and agents more listings to consider within your own application.</p></article>
       </div>
       <div class="product-note buyer-summary">
-        <strong>Self-hosted. Functional today. In active development.</strong>
-        <p>Veyra runs in infrastructure your organization controls. It is being refined before broader production rollout.</p>
-        <p>A walkthrough is a discussion of your property workflow, data and existing systems, followed by integration and deployment requirements and next steps if there is a fit.</p>
-        <a href="#walkthrough" class="buyer-walkthrough-link">Request a walkthrough <span aria-hidden="true">&#8594;</span></a>
+        <strong>A fit for teams with property data and an application to improve.</strong>
+        <p>Your technical team needs to prepare listing data, connect the application and operate the deployment. The walkthrough helps establish which search workflows Veyra can support in your environment.</p>
+        <p>Veyra is functional and in active development. Search quality, query coverage and reliability are being refined before broader production rollout.</p>
+        <a href="#integration" class="buyer-walkthrough-link">See how it fits your systems <span aria-hidden="true">&#8595;</span></a>
       </div>
     </div>
   </section>
-  <section id="who" class="x51">
-    <div class="x52">
-      <div class="x53"><span class="x32"></span>The problem</div>
-      <p id="whoText" class="x54">Enterprise AI should work where your business already operates. Organizations should not have to surrender ownership of their infrastructure or operational data simply to adopt AI. Veyra exists because of that belief.</p>
-      <div id="whoPillars" class="x55">
-        <div class="x56"><span class="x57">01</span>Ownership first<span class="x58">Property data is processed in your customer-controlled Veyra environment.</span></div>
-        <div class="x56"><span class="x57">02</span>Domain focus<span class="x58">Built specifically for real estate operations, not generic use cases.</span></div>
-        <div class="x56"><span class="x57">03</span>Operational focus<span class="x58">Designed for teams that already run serious systems.</span></div>
+  <section id="integration" class="product-section product-section-alt">
+    <div class="product-section-inner">
+      <p class="product-eyebrow">How it fits your systems</p>
+      <h2>Keep your application.<br>Add a property search engine.</h2>
+      <p class="product-lead">Veyra sits behind your website, portal or internal tools. Your backend sends search requests to Veyra and receives results to display in your own interface. Your existing listing system continues to manage the original property data.</p>
+      <ol class="product-flow" aria-label="How a property request moves through your systems"><li>Your website or internal tool</li><li>Your application backend</li><li>Veyra in your environment</li><li>Results in your interface</li></ol>
+      <div class="product-grid product-grid-two">
+        <article><h3>Your team keeps control.</h3><p>You continue to manage your listings, application and customer workflows. Your team controls the hosting, networking, storage and access for the Veyra deployment.</p></article>
+        <article><h3>Veyra adds the search layer.</h3><p>Supported request parsing, search by meaning, structured filters, result ranking and recommendations help your application surface relevant properties from the data prepared for Veyra.</p></article>
       </div>
+      <div class="product-grid">
+        <article><span class="product-number">01 / Prepare</span><h3>Connect your listing data.</h3><p>Map the property fields Veyra needs and agree how new or changed listings reach the search engine.</p></article>
+        <article><span class="product-number">02 / Integrate</span><h3>Connect your backend.</h3><p>Your developers connect to Veyra's API and adapt the search or recommendations interface in the website or tools your team already uses.</p></article>
+        <article><span class="product-number">03 / Evaluate</span><h3>Check it against your workflow.</h3><p>Use representative listings and search requests to evaluate relevance, supported criteria and operational requirements before planning a rollout.</p></article>
+      </div>
+      <details class="integration-details"><summary>Details for your technical team</summary><div><p>Your backend calls the local <code>/v1</code> API with project API keys. Projects hold the datasets, index bindings and local configuration used by search and recommendations. Local administration manages projects and application access within your deployment.</p><p>Veyra is deployed with Docker on customer-controlled infrastructure. Listing imports use REST, JSON or CSV approaches. Data mapping, updates and application changes require integration work; a generic direct database connector is not currently available.</p><p>Hosting requirements, security configuration, licensing and operational responsibilities are reviewed for your deployment.</p></div></details>
     </div>
   </section>
-
-  <section id="veyra" class="x138">
-    <div class="x139"><span class="x32"></span>A Tandish product</div>
-    <h2 id="veyraBig" class="x140">Veyra</h2>
-    <p id="veyraSub" class="x141">Veyra is Tandish's self-hosted real estate intelligence product for property companies, agencies, developers and institutional operators. Semantic search, structured retrieval and property recommendations run in the customer-controlled Veyra environment.</p>
-    <div class="x142">SELF-HOSTED ARCHITECTURE
-      <svg viewBox="0 0 14 14" fill="none" class="x143"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div id="veyraFloat" class="x144">
-      <div class="x145">
-        <div class="x146"><span class="x147"></span><span class="x148">LOCAL AI RUNTIME</span></div>
-        <div class="x149"></div>
-        <div class="x150"></div>
-        <div class="x151"></div>
-        <div class="x152">
-          <span class="x153"></span>
-          <span class="x154"></span>
-          <span class="x155"></span>
-          <span class="x156"></span>
-          <span class="x157"></span>
-          <span class="x158"></span>
-        </div>
-      </div>
-    </div>
-    <div id="veyraBadge" class="x159">SELF-HOSTED · REAL ESTATE</div>
-  </section>
-
-  <section id="veyra-arch" class="x160">
-    <div id="archTrack" class="x161">
-      <div class="arch-panel x162">
-        <span class="x163">00</span>
-        <svg viewBox="0 0 24 24" fill="none" class="x164"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.4"/><path d="M9 12h6M12 9v6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-        <div class="arch-badge x165">TANDISH-MANAGED</div>
-        <div class="x166">00 / OUTSIDE YOUR NETWORK</div>
-        <h3 class="x167">Control Plane</h3>
-        <p class="x168">Tandish Admin is the vendor control plane for commercial licensing and releases. Customer property data is processed in the self-hosted Veyra environment.</p>
-        <div class="x169">
-          <div class="x170">Tandish boundary</div>
-          <svg viewBox="0 0 24 10" class="x171"><path d="M0 5h20M15 1l5 4-5 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
-          <div class="x172">Your boundary</div>
-        </div>
-        <div class="x173"><span class="x174"></span></div>
-      </div>
-      <div class="arch-panel x162">
-        <span class="x163">01</span>
-        <svg viewBox="0 0 24 24" fill="none" class="x164"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 3"/><rect x="8" y="8" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.4"/></svg>
-        <div class="arch-badge x165">CUSTOMER-OWNED</div>
-        <div class="x166">01</div>
-        <h3 class="x175">Your<br>Environment</h3>
-        <p class="x176">Veyra is packaged for customer infrastructure. Your team controls the hosting environment, network access and storage.</p>
-        <div class="x173"><span class="x174"></span></div>
-      </div>
-      <div class="arch-panel x162">
-        <span class="x163">02</span>
-        <svg viewBox="0 0 24 24" fill="none" class="x164"><rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-        <div class="x166">02</div>
-        <h3 class="x175">Operator<br>Tools</h3>
-        <p class="x176">The operator layer is intended for deployment and maintenance within your environment. Discuss available tools and support responsibilities during a technical walkthrough.</p>
-        <div class="x173"><span class="x174"></span></div>
-      </div>
-      <div class="arch-panel x162">
-        <span class="x163">03</span>
-        <svg viewBox="0 0 24 24" fill="none" class="x164"><circle cx="8" cy="9" r="3" stroke="currentColor" stroke-width="1.4"/><circle cx="17" cy="10" r="2.4" stroke="currentColor" stroke-width="1.4"/><path d="M2 19c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-        <div class="x166">03</div>
-        <h3 class="x177">Admin<br>Console</h3>
-        <p class="x178">Veyra's local administration layer organizes the customer environment, projects and application access within the Veyra deployment.</p>
-        <div class="x179">
-          <div class="x180">
-            <div class="x181"></div>
-            <div class="x182"><span class="x183"></span><span class="x184">Organization</span></div>
-            <div class="x182"><span class="x183"></span><span class="x185">Deployment</span></div>
-            <div class="x182"><span class="x183"></span><span class="x185">Projects</span></div>
-            <div class="x182"><span class="x183"></span><span class="x185">API Keys</span></div>
-            <div class="x182"><span class="x186"></span><span class="x185">Applications</span></div>
-          </div>
-          <div class="x187">ONE ORG → MANY DEPLOYMENTS → MANY APPS</div>
-        </div>
-      </div>
-      <div class="arch-panel x162">
-        <span class="x163">04</span>
-        <svg viewBox="0 0 24 24" fill="none" class="x164"><rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.5 4.5l2 2M17.5 17.5l2 2M19.5 4.5l-2 2M6.5 17.5l-2 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-        <div class="x166">04</div>
-        <h3 class="x167">AI Runtime</h3>
-        <p class="x176">Search, recommendations and local intelligence operate in your Veyra environment. External services and connections depend on your deployment configuration.</p>
-        <div class="x173"><span class="x174"></span></div>
-      </div>
-      <div class="arch-panel x162">
-        <span class="x163">05</span>
-        <svg viewBox="0 0 24 24" fill="none" class="x164"><path d="M8 4L3 12l5 8M16 4l5 8-5 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="x166">05</div>
-        <h3 class="x167">Public API</h3>
-        <p class="x176">The integration point for your internal tools and websites. Review supported endpoints, authentication and API limits for your deployment.</p>
-      </div>
-    </div>
-    <div class="x188">SCROLL → DEPLOYMENT LAYERS</div>
-    <div id="archDots" class="x189">
-      <span class="x190"></span>
-      <span class="x191"></span>
-      <span class="x191"></span>
-      <span class="x191"></span>
-      <span class="x191"></span>
-      <span class="x191"></span>
-    </div>
-    <div class="x192"><div id="archFill" class="x193"></div></div>
-  </section>
-
-  <section id="eng" class="x194">
-    <div class="x195"></div>
-    <div class="x196">
-      <div class="x197">
-        <div class="x198"><span class="x32"></span>How it works</div>
-        <h2 class="x199">From a property search to relevant listings.</h2>
-      </div>
-      <div id="engDesktop" class="x200">
-        <svg viewBox="0 0 1100 220" width="100%" id="engSvg">
-          <path id="engPath" d="M80,110 C 200,40 320,180 450,110 S 680,40 810,110 S 960,180 1020,110" stroke="var(--line-strong)" stroke-width="1.5" fill="none"/>
-          <g id="engNodes"></g>
-        </svg>
-      </div>
-      <div id="engMobile" class="x201">
-        <div class="x202"></div>
-        <div class="x203"><div class="x204"></div><div><strong class="x205">Embeddings</strong><span class="x206">Represent listing text for similarity search</span></div></div>
-        <div class="x203"><div class="x204"></div><div><strong class="x205">Vector Search</strong><span class="x206">Retrieve listings by similarity</span></div></div>
-        <div class="x203"><div class="x204"></div><div><strong class="x205">Multi-signal Retrieval</strong><span class="x206">Combine semantic and structured retrieval</span></div></div>
-        <div class="x203"><div class="x204"></div><div><strong class="x205">Relevance Ranking</strong><span class="x206">Order results by relevance</span></div></div>
-        <div class="x203"><div class="x204"></div><div><strong class="x205">Runtime</strong><span class="x206">Local processing in your environment</span></div></div>
-        <div class="x203"><div class="x204"></div><div><strong class="x205">API Response</strong><span class="x206">Results return to the tools your team already uses</span></div></div>
-      </div>
-      <p class="x207">Veyra extracts supported property criteria using defined rules. Semantic and structured retrieval work together to surface relevant candidates, which are ranked before the API returns results. Processing stays in your Veyra environment. Search quality and query coverage are being refined.</p>
-    </div>
-  </section>
-
-  <section id="capabilities" class="x208">
-    <div class="x209"></div>
-    <div class="x210"></div>
-    <div class="x211">
-      <div class="x212">
-        <div class="x213"><span class="x62"></span>Veyra capabilities</div>
-        <h2 class="x214">Built around property workflows.</h2>
-        <p class="x215">Search, retrieval and recommendations for property discovery, running in your own Veyra environment.</p>
-      </div>
-      <div class="x216">
-        <div id="capTrack" class="x217">
-          <div class="exp-card x218">
-            <svg viewBox="0 0 24 24" fill="none" class="x219"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M20 20l-3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            <div class="x220"><span class="x221"></span><span class="x222"></span><span class="x223"></span></div>
-            <h4 class="x224">Semantic property search</h4>
-            <p class="x225">Find relevant property listings by meaning using semantic and vector retrieval.</p>
-          </div>
-          <div class="exp-card x218">
-            <svg viewBox="0 0 24 24" fill="none" class="x219"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5-6.5-4.5-6.5 4.5 2-7.5L2 9h7z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-            <svg viewBox="0 0 100 60" class="x226"><line x1="50" y1="30" x2="16" y2="12" stroke="currentColor" stroke-width="1.4"/><line x1="50" y1="30" x2="16" y2="48" stroke="currentColor" stroke-width="1.4"/><line x1="50" y1="30" x2="84" y2="30" stroke="currentColor" stroke-width="1.4"/><circle cx="50" cy="30" r="6" fill="none" stroke="var(--ember)" stroke-width="1.4"/><circle cx="16" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="48" r="4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="84" cy="30" r="4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
-            <h4 class="x224">Property recommendations</h4>
-            <p class="x225">Surface property recommendations alongside search to support property discovery.</p>
-          </div>
-          <div class="exp-card x218">
-            <svg viewBox="0 0 24 24" fill="none" class="x219"><path d="M4 19V5M4 19h16M8 15l3-4 3 3 5-7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <div class="x220"><span class="x227"></span><span class="x228"></span><span class="x229"></span><span class="x223"></span></div>
-            <h4 class="x224">Structured retrieval</h4>
-            <p class="x225">Retrieve listings using supported criteria such as property type, bedrooms, price and location.</p>
-          </div>
-          <div class="exp-card x218">
-            <svg viewBox="0 0 24 24" fill="none" class="x219"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            <svg viewBox="0 0 100 60" class="x226"><line x1="14" y1="16" x2="60" y2="16" stroke="currentColor" stroke-width="1.4"/><line x1="14" y1="30" x2="60" y2="30" stroke="currentColor" stroke-width="1.4"/><line x1="14" y1="44" x2="46" y2="44" stroke="currentColor" stroke-width="1.4"/><circle cx="78" cy="30" r="10" fill="none" stroke="var(--ember)" stroke-width="1.4"/><line x1="85" y1="37" x2="92" y2="44" stroke="var(--ember)" stroke-width="1.4" stroke-linecap="round"/></svg>
-            <h4 class="x224">Query understanding</h4>
-            <p class="x225">Extract supported property criteria from requests using defined rules. Coverage continues to improve.</p>
-          </div>
-          <div class="exp-card x218">
-            <svg viewBox="0 0 24 24" fill="none" class="x219"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M7 8h10M7 12h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            <div class="x230">
-              <svg viewBox="0 0 20 20" class="x231"><rect x="2" y="2" width="16" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M6 10l3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <svg viewBox="0 0 20 20" class="x231"><rect x="2" y="2" width="16" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M6 10l3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <svg viewBox="0 0 20 20" class="x232"><rect x="2" y="2" width="16" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
-            </div>
-            <h4 class="x224">Local intelligence</h4>
-            <p class="x225">Run search and intelligence operations where your property data lives, on infrastructure your team controls.</p>
-          </div>
-          <div class="exp-card x218">
-            <svg viewBox="0 0 24 24" fill="none" class="x219"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <svg viewBox="0 0 100 44" class="x226"><rect x="4" y="4" width="52" height="20" rx="8" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="18" cy="14" r="1.6" fill="currentColor"/><circle cx="28" cy="14" r="1.6" fill="currentColor"/><circle cx="38" cy="14" r="1.6" fill="currentColor"/><path d="M60 14h16" stroke="currentColor" stroke-width="1.4"/><rect x="78" y="4" width="20" height="20" rx="8" fill="none" stroke="var(--ember)" stroke-width="1.4"/></svg>
-            <h4 class="x224">Natural language querying</h4>
-            <p class="x225">Describe the property you need in everyday language, with semantic retrieval and supported structured criteria.</p>
-          </div>
-        </div>
-      </div>
-      <div class="x233"><div id="capFill" class="x234"></div></div>
-      <div class="x235">Built for real estate operations.</div>
-    </div>
-  </section>
-
-  <section id="deployment" class="product-section product-section-alt">
+  <section id="deployment" class="product-section">
     <div class="product-section-inner">
       <p class="product-eyebrow">Deployment &amp; operation</p>
       <h2>Local intelligence.<br>Defined responsibilities.</h2>
@@ -519,18 +346,6 @@
         <article><h3>Tandish's role</h3><ul><li>Commercial licensing and entitlements.</li><li>Signed software releases and update authority.</li><li>A separate minimal deployment agent for controlled container updates.</li><li>Deployment and operational requirements discussed for your environment.</li></ul></article>
       </div>
       <aside class="product-note"><strong>Self-hosted does not mean permanently disconnected.</strong><p>Periodic communication with Tandish is part of licensing and rights validation. An offline grace mechanism exists; Veyra is not a fully air-gapped product. Security and compliance depend on the deployment, configuration and operational arrangements.</p></aside>
-    </div>
-  </section>
-  <section id="integration" class="product-section">
-    <div class="product-section-inner">
-      <p class="product-eyebrow">API-first integration</p>
-      <h2>Add intelligence<br>behind your application.</h2>
-      <p class="product-lead">Your backend calls the local Veyra <code>/v1</code> API using Veyra Project/API-key mechanisms. Your frontend does not need direct access to Tandish Admin.</p>
-      <ol class="product-flow" aria-label="Integration flow"><li>Your website or app</li><li>Your backend</li><li>Local Veyra API</li><li>Property results</li></ol>
-      <div class="product-grid product-grid-two">
-        <article><h3>Project-scoped resources</h3><p>Projects, API keys, datasets, index bindings and local product configuration belong to Veyra. Search and recommendations use the relevant project resources.</p></article>
-        <article><h3>Bring your listing data</h3><p>The V1 data-import approach is based on REST, JSON and CSV. Discuss your data structure and update workflow during a walkthrough; a generic direct database connector is not currently available.</p></article>
-      </div>
     </div>
   </section>
   <section id="status" class="product-section product-section-alt">
@@ -550,17 +365,18 @@
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-0" aria-expanded="true" aria-controls="faq-answer-0"><span class="product-number">01</span><span class="product-faq-question">Where does property data live?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-0" role="region" aria-labelledby="faq-question-0" aria-hidden="false" style="max-height:none;opacity:1;"><p>Customer property data and local intelligence are processed in the customer-controlled Veyra environment. Your source data remains authoritative; Veyra maintains its own local representations and indexes. Review access, external connections and operational arrangements for your deployment.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-1" aria-expanded="true" aria-controls="faq-answer-1"><span class="product-number">02</span><span class="product-faq-question">Is Veyra fully air-gapped?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" aria-hidden="false" style="max-height:none;opacity:1;"><p>No. Periodic communication with the Tandish control plane is part of commercial licensing and rights validation. An offline grace mechanism exists, but Veyra is not designed for permanent disconnection. Supported local models run locally after acquisition.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-2" aria-expanded="true" aria-controls="faq-answer-2"><span class="product-number">03</span><span class="product-faq-question">How is Veyra deployed?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra uses a containerized customer deployment with Docker. V1 assumes one active engine-platform replica per installation. Your team configures TLS and controls hosting, networking and storage; logs use the customer or container environment.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-3" aria-expanded="true" aria-controls="faq-answer-3"><span class="product-number">04</span><span class="product-faq-question">How does our application integrate?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="false" style="max-height:none;opacity:1;"><p>Your application backend connects to the local Veyra /v1 API using project API keys. It can request search results and recommendations, plus price intelligence where configured and licensed. Veyra manages the project resources and local configuration.</p></div></div>
+      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-3" aria-expanded="true" aria-controls="faq-answer-3"><span class="product-number">04</span><span class="product-faq-question">How does our application integrate?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="false" style="max-height:none;opacity:1;"><p>Your application backend connects to the local Veyra /v1 API using project API keys, then presents the returned search results or recommendations in your own interface. Your team maps listing data, manages imports and makes the required application changes. Price intelligence is available where configured and licensed.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-4" aria-expanded="true" aria-controls="faq-answer-4"><span class="product-number">05</span><span class="product-faq-question">What is the current product status?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra is functional and in active development, with reliability, search quality and query coverage being refined before broader production rollout. Core query parsing uses rules and location dictionaries; it does not depend on an external LLM.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-5" aria-expanded="true" aria-controls="faq-answer-5"><span class="product-number">06</span><span class="product-faq-question">Who handles operation and support?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-5" role="region" aria-labelledby="faq-question-5" aria-hidden="false" style="max-height:none;opacity:1;"><p>Your team retains control of its infrastructure. Deployment requirements and operational responsibilities are discussed with Tandish for your environment. Tandish controls licensed releases and update authority; no public support SLA or fixed deployment timeline is currently defined.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-6" aria-expanded="true" aria-controls="faq-answer-6"><span class="product-number">07</span><span class="product-faq-question">What happens after a walkthrough request?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-6" role="region" aria-labelledby="faq-question-6" aria-hidden="false" style="max-height:none;opacity:1;"><p>Tandish can discuss your property workflow, data, existing systems, desired discovery experience, integration approach and deployment environment. Security and operational requirements help establish appropriate next steps if there is a fit.</p></div></div>
+      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-6" aria-expanded="true" aria-controls="faq-answer-6"><span class="product-number">07</span><span class="product-faq-question">What happens after a walkthrough request?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-6" role="region" aria-labelledby="faq-question-6" aria-hidden="false" style="max-height:none;opacity:1;"><p>Tandish discusses the property search experience you want to improve, your listing data and the application your team already runs. The walkthrough covers product fit, integration work, hosting and operational requirements, with next steps agreed if there is a fit.</p></div></div>
+      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-7" aria-expanded="true" aria-controls="faq-answer-7"><span class="product-number">08</span><span class="product-faq-question">Does Veyra replace our website or property management system?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-7" role="region" aria-labelledby="faq-question-7" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra adds property search and recommendations behind your existing application. Your team keeps its website, listing system and customer workflows, and integrates Veyra where search or recommendations are needed. It is not a complete website, CRM or property management system.</p></div></div>
     </div>
   </section>
   <section id="walkthrough" class="x241">
     <div class="x242"><span class="x32"></span>Veyra by Tandish</div>
-    <h2 class="x243">See Veyra on your own real-estate workflow.</h2>
-    <p class="x244">Request a technical walkthrough to discuss your property workflow, data, integration requirements and deployment environment. Together, we can identify appropriate next steps if there is a fit.</p>
-    <a href="mailto:hello@tandish.com?subject=Veyra%20technical%20walkthrough&amp;body=Hi%20Tandish%20team%2C%0A%0AI%27d%20like%20to%20request%20a%20technical%20walkthrough%20of%20Veyra%20and%20discuss%20our%20real-estate%20workflow%2C%20data%20and%20deployment%20requirements.%0A%0AThanks!" class="waitlist-submit x248 x246">Request a technical walkthrough</a>
+    <h2 class="x243">See where Veyra fits<br>in your business.</h2>
+    <p class="x244">Tell us how people search your listings today, where your data lives and which website or internal tool you want to improve. A walkthrough covers the search experience, data fit, integration work and deployment requirements so your team can assess the next steps.</p>
+    <a href="mailto:hello@tandish.com?subject=Veyra%20technical%20walkthrough&amp;body=Hi%20Tandish%20team%2C%0A%0AWe%20would%20like%20to%20discuss%20how%20Veyra%20could%20improve%20property%20discovery%20in%20our%20systems.%0A%0ACompany%3A%0AWebsite%20or%20internal%20application%3A%0AHow%20we%20store%20and%20update%20listings%3A%0ASearch%20workflow%20we%20want%20to%20improve%3A%0AHosting%20environment%20(if%20known)%3A%0A%0AThanks!" class="waitlist-submit x248 x246">Request a technical walkthrough</a>
     <a href="mailto:hello@tandish.com" class="link x249">or reach us directly at hello@tandish.com</a>
   </section>
 
@@ -574,15 +390,12 @@
     <a href="#walkthrough" class="link">Walkthrough</a>
     <a href="/#tandish" class="link">Tandish</a>
     <a href="#story" class="link">Demo</a>
-    <a href="#veyra" class="link">Veyra</a>
-    <a href="#eng" class="link">How</a>
-    <a href="#capabilities" class="link">Capabilities</a>
-    <a href="#future" class="link">Trust</a>
+    <a href="#future" class="link">FAQs</a>
   </div>
   <div class="x253">© 2026 Tandish Group</div>
 </footer>
 
-<script defer src="../assets/js/veyra-experience.v1.js?v=26"></script>
+<script defer src="../assets/js/veyra-experience.v1.js?v=27"></script>
 <script defer src="../assets/js/veyra-demo.js?v=1"></script>
 </body>
 </html>

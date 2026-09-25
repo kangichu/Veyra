@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   const container = document.querySelector('.home-product-stories');
   if (!container) return;
   const slides = [...container.querySelectorAll('.home-product-story')];
@@ -33,7 +33,7 @@
     slides.forEach((slide, i) => { slide.hidden = i !== active; });
     choices.forEach((button, i) => button.setAttribute('aria-pressed', String(i === active)));
     const slide = slides[active];
-    status.textContent = `${slide.dataset.product} selected. All three steps now show its problem, context and approach.`;
+    status.textContent = `${slide.dataset.product} selected. Its overview, intended audience and use are now shown.`;
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       slide.animate([{opacity:0.45}, {opacity:1}], {duration:220, easing:'ease-out'});
     }
