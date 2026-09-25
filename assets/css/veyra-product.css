@@ -57,3 +57,7 @@
 .integration-details p + p{margin-top:12px;}
 
 @media(max-width:760px){.product-page #heroFoot{display:grid;grid-template-columns:minmax(0,1fr) auto;}.product-page #heroStats{display:none;}}
+
+/* Keep outcome labels readable at narrow widths. */
+.demo-listing-top{flex-wrap:wrap;}
+.demo-journey[aria-labelledby="searchFlowTitle"]{padding-top:28px;}

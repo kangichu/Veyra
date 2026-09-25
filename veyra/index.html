@@ -17,7 +17,7 @@
     if (localStorage.getItem('veyra-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
   } catch (_) {}
 </script>
-<title>Veyra | Self-Hosted Property Search and Recommendations</title>
+<title>Veyra | Self-Hosted Real Estate Intelligence by Tandish</title>
 <meta name="description" content="Add natural-language property search and recommendations to your real-estate website or internal tools with Veyra, running on infrastructure you control.">
 <meta name="author" content="Tandish Group">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -34,7 +34,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Tandish">
-<meta property="og:title" content="Veyra | Self-Hosted Property Search and Recommendations">
+<meta property="og:title" content="Veyra | Self-Hosted Real Estate Intelligence by Tandish">
 <meta property="og:description" content="Add natural-language property search and recommendations to your real-estate website or internal tools with Veyra, running on infrastructure you control.">
 <meta property="og:url" content="https://tandish.com/veyra/">
 <meta property="og:image" content="https://tandish.com/assets/images/og-image-v2.png">
@@ -46,7 +46,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@tandish">
-<meta name="twitter:title" content="Veyra | Self-Hosted Property Search and Recommendations">
+<meta name="twitter:title" content="Veyra | Self-Hosted Real Estate Intelligence by Tandish">
 <meta name="twitter:description" content="Add natural-language property search and recommendations to your real-estate website or internal tools with Veyra, running on infrastructure you control.">
 <meta name="twitter:image" content="https://tandish.com/assets/images/og-image-v2.png">
 <meta name="twitter:image:alt" content="Veyra by Tandish: AI that runs where your data lives, beside an architectural floor plan with an ember courtyard.">
@@ -56,7 +56,7 @@
 <link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/css/fonts.css?v=3">
 <link rel="stylesheet" href="../assets/css/veyra-experience.v1.css?v=25">
-<link rel="stylesheet" href="../assets/css/veyra-product.css?v=3">
+<link rel="stylesheet" href="../assets/css/veyra-product.css?v=4">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -92,6 +92,8 @@
   "featureList": [
     "Semantic property search",
     "Structured property retrieval",
+    "Constraint-aware property search",
+    "Truthful search outcome classification",
     "Property recommendations",
     "Natural-language property querying",
     "Local intelligence operations",
@@ -116,7 +118,7 @@
   "@type": "FAQPage",
   "@id": "https://tandish.com/veyra/#webpage",
   "url": "https://tandish.com/veyra/",
-  "name": "Veyra | Self-Hosted Property Search and Recommendations",
+  "name": "Veyra | Self-Hosted Real Estate Intelligence by Tandish",
   "inLanguage": "en",
   "isPartOf": {
     "@id": "https://tandish.com/#website"
@@ -162,7 +164,7 @@
       "name": "What is the current product status?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Veyra is functional and in active development, with reliability, search quality and query coverage being refined before broader production rollout. Core query parsing uses rules and location dictionaries; it does not depend on an external LLM."
+        "text": "Veyra is functional and in active development. Natural-language querying, semantic and structured retrieval, constraint-aware results, ranking, diversification and property recommendations are implemented. Supported query criteria are parsed with deterministic rules and canonical property semantics. Search quality, query coverage and reliability continue to be refined."
       }
     },
     {
@@ -274,7 +276,7 @@
           <div class="demo-step-heading"><span class="product-number">01 / Describe</span><h3 id="describeTitle">Start with what<br>you have in mind.</h3><p>A request in everyday language.</p></div>
           <div class="demo-request">
             <span class="demo-label">Your property search</span>
-            <blockquote id="demoQuery">A three-bedroom apartment in Westlands under KES 18M.</blockquote>
+            <blockquote id="demoQuery">A three-bedroom apartment in Westlands under KES 18M. A balcony would be a plus.</blockquote>
             <span class="demo-request-note">One request. The details together.</span>
           </div>
         </section>
@@ -288,12 +290,30 @@
           </dl>
         </section>
         <section class="demo-step demo-step-results" aria-labelledby="resultsTitle">
-          <div class="demo-step-heading"><span class="product-number">03 / Discover</span><h3 id="resultsTitle">Bring relevant<br>listings forward.</h3><p>Keep the original request in view when comparing properties.</p></div>
+          <div class="demo-step-heading"><span class="product-number">03 / Discover</span><h3 id="resultsTitle">Bring relevant<br>listings forward.</h3><p>See which requirements each result meets, and where an alternative falls short.</p></div>
           <div class="demo-results">
-            <article class="demo-listing"><div class="demo-listing-top"><span class="demo-label">Sample listing 01</span><span aria-hidden="true">01</span></div><h4 id="demoName0">Westlands apartment</h4><p id="demoDetails0" class="demo-listing-details">3 bedrooms &middot; 2 bathrooms &middot; Westlands</p><p id="demoPrice0" class="demo-listing-price">KES 16.8M</p><p id="demoReason0" class="demo-listing-reason">Matches the location and bedroom count, within the KES 18M budget.</p></article>
-            <article class="demo-listing"><div class="demo-listing-top"><span class="demo-label">Sample listing 02</span><span aria-hidden="true">02</span></div><h4 id="demoName1">Westlands apartment</h4><p id="demoDetails1" class="demo-listing-details">3 bedrooms &middot; 3 bathrooms &middot; Westlands</p><p id="demoPrice1" class="demo-listing-price">KES 17.5M</p><p id="demoReason1" class="demo-listing-reason">Another match for the same request, with an additional bathroom.</p></article>
+            <article class="demo-listing"><div class="demo-listing-top"><span class="demo-label">Sample listing 01</span><span id="demoMatch0">FULL MATCH</span></div><h4 id="demoName0">Westlands apartment</h4><p id="demoDetails0" class="demo-listing-details">3 bedrooms &middot; 2 bathrooms &middot; Westlands &middot; Balcony</p><p id="demoPrice0" class="demo-listing-price">KES 16.8M</p><p id="demoReason0" class="demo-listing-reason">Matches property type, location, bedrooms and budget, with the preferred balcony.</p></article>
+            <article class="demo-listing"><div class="demo-listing-top"><span class="demo-label">Sample listing 02</span><span id="demoMatch1">WEAK MATCH</span></div><h4 id="demoName1">Westlands apartment</h4><p id="demoDetails1" class="demo-listing-details">3 bedrooms &middot; 3 bathrooms &middot; Westlands &middot; No balcony</p><p id="demoPrice1" class="demo-listing-price">KES 17.5M</p><p id="demoReason1" class="demo-listing-reason">Meets the required property type, location, bedrooms and budget, but lacks the preferred balcony.</p></article>
           </div>
         </section>
+      </div>
+      <div class="product-note">
+        <strong>Know what kind of result came back.</strong>
+        <p><b>Full match:</b> satisfies the explicit requirements. <b>Weak match:</b> meets required constraints but may miss softer preferences.</p>
+        <p><b>Relaxed match:</b> an alternative that falls outside an explicit requirement, labeled to make the compromise clear.</p>
+        <p><b>Conflicting query:</b> the request contains contradictory requirements. <b>No match:</b> no acceptable result was found within the bounded search.</p>
+      </div>
+      <div class="demo-journey" aria-labelledby="searchFlowTitle">
+        <div class="demo-step-heading"><h3 id="searchFlowTitle">How search works</h3></div>
+        <p class="product-lead">Veyra interprets supported property criteria from the request, combines semantic and structured retrieval, applies explicit constraints, orders valid candidates and validates the outcome before returning results through the local API. Processing stays inside the Veyra environment. Search quality and query coverage continue to be refined.</p>
+        <div class="product-grid">
+          <article><span class="product-number">01 / Understand</span><h3>Query understanding</h3><p>Extract supported property criteria from natural-language requests using deterministic rules and canonical property semantics.</p></article>
+          <article><span class="product-number">02 / Retrieve</span><h3>Semantic + structured retrieval</h3><p>Surface candidates using semantic similarity together with structured property signals.</p></article>
+          <article><span class="product-number">03 / Check</span><h3>Constraint enforcement</h3><p>Check explicit requirements such as location, bedrooms, area and exclusions. Any relaxed alternative is identified separately.</p></article>
+          <article><span class="product-number">04 / Order</span><h3>Result ordering</h3><p>Order valid candidates by relevance, keeping full matches ahead of weaker or relaxed alternatives.</p></article>
+          <article><span class="product-number">05 / Validate</span><h3>Outcome validation</h3><p>Distinguish full, weak and relaxed matches, detect contradictory requirements and identify no-match outcomes.</p></article>
+          <article><span class="product-number">06 / Return</span><h3>API response</h3><p>Return results with their actual outcome state so your application can show what matched and what did not.</p></article>
+        </div>
       </div>
       <p id="demoStatus" class="demo-sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
       <div class="demo-footer"><p>See how this could fit your own property data and application.</p><a href="#walkthrough" class="veyra-text-link">Request a walkthrough <span aria-hidden="true">&#8599;</span></a></div>
@@ -326,7 +346,7 @@
       <ol class="product-flow" aria-label="How a property request moves through your systems"><li>Your website or internal tool</li><li>Your application backend</li><li>Veyra in your environment</li><li>Results in your interface</li></ol>
       <div class="product-grid product-grid-two">
         <article><h3>Your team keeps control.</h3><p>You continue to manage your listings, application and customer workflows. Your team controls the hosting, networking, storage and access for the Veyra deployment.</p></article>
-        <article><h3>Veyra adds the search layer.</h3><p>Supported request parsing, search by meaning, structured filters, result ranking and recommendations help your application surface relevant properties from the data prepared for Veyra.</p></article>
+        <article><h3>Constraint-aware results.</h3><p>Explicit requirements are checked separately from softer preferences so results can distinguish a full match from a compromise. Your application receives the outcome state alongside the results.</p></article>
       </div>
       <div class="product-grid">
         <article><span class="product-number">01 / Prepare</span><h3>Connect your listing data.</h3><p>Map the property fields Veyra needs and agree how new or changed listings reach the search engine.</p></article>
@@ -352,7 +372,7 @@
     <div class="product-section-inner">
       <p class="product-eyebrow">Active development</p>
       <h2>Functional today.<br>Continuing to improve.</h2>
-      <p class="product-lead">Natural-language querying, semantic and structured retrieval, result ranking and diversification, and property recommendations are implemented. Search quality and query coverage continue to be refined.</p>
+      <p class="product-lead">Natural-language querying, semantic and structured retrieval, constraint-aware result handling, ranking, diversification and property recommendations are implemented. Search quality and query coverage continue to be refined.</p>
       <div class="product-grid product-grid-two">
         <article><h3>Price intelligence</h3><p>Price intelligence is available through the V1 API where licensed and configured. Discuss availability for your deployment.</p></article>
         <article><h3>A focused product scope</h3><p>Veyra focuses on property search, retrieval and recommendations within existing systems. General-purpose chat, enterprise document analysis and workflow automation are outside its current scope.</p></article>
@@ -366,7 +386,7 @@
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-1" aria-expanded="true" aria-controls="faq-answer-1"><span class="product-number">02</span><span class="product-faq-question">Is Veyra fully air-gapped?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" aria-hidden="false" style="max-height:none;opacity:1;"><p>No. Periodic communication with the Tandish control plane is part of commercial licensing and rights validation. An offline grace mechanism exists, but Veyra is not designed for permanent disconnection. Supported local models run locally after acquisition.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-2" aria-expanded="true" aria-controls="faq-answer-2"><span class="product-number">03</span><span class="product-faq-question">How is Veyra deployed?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra uses a containerized customer deployment with Docker. V1 assumes one active engine-platform replica per installation. Your team configures TLS and controls hosting, networking and storage; logs use the customer or container environment.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-3" aria-expanded="true" aria-controls="faq-answer-3"><span class="product-number">04</span><span class="product-faq-question">How does our application integrate?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="false" style="max-height:none;opacity:1;"><p>Your application backend connects to the local Veyra /v1 API using project API keys, then presents the returned search results or recommendations in your own interface. Your team maps listing data, manages imports and makes the required application changes. Price intelligence is available where configured and licensed.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-4" aria-expanded="true" aria-controls="faq-answer-4"><span class="product-number">05</span><span class="product-faq-question">What is the current product status?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra is functional and in active development, with reliability, search quality and query coverage being refined before broader production rollout. Core query parsing uses rules and location dictionaries; it does not depend on an external LLM.</p></div></div>
+      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-4" aria-expanded="true" aria-controls="faq-answer-4"><span class="product-number">05</span><span class="product-faq-question">What is the current product status?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra is functional and in active development. Natural-language querying, semantic and structured retrieval, constraint-aware results, ranking, diversification and property recommendations are implemented. Supported query criteria are parsed with deterministic rules and canonical property semantics. Search quality, query coverage and reliability continue to be refined.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-5" aria-expanded="true" aria-controls="faq-answer-5"><span class="product-number">06</span><span class="product-faq-question">Who handles operation and support?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-5" role="region" aria-labelledby="faq-question-5" aria-hidden="false" style="max-height:none;opacity:1;"><p>Your team retains control of its infrastructure. Deployment requirements and operational responsibilities are discussed with Tandish for your environment. Tandish controls licensed releases and update authority; no public support SLA or fixed deployment timeline is currently defined.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-6" aria-expanded="true" aria-controls="faq-answer-6"><span class="product-number">07</span><span class="product-faq-question">What happens after a walkthrough request?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-6" role="region" aria-labelledby="faq-question-6" aria-hidden="false" style="max-height:none;opacity:1;"><p>Tandish discusses the property search experience you want to improve, your listing data and the application your team already runs. The walkthrough covers product fit, integration work, hosting and operational requirements, with next steps agreed if there is a fit.</p></div></div>
       <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-7" aria-expanded="true" aria-controls="faq-answer-7"><span class="product-number">08</span><span class="product-faq-question">Does Veyra replace our website or property management system?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-7" role="region" aria-labelledby="faq-question-7" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra adds property search and recommendations behind your existing application. Your team keeps its website, listing system and customer workflows, and integrates Veyra where search or recommendations are needed. It is not a complete website, CRM or property management system.</p></div></div>
@@ -396,6 +416,6 @@
 </footer>
 
 <script defer src="../assets/js/veyra-experience.v1.js?v=27"></script>
-<script defer src="../assets/js/veyra-demo.js?v=1"></script>
+<script defer src="../assets/js/veyra-demo.js?v=2"></script>
 </body>
 </html>
