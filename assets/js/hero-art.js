@@ -19,8 +19,8 @@
       list[i].normal=turn(list[i].normal);
     }
   }
-  function scene(kind,time){
-    const list=[],open=openness(time);
+  function scene(kind,time,scroll=0){
+    const list=[],open=openness(time)*(1-scroll)+scroll;
     if(kind==='tandish'){
       for(let i=0;i<15;i++){
         const start=list.length;
@@ -71,7 +71,7 @@
     // Fit the entire motion envelope once, so the sculpture never zooms as parts move.
     for(const t of [0,3,6,9,12]){
       const model=scene(kind,t);
-      for(const yawOffset of [-.095,.095])for(const pitchOffset of [-.045,.045]){
+      for(const yawOffset of [-.095,.095,.415])for(const pitchOffset of [-.045,.045,.225]){
         const yaw=(kind==='tandish'?-.56:-.65)+yawOffset,pitch=(kind==='tandish'?.32:.48)+pitchOffset;
         for(const face of model)for(const vertex of face.points){
           const p=rotate(vertex,yaw,pitch),s=1/(1-p[2]/9),x=p[0]*s,y=-p[1]*s;
@@ -82,10 +82,10 @@
     const result={minX,maxX,minY,maxY};framing.set(kind,result);return result;
   }
   const dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
-  function viewFaces(kind,time,px=0,py=0){
-    const yaw=(kind==='tandish'?-.56:-.65)+Math.sin(time*.065)*.055+px*.08;
-    const pitch=(kind==='tandish'?.32:.48)+Math.sin(time*.05)*.025+py*.04;
-    return scene(kind,time).map(face=>({...face,points:face.points.map(p=>rotate(p,yaw,pitch)),normal:rotate(face.normal,yaw,pitch)}))
+  function viewFaces(kind,time,px=0,py=0,scroll=0){
+    const yaw=(kind==='tandish'?-.56:-.65)+Math.sin(time*.065)*.055+px*.08+scroll*.32;
+    const pitch=(kind==='tandish'?.32:.48)+Math.sin(time*.05)*.025+py*.04+scroll*.18;
+    return scene(kind,time,scroll).map(face=>({...face,points:face.points.map(p=>rotate(p,yaw,pitch)),normal:rotate(face.normal,yaw,pitch)}))
       .filter(f=>dot(f.normal,[-f.points[0][0],-f.points[0][1],9-f.points[0][2]])>1e-7);
   }
   function projectFaces(faces,kind,w,h,light=false){
@@ -101,7 +101,7 @@
       return {points:face.points.map(p=>{const s=1/(1-p[2]/9);return[(p[0]*s-cx)*scale+w*.5,(-p[1]*s-cy)*scale+h*.47];}),depths:face.points.map(p=>9-p[2]),color};
     });
   }
-  function renderData(kind,time,w,h,px=0,py=0,light=false){return projectFaces(viewFaces(kind,time,px,py),kind,w,h,light);}
+  function renderData(kind,time,w,h,px=0,py=0,light=false,scroll=0){return projectFaces(viewFaces(kind,time,px,py,scroll),kind,w,h,light);}
   // Static SVG fallback uses plane splitting rather than average-depth sorting.
   // This runs when generating the assets, never in the live animation loop.
   function orderFaces(faces){
@@ -153,11 +153,19 @@
   rendererReady=initRenderer();if(!rendererReady)return;
   const hero=document.getElementById('hero'),preference=matchMedia('(prefers-reduced-motion: reduce)'),finePointer=matchMedia('(hover:hover) and (pointer:fine)');
   let width=0,height=0,ratio=1,time=0,last=0,frame=null,visible=true,targetX=0,targetY=0,pointerX=0,pointerY=0;
+  let scrollTarget=0,scrollProgress=0;
+  function readScroll(){
+    const bounds=hero.getBoundingClientRect();
+    const progress=Math.max(0,Math.min(1,-bounds.top/(bounds.height*.55)));
+    scrollTarget=preference.matches?0:progress*progress*(3-2*progress);
+  }
+  window.addEventListener('scroll',readScroll,{passive:true});
   let vertices=new Float32Array(0);
   function paint(){
     if(!rendererReady||gl.isContextLost()||!width||!height)return;
     const light=document.documentElement.getAttribute('data-theme')==='light';
-    const faces=renderData(art.dataset.heroArt,preference.matches?0:time,width,height,pointerX,pointerY,light);
+    const faces=renderData(art.dataset.heroArt,preference.matches?0:time,width,height,pointerX,pointerY,light,scrollProgress);
+    art.style.transform=scrollProgress?`translateY(${scrollProgress*Math.min(100,hero.clientHeight*.12)}px)`: '';
     const needed=faces.length*6*7;if(vertices.length<needed)vertices=new Float32Array(needed);
     let cursor=0;
     for(const face of faces)for(const index of [0,1,2,0,2,3]){
@@ -175,10 +183,18 @@
     gl.drawArrays(gl.TRIANGLES,0,cursor/7);art.setAttribute('data-ready','');
   }
   function tick(now){frame=null;if(!rendererReady||gl.isContextLost()||!visible||document.hidden||preference.matches){last=0;return;}
-    if(!last||now-last>=1000/30){time+=last?Math.min(now-last,100)/1000:0;last=now;pointerX+=(targetX-pointerX)*.025;pointerY+=(targetY-pointerY)*.025;paint();}frame=requestAnimationFrame(tick);
+    if(!last||now-last>=1000/30){
+      const elapsed=last?Math.min(now-last,100):0;
+      time+=elapsed/1000;last=now;
+      pointerX+=(targetX-pointerX)*.025;pointerY+=(targetY-pointerY)*.025;
+      // Keep scroll response consistent on both fast and slower graphics hardware.
+      scrollProgress+=(scrollTarget-scrollProgress)*(1-Math.exp(-elapsed/160));
+      if(Math.abs(scrollTarget-scrollProgress)<.0001)scrollProgress=scrollTarget;
+      paint();
+    }frame=requestAnimationFrame(tick);
   }
-  function sync(){if(frame!==null)cancelAnimationFrame(frame);frame=null;last=0;if(preference.matches){targetX=targetY=pointerX=pointerY=0;}paint();if(rendererReady&&!gl.isContextLost()&&visible&&!document.hidden&&!preference.matches)frame=requestAnimationFrame(tick);}
-  function resize(){width=art.clientWidth;height=art.clientHeight;ratio=Math.min(devicePixelRatio||1,1.5);canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);sync();}
+  function sync(){readScroll();if(preference.matches)scrollProgress=0;if(frame!==null)cancelAnimationFrame(frame);frame=null;last=0;if(preference.matches){targetX=targetY=pointerX=pointerY=0;}paint();if(rendererReady&&!gl.isContextLost()&&visible&&!document.hidden&&!preference.matches)frame=requestAnimationFrame(tick);}
+  function resize(){width=art.clientWidth;height=art.clientHeight;ratio=Math.min(devicePixelRatio||1,1.5);canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);readScroll();scrollProgress=scrollTarget;sync();}
   hero.addEventListener('pointermove',e=>{if(preference.matches||!finePointer.matches||e.pointerType!=='mouse')return;const r=hero.getBoundingClientRect();targetX=(e.clientX-r.left)/r.width-.5;targetY=(e.clientY-r.top)/r.height-.5;},{passive:true});
   hero.addEventListener('pointerleave',()=>{targetX=targetY=0;});
   new ResizeObserver(resize).observe(art);
