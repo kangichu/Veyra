@@ -57,7 +57,8 @@
 <link rel="stylesheet" href="../assets/css/fonts.css?v=3">
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<link rel="stylesheet" href="../assets/css/veyra-experience.v1.css?v=23">
+<link rel="stylesheet" href="../assets/css/veyra-experience.v1.css?v=24">
+<link rel="stylesheet" href="../assets/css/veyra-product.css?v=1">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -183,12 +184,6 @@
 </script>
 </head><body class="product-page">
 
-<!-- Reading progress stays at the viewport edge, clear of page content. -->
-<div id="readingProgress" class="reading-progress" aria-hidden="true">
-  <span class="reading-progress-fill"></span>
-  <span class="reading-progress-tip"></span>
-</div>
-
 <div class="x1"></div>
 
 <div id="cursor" class="x2"></div>
@@ -231,9 +226,14 @@
     <div id="heroContent" class="x30">
       <div class="x31"><span class="x32"></span>Veyra by Tandish</div>
       <h1 class="product-hero-title">Property intelligence.<br><span>On your infrastructure.</span></h1>
+      <p class="hero-summary">Add natural-language property search and recommendations to your existing systems, running on infrastructure you control.</p>
+      <div class="hero-actions">
+        <a href="#story" class="veyra-primary-link">See the demo <span aria-hidden="true">&#8595;</span></a>
+        <a href="#walkthrough" class="veyra-text-link">Request a walkthrough <span aria-hidden="true">&#8599;</span></a>
+      </div>
     </div>
     <div id="heroFoot" class="x42">
-      <p class="x43">Self-hosted real-estate intelligence by Tandish. Add natural-language search, retrieval and recommendations to the systems your team already operates.</p>
+      <p class="hero-footnote">For teams building property discovery.</p>
       <div id="heroStats" class="x44">
         <div class="x45"><span class="x46">Real Estate</span><span class="x47">FOCUS</span></div>
         <div class="x45"><span class="x46">Self-hosted</span><span class="x47">DEPLOYMENT</span></div>
@@ -242,6 +242,51 @@
         <span>SCROLL</span>
         <span class="x49"><span class="x50"></span></span>
       </div>
+    </div>
+  </section>
+
+  <section id="story" class="product-section veyra-demo" aria-labelledby="demoTitle">
+    <div class="product-section-inner">
+      <div class="demo-heading">
+        <div>
+          <p class="product-eyebrow">The search experience</p>
+          <h2 id="demoTitle">From a few words<br>to a place that fits.</h2>
+        </div>
+        <p class="demo-disclaimer">An illustrative interface with sample listings.<br>These examples are not live search results.</p>
+      </div>
+      <div id="demoExamples" class="demo-examples" role="group" aria-label="Choose a sample property search" hidden>
+        <span>Explore an example</span>
+        <button type="button" data-example="apartment" aria-pressed="true" aria-controls="demoJourney">An apartment</button>
+        <button type="button" data-example="house" aria-pressed="false" aria-controls="demoJourney">A family home</button>
+      </div>
+      <div id="demoJourney" class="demo-journey">
+        <section class="demo-step" aria-labelledby="describeTitle">
+          <div class="demo-step-heading"><span class="product-number">01 / Describe</span><h3 id="describeTitle">Start with what<br>you have in mind.</h3><p>A request in everyday language.</p></div>
+          <div class="demo-request">
+            <span class="demo-label">Your property search</span>
+            <blockquote id="demoQuery">A three-bedroom apartment in Westlands under KES 18M.</blockquote>
+            <span class="demo-request-note">One request. The details together.</span>
+          </div>
+        </section>
+        <section class="demo-step" aria-labelledby="understandTitle">
+          <div class="demo-step-heading"><span class="product-number">02 / Understand</span><h3 id="understandTitle">Give the request<br>structure.</h3><p>Identify the criteria that guide the search.</p></div>
+          <dl class="demo-criteria">
+            <div><dt>Property type</dt><dd id="demoType">Apartment</dd></div>
+            <div><dt>Location</dt><dd id="demoLocation">Westlands</dd></div>
+            <div><dt>Bedrooms</dt><dd id="demoBedrooms">3 bedrooms</dd></div>
+            <div><dt>Budget</dt><dd id="demoBudget">Under KES 18M</dd></div>
+          </dl>
+        </section>
+        <section class="demo-step demo-step-results" aria-labelledby="resultsTitle">
+          <div class="demo-step-heading"><span class="product-number">03 / Discover</span><h3 id="resultsTitle">Bring relevant<br>listings forward.</h3><p>Keep the original request in view when comparing properties.</p></div>
+          <div class="demo-results">
+            <article class="demo-listing"><div class="demo-listing-top"><span class="demo-label">Sample listing 01</span><span aria-hidden="true">01</span></div><h4 id="demoName0">Westlands apartment</h4><p id="demoDetails0" class="demo-listing-details">3 bedrooms &middot; 2 bathrooms &middot; Westlands</p><p id="demoPrice0" class="demo-listing-price">KES 16.8M</p><p id="demoReason0" class="demo-listing-reason">Matches the location and bedroom count, within the KES 18M budget.</p></article>
+            <article class="demo-listing"><div class="demo-listing-top"><span class="demo-label">Sample listing 02</span><span aria-hidden="true">02</span></div><h4 id="demoName1">Westlands apartment</h4><p id="demoDetails1" class="demo-listing-details">3 bedrooms &middot; 3 bathrooms &middot; Westlands</p><p id="demoPrice1" class="demo-listing-price">KES 17.5M</p><p id="demoReason1" class="demo-listing-reason">Another match for the same request, with an additional bathroom.</p></article>
+          </div>
+        </section>
+      </div>
+      <p id="demoStatus" class="demo-sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+      <div class="demo-footer"><p>See how this could fit your own property data and application.</p><a href="#walkthrough" class="veyra-text-link">Request a walkthrough <span aria-hidden="true">&#8599;</span></a></div>
     </div>
   </section>
 
@@ -274,160 +319,6 @@
       </div>
     </div>
   </section>
-
-  <div id="story" class="x59">
-    <div class="x60">
-      <div class="x61"><span class="x62"></span>Illustrative product demo</div>
-      <p class="x100">Sample listings and illustrative interface concepts. Pricing and map examples are not live product outputs.</p>
-    </div>
-
-    <section class="x63">
-      <div class="x64">
-        <div class="x65">01 — Today</div>
-        <h2 class="x66">Most property websites make customers search.</h2>
-      </div>
-      <div class="x67">
-        <div class="x68">
-          <div class="x69">
-            <div class="x70"></div>
-            <div class="x70"></div>
-            <div class="x70"></div>
-          </div>
-          <div class="x71">your-site.example</div>
-        </div>
-        <div class="x72">
-          <div class="x73">Find Your Perfect Property</div>
-          <div class="x74">Explore sample listings across Nairobi</div>
-          <div class="x75">
-            <div class="x76"></div>
-            <div id="s1Filters" class="x77"></div>
-            <div class="x78">Search</div>
-          </div>
-        </div>
-        <div id="s1Cards" class="x79"></div>
-      </div>
-    </section>
-
-    <section id="scene2" class="x80">
-      <div class="x81">
-        <div class="x82">
-          <div class="x65">02 — Simplification</div>
-          <h2 class="x83">What if your website understood people instead?</h2>
-        </div>
-        <div class="x84">
-          <div id="s2Filters" class="x85"></div>
-          <div id="s2SearchBar" class="x86">
-            <span class="x87">Describe the property you're looking for…</span>
-          </div>
-          <div id="s2Cards" class="x88"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="scene3" class="x89">
-      <div class="x82">
-        <div class="x65">03 — Understanding</div>
-        <h2 class="x83">From a request to search criteria.</h2>
-      </div>
-      <div class="x90">
-        <div class="x91">
-          <span id="typedText"></span><span class="x92"></span>
-        </div>
-        <div id="s3Tokens" class="x93"></div>
-      </div>
-    </section>
-
-    <section id="scene4" class="x94">
-      <div class="x95">
-        <div class="x65">04 — Intelligent Results</div>
-        <h2 class="x83">Relevant results instead of endless filtering.</h2>
-      </div>
-      <div id="s4Cards" class="x96"></div>
-    </section>
-
-    <section id="scene5" class="x97">
-      <div class="x98">
-        <div class="x65">05 — Recommendations</div>
-        <h2 class="x99">Continue the property search.</h2>
-        <div class="x100">Example recommendations based on search interests</div>
-      </div>
-      <div id="s5Chips" class="x101"></div>
-      <div class="x102">
-        <div id="s5Marquee" class="x103"></div>
-      </div>
-    </section>
-
-    <section id="scene6" class="x94">
-      <div class="x95">
-        <div class="x65">06 — The Listing</div>
-        <h2 class="x83">A listing that explains itself.</h2>
-      </div>
-      <div class="x104">
-        <div id="s6Left" class="x105">
-          <div class="x106">
-            <div class="x107">
-              <div class="x108">KES 24.5M</div>
-              <div class="x109">Riverside Drive, Westlands · 3 bd · 3 ba · 2,400 sqft</div>
-            </div>
-          </div>
-          <div class="x110">
-            <div class="x111">Example listing summary</div>
-            <div class="x112">Illustrative summary: a three-bedroom apartment on Riverside Drive, Westlands, with three bathrooms and 2,400 sqft of space.</div>
-          </div>
-        </div>
-        <div id="s6Right" class="x113">
-          <div class="s6r x114">
-            <div class="x115">Example neighbourhood map</div>
-            <div class="x116">
-              <div class="x117"></div>
-              <div class="x118"></div>
-              <div class="x119"></div>
-            </div>
-            <div class="x120">
-              <span>Schools · 6 min</span><span>Hospital · 9 min</span><span>Transit · 4 min</span>
-            </div>
-          </div>
-          <div class="s6r x121">
-            <div class="x115">Illustrative price trends</div>
-            <svg viewBox="0 0 240 60" class="x122"><polyline points="0,48 30,44 60,40 90,42 120,30 150,26 180,18 210,14 240,8" fill="none" stroke="var(--ember)" stroke-width="2"/></svg>
-          </div>
-          <div class="s6r x123">
-            <div class="x115">Related Properties</div>
-            <div id="s6Related" class="x124"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="scene7" class="x125">
-      <div class="x126">
-        <div class="x127">
-          <div class="x65">07 — Business Transformation</div>
-          <h2 class="x83">The whole journey changes.</h2>
-        </div>
-        <div class="x128">
-          <div class="x129">
-            <div class="x130">Before</div>
-            <div id="s7Old"></div>
-          </div>
-          <div class="x131">
-            <div class="x132">After</div>
-            <div id="s7New"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="scene8" class="x133">
-      <div class="x134">
-        <div class="x65">08 — Deployment Philosophy</div>
-        <h2 class="x83">It lives inside your infrastructure.</h2>
-      </div>
-      <div id="s8Nodes" class="x135"></div>
-      <div id="s8Emphasis" class="x136"></div>
-      <div id="s8Trust" class="x137">Veyra processes property data locally. External connections are governed by your deployment configuration.</div>
-    </section>
-  </div>
 
   <section id="veyra" class="x138">
     <div class="x139"><span class="x32"></span>A Tandish product</div>
@@ -691,6 +582,7 @@
   <div class="x253">© 2026 Tandish Group</div>
 </footer>
 
-<script defer src="../assets/js/veyra-experience.v1.js?v=24"></script>
+<script defer src="../assets/js/veyra-experience.v1.js?v=26"></script>
+<script defer src="../assets/js/veyra-demo.js?v=1"></script>
 </body>
 </html>
