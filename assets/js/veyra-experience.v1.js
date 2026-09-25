@@ -27,7 +27,6 @@
   }
   const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
   const reducedMotion = () => motionPreference.matches;
-  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   // ---- FAQ accordion ----
   const faqList = document.getElementById('faqList');
   if (faqList) {
@@ -128,49 +127,5 @@
     scrollTopBtn.style.pointerEvents = show ? 'auto' : 'none';
   }, {passive:true});
   scrollTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:reducedMotion() ? 'auto' : 'smooth'}));
-
-  // Pause decorative frames on small screens, hidden tabs and reduced motion.
-  function motionLoop(callback, enabled){
-    let frame = null;
-    function tick(){
-      frame = null;
-      if (document.hidden || reducedMotion() || !enabled()) return;
-      callback();
-      frame = requestAnimationFrame(tick);
-    }
-    function restart(){ if (frame === null) tick(); }
-    window.addEventListener('resize', restart);
-    document.addEventListener('visibilitychange', restart);
-    motionPreference.addEventListener('change', restart);
-    restart();
-  }
-
-  // ---- Custom cursor ----
-  const cursor = document.getElementById('cursor');
-  function cursorVisible(){ return window.innerWidth > 860; }
-  cursor.style.display = cursorVisible() ? 'block' : 'none';
-  let mx = innerWidth/2, my = innerHeight/2, cx = mx, cy = my;
-  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  motionLoop(()=>{
-    cx += (mx-cx)*.18; cy += (my-cy)*.18;
-    cursor.style.left = cx+'px'; cursor.style.top = cy+'px';
-  }, cursorVisible);
-  function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
-  document.querySelectorAll('a,button').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.style.width='44px'; cursor.style.height='44px'; cursor.style.background=cssVar('--white'); });
-    el.addEventListener('mouseleave', () => { cursor.style.width='8px'; cursor.style.height='8px'; cursor.style.background=cssVar('--signal'); });
-  });
-
-  // ---- Responsive display toggles ----
-  function applyResponsive(){
-    const vw = window.innerWidth;
-    cursor.style.display = vw<=860 ? 'none':'block';
-
-
-
-  }
-  window.addEventListener('resize', applyResponsive);
-  applyResponsive();
-
 
 })();
