@@ -1,5 +1,5 @@
 /* Veyra's introduction and demo: ordinary document flow, readable without scripts. */
-.product-page #hero{min-height:min(820px,100svh);padding:clamp(144px,19vh,200px) 0 36px;gap:56px;}
+.product-page #hero{min-height:100vh;min-height:100dvh;padding:clamp(144px,19vh,200px) 0 36px;gap:56px;}
 .product-page .product-hero-title{font-size:clamp(42px,6.1vw,88px);max-width:24ch;line-height:1.07;}
 .product-page .hero-summary{max-width:620px;margin-top:28px;font-size:clamp(16px,1.5vw,19px);line-height:1.65;color:var(--fog);}
 .hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:16px 28px;margin-top:32px;}
@@ -45,7 +45,7 @@
 .demo-footer p{font-size:13px;line-height:1.6;color:var(--fog);}
 .demo-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
 @media(max-width:900px){.demo-heading{align-items:flex-start;flex-direction:column;}.demo-disclaimer{max-width:420px;}.demo-criteria{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media(max-width:760px){.product-page > .x5{background:var(--ink);}.product-page #hero{min-height:auto;padding-top:144px;gap:48px;}.product-page .hero-summary{margin-top:24px;}.product-page #heroFoot{gap:24px;}.demo-step{grid-template-columns:minmax(0,1fr);gap:24px;padding:28px 0;}.demo-step-heading p{max-width:36ch;}.demo-request{padding:24px;}.demo-footer{align-items:flex-start;flex-direction:column;gap:12px;}}
+@media(max-width:760px){.product-page > .x5{background:var(--ink);}.product-page #hero{padding-top:144px;gap:48px;}.product-page .hero-summary{margin-top:24px;}.product-page #heroFoot{gap:24px;}.demo-step{grid-template-columns:minmax(0,1fr);gap:24px;padding:28px 0;}.demo-step-heading p{max-width:36ch;}.demo-request{padding:24px;}.demo-footer{align-items:flex-start;flex-direction:column;gap:12px;}}
 @media(max-width:480px){.demo-results{grid-template-columns:minmax(0,1fr);}.hero-actions{align-items:flex-start;flex-direction:column;gap:10px;}.demo-examples > span{flex-basis:100%;margin-bottom:4px;}}
 @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth;}}
 

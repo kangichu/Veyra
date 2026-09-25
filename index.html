@@ -55,7 +55,7 @@
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css?v=3">
-<link rel="stylesheet" href="assets/css/veyra-experience.v1.css?v=25">
+<link rel="stylesheet" href="assets/css/veyra-experience.v1.css?v=27">
 <link rel="stylesheet" href="assets/css/tandish-home.css?v=24">
 <script type="application/ld+json">
 {
@@ -126,6 +126,7 @@
   "description": "Tandish builds software for business and everyday life: Veyra for self-hosted property search, and Saelis, an upcoming app for shared experiences and connection."
 }
 </script>
+<link rel="stylesheet" href="assets/css/hero-design.css?v=2">
 </head><body class="tandish-home">
 
 <div class="x1"></div>
@@ -144,28 +145,23 @@
 </nav>
 
 <main id="top">
-  <section id="hero" class="x17">
-    <canvas id="heroContours" class="hero-contours" aria-hidden="true"></canvas>
-    <div id="heroStatus" class="x28">
-      <span class="x32" aria-hidden="true"></span>FOCUSED SOFTWARE PRODUCTS
-    </div>
-    <div id="heroContent" class="x30">
-      <div class="x31"><span class="x32"></span>Tandish Group</div>
-      <h1 class="x33 home-hero-title">
-        <span class="x34"><span class="x35"><span class="x36">Built</span></span> <span class="x35"><span class="x37">around</span></span> <span class="x35"><span class="x38">the problem,</span></span></span>
-        <span class="x34"><span class="x35"><span class="x39">not</span></span> <span class="x35"><span class="x40">the</span></span> <span class="x35"><span class="x41">trend.</span></span></span>
-      </h1>
+  <section id="hero" class="x17 designed-hero">
+    <div class="hero-stage">
+      <div id="heroContent" class="x30">
+        <div class="x31"><span class="x32"></span>Tandish Group / Product company</div>
+        <h1 class="home-hero-title">Built around<br>the problem,<br><span>not the trend.</span></h1>
+        <p class="hero-intro">Tandish is a software product company. We build Veyra for property search in business systems, and Saelis for connecting people through shared experiences.</p>
+        <a class="hero-editorial-link" href="#products">Explore our products <span aria-hidden="true">&#8599;</span></a>
+      </div>
+      <div class="hero-art" data-hero-art="tandish" aria-hidden="true"><img class="hero-art-fallback" src="assets/images/hero-tandish.svg" alt="" width="800" height="800"><canvas id="heroContours"></canvas><span class="hero-art-corner hero-art-corner-a"></span><span class="hero-art-corner hero-art-corner-b"></span></div>
     </div>
     <div id="heroFoot" class="x42">
-      <p class="x43">Tandish is a software product company. We build Veyra for property search in business systems, and Saelis for connecting people through shared experiences.</p>
-      <div id="heroStats" class="x44">
-        <div class="x45"><span class="x46">Product company</span><span class="x47">FOCUS</span></div>
-        <div class="x45"><span class="x46">Multi-industry</span><span class="x47">DIRECTION</span></div>
+      <div id="heroStatus" class="x28"><span class="x32" aria-hidden="true"></span>FOCUSED SOFTWARE PRODUCTS</div>
+      <div id="heroStats" class="x44 hero-product-links">
+        <a href="/veyra/">Veyra <span>Real estate</span><span aria-hidden="true">&#8599;</span></a>
+        <a href="#products" data-hero-product="Saelis">Saelis <span>Social discovery &middot; Coming soon</span><span aria-hidden="true">&#8595;</span></a>
       </div>
-      <div class="x48">
-        <span>SCROLL</span>
-        <span class="x49"><span class="x50"></span></span>
-      </div>
+      <a class="hero-scroll" href="#products" aria-label="Scroll to our products"><span>Explore</span><span aria-hidden="true">&#8595;</span></a>
     </div>
   </section>
 
@@ -265,7 +261,8 @@
   <div class="x253">© 2026 Tandish Group</div>
 </footer>
 
-<script defer src="assets/js/veyra-experience.v1.js?v=27"></script>
+<script defer src="assets/js/veyra-experience.v1.js?v=30"></script>
 <script defer src="assets/js/tandish-products.js?v=4"></script>
+<script defer src="assets/js/hero-art.js?v=3"></script>
 </body>
 </html>

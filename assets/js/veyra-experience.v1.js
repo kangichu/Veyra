@@ -161,145 +161,16 @@
     el.addEventListener('mouseleave', () => { cursor.style.width='8px'; cursor.style.height='8px'; cursor.style.background=cssVar('--signal'); });
   });
 
-  // ---- Hero contour field ----
-  // Two flowing ribbons frame the headline. Cap resolution and frame rate, and
-  // stop drawing entirely offscreen, in hidden tabs, or for reduced motion.
-  const hero = document.getElementById('hero');
-  const contourCanvas = document.getElementById('heroContours');
-  const contourContext = contourCanvas.getContext('2d');
-  const scrollContours = document.body.classList.contains('tandish-home');
-  if (contourContext) {
-    let width = 0, height = 0, ratio = 1, frame = null, lastTime = 0, elapsed = 0;
-    let visible = true, pointerX = 0, pointerY = 0, offsetX = 0, offsetY = 0;
-    let signal, ember, dark;
-    let ribbonGradients = [], highlightGradients = [];
-    function cacheContourGradients(){
-      contourContext.setTransform(ratio,0,0,ratio,0,0);
-      ribbonGradients = []; highlightGradients = [];
-      for (let ribbon = 0; ribbon < 2; ribbon++) {
-        const lower = ribbon === 1;
-        const color = contourContext.createLinearGradient(0,0,width,0);
-        color.addColorStop(0,'transparent');
-        color.addColorStop(.45,lower ? ember : signal);
-        color.addColorStop(1,signal);
-        ribbonGradients.push(color);
-        const highlight = contourContext.createLinearGradient(0,0,width,0);
-        highlight.addColorStop(0,'transparent');
-        highlight.addColorStop(.35,lower ? signal : ember);
-        highlight.addColorStop(1,'transparent');
-        highlightGradients.push(highlight);
-      }
-    }
-    function contourColors(){
-      signal = cssVar('--signal'); ember = cssVar('--ember');
-      dark = document.documentElement.getAttribute('data-theme') === 'dark';
-      cacheContourGradients();
-    }
-    function paintContours(time){
-      // Let the homepage ribbons respond to scrolling within the hero.
-      const scroll = scrollContours && !reducedMotion()
-        ? clamp((window.scrollY - hero.offsetTop) / Math.max(height, 1), 0, 1) : 0;
-      time += scroll * 1.5;
-      const ctx = contourContext;
-      ctx.setTransform(ratio,0,0,ratio,0,0);
-      ctx.clearRect(0,0,width,height);
-      const compact = width < 760;
-      const count = compact ? 22 : 38;
-      // The quieter centre band leaves the existing headline unobstructed.
-      for (let ribbon=0;ribbon<2;ribbon++) {
-        const lower = ribbon === 1;
-        ctx.strokeStyle = ribbonGradients[ribbon];
-        for(let i=0;i<count;i++) {
-          const n = i/(count-1), spread = (n-.5);
-          const wave = Math.sin(time*.28 + n*1.8);
-          const drift = Math.cos(time*.2 + n*1.2);
-          const base = height*(lower ? .77 : .15) + scroll*height*(lower ? -.025 : .025);
-          const band = height*(lower ? .075 : .14);
-          ctx.globalAlpha = (dark ? .38 : .24) * (lower ? .7 : 1) * (.45+.55*Math.sin(n*Math.PI));
-          ctx.lineWidth = i%6===0 ? 1.2 : .65;
-          ctx.beginPath();
-          ctx.moveTo(width*-.08,base + spread*band + offsetY);
-          ctx.bezierCurveTo(
-            width*.38 + offsetX,base + height*(lower ? -.12 : .2) + spread*band*.35 + wave*height*.04,
-            width*.73 + offsetX,base - height*(lower ? -.11 : .13) + spread*band*1.4 + drift*height*.04,
-            width*1.12,base + height*(lower ? -.01 : .06) + spread*band*.7
-          );
-          ctx.stroke();
-        }
-        // A restrained highlight travels along a few contours, suggesting flow.
-        if (!reducedMotion()) {
-          ctx.globalAlpha = dark ? .34 : .22;
-          ctx.strokeStyle = highlightGradients[ribbon];
-          ctx.lineWidth = 1.3;
-          ctx.setLineDash([width*.055,width*1.8]);
-          ctx.lineDashOffset = -((time*28) % (width*1.855));
-          ctx.stroke();
-          ctx.setLineDash([]);
-        }
-      }
-      ctx.globalAlpha = 1;
-    }
-    function tickContours(now){
-      frame = null;
-      if (!visible || document.hidden || reducedMotion()) { lastTime = 0; return; }
-      if (!lastTime || now-lastTime >= 1000/30) {
-        elapsed += lastTime ? Math.min(now-lastTime,100)/1000 : 0;
-        lastTime = now;
-        offsetX += (pointerX-offsetX)*.06;
-        offsetY += (pointerY-offsetY)*.06;
-        paintContours(elapsed);
-      }
-      frame = requestAnimationFrame(tickContours);
-    }
-    function syncContours(){
-      if (frame !== null) { cancelAnimationFrame(frame); frame = null; }
-      lastTime = 0;
-      if (reducedMotion()) { offsetX = offsetY = 0; paintContours(0); }
-      else if (visible && !document.hidden) { paintContours(elapsed); frame = requestAnimationFrame(tickContours); }
-    }
-    function resizeContours(){
-      const nextWidth = hero.clientWidth, nextHeight = hero.clientHeight;
-      const nextRatio = Math.min(devicePixelRatio || 1,1.5);
-      if (width === nextWidth && height === nextHeight && ratio === nextRatio) return;
-      width = nextWidth; height = nextHeight;
-      ratio = Math.min(devicePixelRatio || 1,1.5);
-      contourCanvas.width = Math.round(width*ratio); contourCanvas.height = Math.round(height*ratio);
-      cacheContourGradients();
-      syncContours();
-    }
-    hero.addEventListener('pointermove', e => {
-      if (reducedMotion() || e.pointerType !== 'mouse') return;
-      const rect = hero.getBoundingClientRect();
-      pointerX = ((e.clientX-rect.left)/width-.5)*28;
-      pointerY = ((e.clientY-rect.top)/height-.5)*12;
-    }, {passive:true});
-    hero.addEventListener('pointerleave', () => { pointerX = pointerY = 0; });
-    new IntersectionObserver(entries => { visible = entries[0].isIntersecting; syncContours(); }).observe(hero);
-    new ResizeObserver(resizeContours).observe(hero);
-    new MutationObserver(() => { contourColors(); syncContours(); }).observe(document.documentElement, {attributes:true,attributeFilter:['data-theme']});
-    document.addEventListener('visibilitychange', syncContours);
-    motionPreference.addEventListener('change', syncContours);
-    contourColors(); resizeContours();
-  }
-
-  // ---- Existing hero parallax ----
-  const heroContent = document.getElementById('heroContent');
-  window.addEventListener('mousemove', (e)=>{
-    if (reducedMotion()) return;
-    const relX = e.clientX/window.innerWidth-0.5, relY = e.clientY/window.innerHeight-0.5;
-    heroContent.style.transform = `translate(${relX*-18}px, ${relY*-10}px)`;
-  });
-
   // ---- Responsive display toggles ----
   function applyResponsive(){
     const vw = window.innerWidth;
     cursor.style.display = vw<=860 ? 'none':'block';
-    document.getElementById('heroStatus').style.display = vw<=760 ? 'none':'flex';
-    document.getElementById('heroStats').style.display = vw<=900 ? 'none':'flex';
+
+
 
   }
   window.addEventListener('resize', applyResponsive);
   applyResponsive();
 
-  motionPreference.addEventListener('change', () => { heroContent.style.transform = ''; });
+
 })();
