@@ -28,13 +28,12 @@
   container.setAttribute('aria-roledescription', 'carousel');
   container.setAttribute('role', 'region');
 
-  function select(index, focusDirection) {
+  function select(index) {
     active = (index + slides.length) % slides.length;
     slides.forEach((slide, i) => { slide.hidden = i !== active; });
     choices.forEach((button, i) => button.setAttribute('aria-pressed', String(i === active)));
     const slide = slides[active];
     status.textContent = `${slide.dataset.product} selected. All three steps now show its problem, context and approach.`;
-    if (focusDirection) slide.querySelector(`[data-direction="${focusDirection}"]`).focus({preventScroll:true});
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       slide.animate([{opacity:0.45}, {opacity:1}], {duration:220, easing:'ease-out'});
     }
@@ -43,29 +42,7 @@
   slides.forEach((slide, index) => {
     slide.hidden = index !== active;
     slide.setAttribute('aria-roledescription', 'slide');
-    const controls = document.createElement('div');
-    controls.className = 'product-slider-controls';
-    const counter = document.createElement('span');
-    counter.className = 'product-slider-count';
-    counter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
-    controls.append(counter);
-    for (const [direction, delta, symbol] of [['previous', -1, '\u2190'], ['next', 1, '\u2192']]) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.dataset.direction = direction;
-      button.textContent = symbol;
-      const target = slides[(index + delta + slides.length) % slides.length].dataset.product;
-      button.setAttribute('aria-label', `${direction === 'next' ? 'Next' : 'Previous'} product: ${target}`);
-      button.addEventListener('click', () => select(active + delta, direction));
-      controls.append(button);
-    }
-    controls.addEventListener('keydown', event => {
-      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-      event.preventDefault();
-      select(active + (event.key === 'ArrowRight' ? 1 : -1), event.key === 'ArrowRight' ? 'next' : 'previous');
-    });
     const outcome = slide.querySelector('.home-story-outcome');
-    outcome.append(controls);
     let start = null;
     outcome.addEventListener('pointerdown', event => {
       if (event.pointerType !== 'touch' || event.target.closest('a,button')) return;
