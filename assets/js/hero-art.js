@@ -1,14 +1,38 @@
 ﻿/* Original geometric hero studies: no external renderer or animation dependency. */
 (function(){
-  const palette={ceramic:[198,205,224],edge:[149,160,184],signal:[100,112,228],warm:[190,167,145],focus:[225,150,107]};
+  const palette={ceramic:[210,215,229],edge:[146,157,182],signal:[105,117,230],focus:[222,149,105],indigo:[103,119,244],copper:[238,164,116]};
+  const clamp=value=>Math.max(0,Math.min(1,value));
+  const ease=value=>{const t=clamp(value);return t*t*t*(t*(t*6-15)+10);};
   function box(list,x,y,z,w,h,d,material='ceramic'){
+    // Small real chamfers catch the light without outlining every face.
+    if(material==='ceramic'||material==='focus'||material==='signal'){
+      const half=[w/2,h/2,d/2],center=[x,y,z],bevel=Math.min(.018,w*.12,h*.12,d*.12);
+      const face=(points,normal)=>list.push({points:points.map(p=>p.map((v,i)=>v+center[i])),normal,material});
+      for(let axis=0;axis<3;axis++)for(const sign of [-1,1]){
+        const other=[0,1,2].filter(i=>i!==axis),normal=[0,0,0];normal[axis]=sign;
+        face([[-1,-1],[1,-1],[1,1],[-1,1]].map(pair=>{const p=[0,0,0];p[axis]=sign*half[axis];other.forEach((a,i)=>p[a]=pair[i]*(half[a]-bevel));return p;}),normal);
+      }
+      for(let a=0;a<3;a++)for(let b=a+1;b<3;b++)for(const sa of [-1,1])for(const sb of [-1,1]){
+        const c=3-a-b,normal=[0,0,0];normal[a]=sa/Math.SQRT2;normal[b]=sb/Math.SQRT2;
+        face([[-1,0],[1,0],[1,1],[-1,1]].map(([sc,end])=>{const p=[0,0,0];p[a]=sa*(half[a]-(end?bevel:0));p[b]=sb*(half[b]-(end?0:bevel));p[c]=sc*(half[c]-bevel);return p;}),normal);
+      }
+      for(const sx of [-1,1])for(const sy of [-1,1])for(const sz of [-1,1]){
+        const signs=[sx,sy,sz];face([0,1,2].map(axis=>half.map((v,i)=>signs[i]*(v-(i===axis?0:bevel)))),signs.map(v=>v/Math.sqrt(3)));
+      }
+      return;
+    }
     const vertices=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]].map(p=>[x+p[0]*w/2,y+p[1]*h/2,z+p[2]*d/2]);
     const sides=[[[4,5,6,7],[0,0,1]],[[1,0,3,2],[0,0,-1]],[[5,1,2,6],[1,0,0]],[[0,4,7,3],[-1,0,0]],[[7,6,2,3],[0,1,0]],[[0,1,5,4],[0,-1,0]]];
     sides.forEach(([indices,normal])=>list.push({points:indices.map(i=>vertices[i]),normal,material}));
   }
-  // One calm assembly cycle, with zero velocity at both ends.
-  const PART_CYCLE=24;
-  function openness(time){return (1-Math.cos(time*Math.PI*2/PART_CYCLE))*.5;}
+  // An unhurried opening, a moment to read the structure, then a soft return.
+  const PART_CYCLE=32;
+  function openness(time){const phase=((time%PART_CYCLE)+PART_CYCLE)%PART_CYCLE;return ease((phase-2)/10)*(1-ease((phase-19)/11));}
+  function partOpen(time,index,count,scroll,motion){
+    const delay=index/(count-1)*1.8;
+    return (openness(time-delay)*(1-scroll)+scroll)*motion;
+  }
+  function energize(list,start,amount){for(let i=start;i<list.length;i++)list[i].energy=amount;}
   function transformPart(list,start,yaw,roll,dx,dy,dz){
     function turn(p){
       const q=rotate(p,yaw,0),c=Math.cos(roll),s=Math.sin(roll);
@@ -19,10 +43,11 @@
       list[i].normal=turn(list[i].normal);
     }
   }
-  function scene(kind,time,scroll=0){
-    const list=[],open=openness(time)*(1-scroll)+scroll;
+  function scene(kind,time,scroll=0,motion=1){
+    const list=[];
     if(kind==='tandish'){
       for(let i=0;i<15;i++){
+        const open=partOpen(time,i,15,scroll,motion);
         const start=list.length;
         const material=i===7?'signal':i===14?'ceramic':'edge';
         box(list,0,1.13,0,2.7,.44,.068,material);
@@ -31,11 +56,20 @@
         box(list,1.13,0,0,.44,1.82,.068,material);
         // The logo corner stays attached to its front frame.
         if(i===14)box(list,-.81,.81,.095,.63,.63,.16,'signal');
-        transformPart(list,start,0,(i-7)*.024*open,(i-7)*.022*open,0,(i-7)*(.115+.065*open));
+        // Recessed inner seams carry one broad, slow highlight through the stack.
+        const seam=list.length;
+        box(list,0,.899,.037,1.79,.018,.012,'indigo');
+        box(list,.899,0,.037,.018,1.79,.012,'indigo');
+        box(list,0,-.899,.037,1.79,.018,.012,'indigo');
+        box(list,-.899,0,.037,.018,1.79,.012,'indigo');
+        const wave=Math.pow((1+Math.cos(i*.36-time*.28))*.5,5);
+        energize(list,seam,.12+.88*wave);
+        transformPart(list,start,0,(i-7)*.033*open,(i-7)*.027*open,Math.sin(i/14*Math.PI)*.08*open,(i-7)*(.115+.079*open));
       }
     }else{
       box(list,0,-1.03,0,2.85,.13,2.6,'edge');
       for(let floor=0;floor<3;floor++){
+        const open=partOpen(time,floor,4,scroll,motion);
         const start=list.length;
         const mat=floor===2?'ceramic':'edge';
         box(list,0,0,-1,2.62,.1,.48,mat);
@@ -47,16 +81,26 @@
         box(list,.65,.23,1.15,.11,.46,.13,'ceramic');
         box(list,1.21,.23,.3,.1,.46,1.7,'ceramic');
         box(list,-.6,.23,1.15,.1,.46,.13,'ceramic');
-        // Each floor moves as one assembly, gently revealing the central volume.
-        transformPart(list,start,(floor-1)*.065*open,0,0,-.84+floor*.62+(.08+floor*.25)*open,0);
+        const seam=list.length;
+        box(list,0,.014,1.247,2.35,.018,.013,'copper');
+        box(list,1.317,.014,0,.013,.018,2.17,'copper');
+        energize(list,seam,.16+.84*Math.pow((1+Math.cos(floor*1.1-time*.32))*.5,4));
+        // Floors lift in succession; the core stays visibly inside the structure.
+        transformPart(list,start,(floor-1)*.085*open,0,(floor-1)*.06*open,-.84+floor*.62+(.08+floor*.25)*open,0);
       }
-      box(list,0,-.1,0,.86,1.45,.86,'focus');
+      const coreOpen=partOpen(time,1,4,scroll,motion);
+      for(let cell=0;cell<3;cell++){
+        const start=list.length,y=-.58+cell*(.49+.065*coreOpen);
+        box(list,0,y,0,.86,.445,.86,'focus');
+        energize(list,start,.08+.16*Math.pow((1+Math.cos(cell*1.15-time*.32))*.5,3));
+      }
       const roof=list.length;
       box(list,0,0,-1,2.62,.08,.48,'ceramic');
       box(list,0,0,1,2.62,.08,.48,'ceramic');
       box(list,-1.08,0,0,.46,.08,1.52,'ceramic');
       box(list,1.08,0,0,.46,.08,1.52,'ceramic');
-      transformPart(list,roof,.1*open,0,0,1.18+.94*open,0);
+      const open=partOpen(time,3,4,scroll,motion);
+      transformPart(list,roof,.13*open,0,0,1.18+.82*open,0);
     }
     return list;
   }
@@ -69,8 +113,8 @@
     if(framing.has(kind))return framing.get(kind);
     let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
     // Fit the entire motion envelope once, so the sculpture never zooms as parts move.
-    for(const t of [0,3,6,9,12]){
-      const model=scene(kind,t);
+    for(const t of [0,5,9,13,17,21,25,29])for(const scroll of [0,.5,1]){
+      const model=scene(kind,t,scroll);
       for(const yawOffset of [-.095,.095,.415])for(const pitchOffset of [-.045,.045,.225]){
         const yaw=(kind==='tandish'?-.56:-.65)+yawOffset,pitch=(kind==='tandish'?.32:.48)+pitchOffset;
         for(const face of model)for(const vertex of face.points){
@@ -82,10 +126,10 @@
     const result={minX,maxX,minY,maxY};framing.set(kind,result);return result;
   }
   const dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
-  function viewFaces(kind,time,px=0,py=0,scroll=0){
+  function viewFaces(kind,time,px=0,py=0,scroll=0,motion=1){
     const yaw=(kind==='tandish'?-.56:-.65)+Math.sin(time*.065)*.055+px*.08+scroll*.32;
     const pitch=(kind==='tandish'?.32:.48)+Math.sin(time*.05)*.025+py*.04+scroll*.18;
-    return scene(kind,time,scroll).map(face=>({...face,points:face.points.map(p=>rotate(p,yaw,pitch)),normal:rotate(face.normal,yaw,pitch)}))
+    return scene(kind,time,scroll,motion).map(face=>({...face,points:face.points.map(p=>rotate(p,yaw,pitch)),normal:rotate(face.normal,yaw,pitch)}))
       .filter(f=>dot(f.normal,[-f.points[0][0],-f.points[0][1],9-f.points[0][2]])>1e-7);
   }
   function projectFaces(faces,kind,w,h,light=false){
@@ -93,15 +137,18 @@
     const scale=Math.min(w*.82/(maxX-minX),h*.8/(maxY-minY));
     const cx=(minX+maxX)/2,cy=(minY+maxY)/2;
     return faces.map(face=>{
-      const n=face.normal,illum=.38+Math.max(0,-n[0]*.25+n[1]*.6+n[2]*.72)*.63;
-      const spec=Math.pow(Math.max(0,n[1]*.35+n[2]*.94),12)*18;
+      const n=face.normal,illum=.32+Math.max(0,-n[0]*.32+n[1]*.58+n[2]*.72)*.67;
+      const spec=Math.pow(Math.max(0,-n[0]*.12+n[1]*.35+n[2]*.92),20)*30;
       let base=palette[face.material];
-      if(light&&face.material==='edge')base=[173,177,190];
-      const color=base.map(v=>Math.round(Math.min(255,v*illum+spec)));
+      if(light&&face.material==='edge')base=[135,147,168];
+      if(light&&face.material==='ceramic')base=[183,193,209];
+      const emissive=face.material==='indigo'||face.material==='copper';
+      const energy=face.energy||0;
+      const color=base.map(v=>Math.round(Math.min(255,emissive?v*(light?.42+energy*.43:.35+energy*.7):v*illum+spec+energy*18)));
       return {points:face.points.map(p=>{const s=1/(1-p[2]/9);return[(p[0]*s-cx)*scale+w*.5,(-p[1]*s-cy)*scale+h*.47];}),depths:face.points.map(p=>9-p[2]),color};
     });
   }
-  function renderData(kind,time,w,h,px=0,py=0,light=false,scroll=0){return projectFaces(viewFaces(kind,time,px,py,scroll),kind,w,h,light);}
+  function renderData(kind,time,w,h,px=0,py=0,light=false,scroll=0,motion=1){return projectFaces(viewFaces(kind,time,px,py,scroll,motion),kind,w,h,light);}
   // Static SVG fallback uses plane splitting rather than average-depth sorting.
   // This runs when generating the assets, never in the live animation loop.
   function orderFaces(faces){
@@ -167,11 +214,11 @@
   function paint(){
     if(!rendererReady||gl.isContextLost()||!width||!height)return;
     const light=document.documentElement.getAttribute('data-theme')==='light';
-    const faces=renderData(art.dataset.heroArt,preference.matches?0:time,width,height,pointerX,pointerY,light,scrollProgress);
+    const faces=renderData(art.dataset.heroArt,preference.matches?0:time,width,height,pointerX,pointerY,light,scrollProgress,scrollMotion.matches?1:.45);
     art.style.transform=scrollProgress?`translateY(${scrollProgress*Math.min(100,hero.clientHeight*.12)}px)`: '';
     const needed=faces.length*6*7;if(vertices.length<needed)vertices=new Float32Array(needed);
     let cursor=0;
-    for(const face of faces)for(const index of [0,1,2,0,2,3]){
+    for(const face of faces)for(let triangle=1;triangle<face.points.length-1;triangle++)for(const index of [0,triangle,triangle+1]){
       const [x,y]=face.points[index],depth=face.depths[index];
       // Preserve perspective depth per vertex. A depth buffer resolves occlusion
       // per pixel, including crossing projections and long architectural faces.
@@ -191,7 +238,8 @@
     if(!last||now-last>=1000/30){
       const elapsed=last?Math.min(now-last,100):0;
       time+=elapsed/1000;last=now;
-      pointerX+=(targetX-pointerX)*.025;pointerY+=(targetY-pointerY)*.025;
+      const pointerEase=1-Math.exp(-elapsed/650);
+      pointerX+=(targetX-pointerX)*pointerEase;pointerY+=(targetY-pointerY)*pointerEase;
       // Keep scroll response consistent on both fast and slower graphics hardware.
       scrollProgress+=(scrollTarget-scrollProgress)*(1-Math.exp(-elapsed/160));
       if(Math.abs(scrollTarget-scrollProgress)<.0001)scrollProgress=scrollTarget;
