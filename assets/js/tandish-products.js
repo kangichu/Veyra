@@ -56,5 +56,11 @@
     }, {passive:true});
     outcome.addEventListener('pointercancel', () => { start = null; });
   });
+  document.querySelectorAll('[data-hero-product]').forEach(link => {
+    link.addEventListener('click', () => {
+      const index = slides.findIndex(slide => slide.dataset.product === link.dataset.heroProduct);
+      if (index !== -1) select(index);
+    });
+  });
   container.classList.add('product-slider-ready');
 })();

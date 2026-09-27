@@ -1,4 +1,4 @@
-/* A quiet architectural field, behind the content and the moving sculpture. */
+/* Ambient contours frame the centered hero message. */
 .designed-hero{isolation:isolate;--atmosphere-rgb:111,124,241;--atmosphere-line:.28;--atmosphere-trace:.56;}
 .product-page .designed-hero{--atmosphere-rgb:205,145,108;--atmosphere-line:.26;--atmosphere-trace:.5;}
 .hero-atmosphere{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;contain:paint;}
@@ -9,7 +9,7 @@
 .hero-atmosphere__field path{vector-effect:non-scaling-stroke;}
 .hero-atmosphere__trace{fill:none;stroke:rgb(var(--atmosphere-rgb));stroke-width:1;stroke-linecap:round;stroke-dasharray:100 1800;opacity:var(--atmosphere-trace);animation:atmosphere-trace 38s linear infinite;}
 .hero-atmosphere__trace--second{animation-delay:-19s;animation-duration:46s;}
-.hero-atmosphere__veil{position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 22%,transparent 68%),linear-gradient(0deg,var(--ink),transparent 15%,transparent 90%,var(--ink));}
+.hero-atmosphere__veil{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 47%,var(--ink) 12%,transparent 72%),linear-gradient(0deg,var(--ink),transparent 15%,transparent 90%,var(--ink));}
 .hero-atmosphere__light,.hero-atmosphere svg,.hero-atmosphere__trace{animation-play-state:paused;}
 .designed-hero[data-atmosphere-active] .hero-atmosphere__light,.designed-hero[data-atmosphere-active] .hero-atmosphere svg,.designed-hero[data-atmosphere-active] .hero-atmosphere__trace{animation-play-state:running;}
 [data-theme='light'] .designed-hero{--atmosphere-rgb:69,85,167;--atmosphere-line:.26;--atmosphere-trace:.43;}
@@ -19,13 +19,12 @@
 @keyframes atmosphere-light{from{transform:scale(1);opacity:.6}to{transform:scale(1.06);opacity:1}}
 @keyframes atmosphere-trace{from{stroke-dashoffset:1900}to{stroke-dashoffset:0}}
 @media(max-width:760px){
- .hero-atmosphere{top:42%;bottom:70px;}
- .hero-atmosphere svg{width:170%;left:-65%;}
+ .hero-atmosphere{top:58%;bottom:54px;}
+ .hero-atmosphere svg{width:170%;left:-65%;animation-duration:60s;}
  .hero-atmosphere__light{background:radial-gradient(ellipse at 50% 65%,rgba(var(--atmosphere-rgb),.11),transparent 65%);}
  .hero-atmosphere__veil{background:linear-gradient(0deg,var(--ink),transparent 25%,transparent 55%,var(--ink));}
  .hero-atmosphere__trace{display:none;}
  .hero-atmosphere__field{opacity:.21;}
- .designed-hero[data-atmosphere-active] .hero-atmosphere svg{animation:none;}
 }
 @media(prefers-reduced-motion:reduce){
  .hero-atmosphere__light,.hero-atmosphere svg,.hero-atmosphere__trace{animation:none!important;}
