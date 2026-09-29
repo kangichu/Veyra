@@ -26,7 +26,7 @@
 .designed-hero #heroStats .x47{font-size:9px;}
 .hero-scroll{display:flex;align-items:center;gap:20px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--fog);min-height:44px;}
 .hero-scroll>span:last-child{font-size:22px;color:var(--white);}
-@media(min-width:1700px){.designed-hero .hero-stage{max-width:1800px;margin:auto;}}
+
 @media(max-width:1100px) and (min-width:761px){.tandish-home .designed-hero .home-hero-title{font-size:min(6.7vw,9svh);}.product-page .designed-hero .product-hero-title{font-size:min(6.3vw,8.8svh);}.designed-hero #heroStats{gap:24px;}.designed-hero #heroStatus{max-width:180px;line-height:1.7;}}
 @media(max-width:760px){
  .tandish-home #hero.designed-hero,.product-page #hero.designed-hero{padding:84px 24px 20px;gap:16px;}

@@ -1,8 +1,8 @@
-﻿/* Shared spacing, typography and product accents. */
-.tandish-home,.product-page{--flow-accent:var(--signal);--flow-gutter:clamp(24px,4vw,76px);--flow-space:clamp(72px,8vw,124px);--flow-width:1320px;--flow-rgb:111,124,241;}
+/* Shared spacing, typography and product accents. */
+.tandish-home,.product-page{--flow-accent:var(--signal);--flow-gutter:clamp(24px,4vw,76px);--flow-space:clamp(72px,8vw,124px);--flow-rgb:111,124,241;}
 .product-page{--flow-accent:var(--ember);--flow-rgb:205,145,108;}
 .home-section,.product-section{position:relative;padding:var(--flow-space) var(--flow-gutter);scroll-margin-top:96px;}
-.home-inner,.product-section-inner{max-width:1800px;margin-inline:auto;}
+.home-inner,.product-section-inner{width:100%;max-width:none;margin-inline:0;}
 .home-section .company-title,.product-section h2,.product-page .x239,.x241 .x243{font-weight:500;letter-spacing:-.045em;line-height:1.06;}
 .home-section .company-title,.product-section h2{font-size:clamp(34px,4.4vw,68px);max-width:20ch;}
 .home-products > .home-inner > .company-title{max-width:22ch;}
@@ -11,7 +11,7 @@
 .home-company-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(32px,7vw,120px);}
 .home-company-grid > .home-body{max-width:560px;}
 /* Keep each product's overview beside its practical benefits. */
-#products > .home-inner{max-width:var(--flow-width);}
+
 #products .x53{margin-bottom:26px;}
 #products .company-title{max-width:none;font-size:clamp(32px,3.6vw,56px);text-wrap:balance;}
 #products .product-picker{gap:24px;border-bottom:1px solid var(--line-strong);margin-top:32px;}
@@ -69,7 +69,7 @@
 .x241 .x243{font-size:clamp(38px,4.8vw,76px);max-width:17ch;}
 .x241 .x244{font-size:16px;line-height:1.7;max-width:540px;}
 .x241 .x248{max-width:100%;min-height:48px;text-align:center;line-height:1.5;justify-content:center;}
-@media(min-width:2000px){.product-page #future,.tandish-home #contact,.product-page #walkthrough{padding-inline:max(var(--flow-gutter),calc((100% - 1800px)/2));}}
+
 @media(max-width:1000px){.product-flow{grid-template-columns:repeat(2,minmax(0,1fr));}.product-flow li:nth-child(2)::after{display:none;}.x241 .x243{max-width:15ch;}}
 @media(max-width:900px){.home-story-steps{border-top:0;gap:0;}.home-story-context{border-top:1px solid var(--line-strong);border-right:0;}.home-story-steps > li,.home-story-steps > li:first-child,.home-story-steps > li:last-child{padding:24px 0;}.home-story-outcome .home-product{display:flex;}.product-page #future{grid-template-columns:minmax(0,1fr);gap:40px;}.product-page #future .x237{max-width:600px;}}
 @media(max-width:760px){.home-company-grid{grid-template-columns:minmax(0,1fr);}.home-story-outcome{padding:24px;}.product-flow li{padding:18px;}.x241 .x244{max-width:540px;}.x241 .x243{max-width:18ch;}.product-faq-button{gap:12px;}.product-faq-button .product-number{width:24px;}.product-faq-panel p{padding-left:36px;}#deployment .product-grid-two{gap:40px;}}
@@ -113,7 +113,7 @@
 
 /* A compact closing invitation aligned with the product overview. */
 .tandish-home #contact,.product-page #walkthrough{display:block;padding-block:clamp(64px,6vw,96px);}
-.closing-contact-inner{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);align-items:center;gap:clamp(40px,6vw,96px);width:100%;max-width:var(--flow-width);margin-inline:auto;}
+.closing-contact-inner{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);align-items:center;gap:clamp(40px,6vw,96px);width:100%;max-width:none;margin-inline:0;}
 :is(#contact,#walkthrough) .x242{margin-bottom:24px;}
 :is(#contact,#walkthrough) .x243{font-size:clamp(36px,4.2vw,64px);max-width:16ch;line-height:1.08;}
 :is(#contact,#walkthrough) .x244{margin:0;max-width:55ch;}
@@ -131,7 +131,7 @@
 .tandish-home main > section,.product-page main > section{position:relative;z-index:1;background:transparent;}
 .home-section,.product-section,.product-page #future,.tandish-home #contact,.product-page #walkthrough{border-top-color:var(--line);}
 
-.x250{position:relative;z-index:1;background:transparent;padding-inline:max(var(--flow-gutter),calc((100% - var(--flow-width))/2));}
+.x250{position:relative;z-index:1;background:transparent;padding-inline:var(--flow-gutter);}
 .product-page .product-number,.product-page .designed-hero .x31{color:var(--flow-accent);}
 .product-eyebrow,.home-section .x53,.product-page .x238,.x241 .x242{font-size:10px;letter-spacing:.13em;line-height:1.6;}
 .x32{background:currentColor;}
