@@ -1,4 +1,4 @@
-﻿/* Homepage-only portfolio styles; the Veyra page retains its existing layout. */
+/* Homepage-only portfolio styles; the Veyra page retains its existing layout. */
 .tandish-home .home-hero-title .x35 > span{font-size:clamp(38px,min(7.6vw,11vh),116px);}
 .tandish-home #heroFoot .x43{max-width:460px;}
 .home-section{padding:clamp(64px,8vw,112px) clamp(20px,5vw,40px);border-top:1px solid var(--line);scroll-margin-top:80px;}
@@ -75,3 +75,8 @@
 .product-picker button[aria-pressed="true"]{background:var(--white);border-color:var(--white);color:var(--ink);}
 .product-picker button:hover{border-color:var(--signal);}
 .product-picker + .home-product-stories{margin-top:28px;}
+
+/* One clear route from the homepage hero to the product overview. */
+.tandish-home .hero-products-link{display:inline-flex;align-items:center;gap:20px;min-height:44px;margin-left:auto;font-size:14px;font-weight:500;color:var(--white);}
+.tandish-home .hero-products-link>span{font-size:20px;line-height:1;}
+.tandish-home .hero-products-link:hover{color:var(--signal);}
