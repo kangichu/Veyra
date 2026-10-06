@@ -119,13 +119,5 @@
     });
   });
 
-  // ---- Scroll-to-top ----
-  const scrollTopBtn = document.getElementById('scrollTop');
-  window.addEventListener('scroll', ()=>{
-    const show = window.scrollY > 600;
-    scrollTopBtn.style.opacity = show ? 1 : 0;
-    scrollTopBtn.style.pointerEvents = show ? 'auto' : 'none';
-  }, {passive:true});
-  scrollTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:reducedMotion() ? 'auto' : 'smooth'}));
 
 })();
