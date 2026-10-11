@@ -13,7 +13,7 @@
 /* Subtle arrival motion; content remains fully available without JavaScript. */
 (() => {
  const motion=matchMedia('(prefers-reduced-motion: reduce)');
- if (motion.matches || !('IntersectionObserver' in window)) return;
+ if (motion.matches || typeof IntersectionObserver !== 'function' || typeof Element.prototype.animate !== 'function') return;
  const observer=new IntersectionObserver(entries=>{
    for(const entry of entries){
      if(!entry.isIntersecting)continue;
@@ -21,5 +21,5 @@
      observer.unobserve(entry.target);
    }
  },{threshold:.1});
- document.querySelectorAll('.product-chapter,.approach-grid>div').forEach(el=>observer.observe(el));
+ document.querySelectorAll('.approach-grid>div').forEach(el=>observer.observe(el));
 })();

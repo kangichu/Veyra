@@ -1,66 +1,137 @@
+/* Product configuration lives in semantic articles. Add another article to extend
+   the gallery, drawer and navigation; no two-product assumptions or dependency. */
 (() => {
-  const container = document.querySelector('.home-product-stories');
-  if (!container) return;
-  const slides = [...container.querySelectorAll('.home-product-story')];
-  if (slides.length < 2) return;
-  let active = 0;
-  const picker = document.createElement('div');
-  picker.className = 'product-picker';
-  picker.setAttribute('role', 'group');
-  picker.setAttribute('aria-label', 'Choose a product');
-  const choices = slides.map((slide, index) => {
-    if (!slide.id) slide.id = 'product-story-' + index;
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = slide.dataset.product;
-    button.setAttribute('aria-controls', slide.id);
-    button.setAttribute('aria-pressed', String(index === active));
-    button.addEventListener('click', () => select(index));
-    picker.append(button);
-    return button;
+  'use strict';
+  const track = document.getElementById('product-track');
+  const dialog = document.querySelector('.product-drawer');
+  if (!track || !dialog || typeof dialog.showModal !== 'function') return;
+  const products = [...track.querySelectorAll('[data-product]')].map(card => ({
+    card,
+    name: card.dataset.productName,
+    tone: card.dataset.productTone,
+    link: card.querySelector('[data-open-product]'),
+    detail: card.querySelector('[data-product-detail]'),
+    content: card.querySelector('.product-detail-body')
+  }));
+  if (!products.length || products.some(product => !product.link || !product.content || !product.detail)) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const previous = document.querySelector('[data-gallery-prev]');
+  const next = document.querySelector('[data-gallery-next]');
+  const count = document.querySelector('.gallery-count');
+  const announcement = document.querySelector('.gallery-announcement');
+  const content = dialog.querySelector('.drawer-content');
+  const close = dialog.querySelector('.drawer-close');
+  const detailPrevious = dialog.querySelector('[data-detail-prev]');
+  const detailNext = dialog.querySelector('[data-detail-next]');
+  let galleryIndex = 0;
+  let detailIndex = 0;
+  let origin = null;
+  let pending = false;
+  const number = value => String(value).padStart(2, '0');
+  const position = index => Math.min(track.scrollWidth - track.clientWidth, products[index].card.offsetLeft - products[0].card.offsetLeft);
+  const updateGallery = () => {
+    pending = false;
+    const distances = products.map((_, index) => Math.abs(position(index) - track.scrollLeft));
+    galleryIndex = distances.indexOf(Math.min(...distances));
+    previous.disabled = track.scrollLeft < 2;
+    next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+    count.textContent = `${number(galleryIndex + 1)} / ${number(products.length)}`;
+  };
+  const moveGallery = index => {
+    galleryIndex = Math.max(0, Math.min(products.length - 1, index));
+    track.scrollTo({left: position(galleryIndex), behavior: reduced.matches ? 'instant' : 'smooth'});
+    announcement.textContent = `${products[galleryIndex].name}, product ${galleryIndex + 1} of ${products.length}.`;
+  };
+  previous.addEventListener('click', () => moveGallery(galleryIndex - 1));
+  next.addEventListener('click', () => moveGallery(galleryIndex + 1));
+  track.addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(updateGallery); } }, {passive:true});
+  window.addEventListener('resize', updateGallery);
+  track.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    if (event.target.closest('.product-fallback')) return;
+    const focused = products.findIndex(product => product.link === document.activeElement);
+    const current = focused < 0 ? galleryIndex : focused;
+    let index = event.key === 'Home' ? 0 : event.key === 'End' ? products.length - 1 : current + (event.key === 'ArrowRight' ? 1 : -1);
+    index = Math.max(0, Math.min(products.length - 1, index));
+    event.preventDefault();
+    products[index].link.focus({preventScroll:true});
+    moveGallery(index);
   });
-  container.before(picker);
-  const status = document.createElement('p');
-  status.className = 'product-slider-status';
-  status.setAttribute('role', 'status');
-  container.after(status);
-  container.setAttribute('aria-label', 'Tandish product stories');
-  container.setAttribute('aria-roledescription', 'carousel');
-  container.setAttribute('role', 'region');
-
-  function select(index) {
-    active = (index + slides.length) % slides.length;
-    slides.forEach((slide, i) => { slide.hidden = i !== active; });
-    choices.forEach((button, i) => button.setAttribute('aria-pressed', String(i === active)));
-    const slide = slides[active];
-    status.textContent = `${slide.dataset.product} selected. Its overview, intended audience and use are now shown.`;
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      slide.animate([{opacity:0.45}, {opacity:1}], {duration:220, easing:'ease-out'});
+  const showProduct = (index, switching = false) => {
+    detailIndex = (index + products.length) % products.length;
+    const product = products[detailIndex];
+    const body = product.content.cloneNode(true);
+    const title = body.querySelector('[data-detail-title]');
+    title.id = 'drawer-title';
+    title.tabIndex = -1;
+    const action = body.querySelector('a.button');
+    const persistentAction = dialog.querySelector('.drawer-cta');
+    persistentAction.href = action.href;
+    persistentAction.replaceChildren(...action.childNodes);
+    persistentAction.hidden = false;
+    action.remove();
+    content.replaceChildren(body);
+    dialog.dataset.tone = product.tone;
+    content.scrollTop = 0;
+    content.classList.remove('switching');
+    if (switching && !reduced.matches) requestAnimationFrame(() => content.classList.add('switching'));
+    dialog.querySelector('.drawer-count').textContent = `${number(detailIndex + 1)} / ${number(products.length)}`;
+    detailPrevious.setAttribute('aria-label', `Previous product: ${products[(detailIndex - 1 + products.length) % products.length].name}`);
+    detailNext.setAttribute('aria-label', `Next product: ${products[(detailIndex + 1) % products.length].name}`);
+    detailPrevious.disabled = detailNext.disabled = products.length < 2;
+    if (switching) title.focus({preventScroll:true});
+  };
+  const openProduct = (index, trigger) => {
+    origin = trigger;
+    showProduct(index);
+    document.documentElement.style.setProperty('--product-scrollbar-width', `${innerWidth - document.documentElement.clientWidth}px`);
+    dialog.showModal();
+    document.documentElement.classList.add('product-modal-open');
+    close.focus({preventScroll:true});
+    content.scrollTop = 0;
+    requestAnimationFrame(() => { if (dialog.open) content.scrollTop = 0; });
+  };
+  const closeProduct = () => dialog.close();
+  close.addEventListener('click', closeProduct);
+  dialog.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    const focusable = [...dialog.querySelectorAll('a[href],button:not(:disabled),[tabindex="0"]')].filter(element => element.getClientRects().length);
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) {
+      event.preventDefault(); first.focus();
     }
-  }
-
-  slides.forEach((slide, index) => {
-    slide.hidden = index !== active;
-    slide.setAttribute('aria-roledescription', 'slide');
-    const outcome = slide.querySelector('.home-story-outcome');
-    let start = null;
-    outcome.addEventListener('pointerdown', event => {
-      if (event.pointerType !== 'touch' || event.target.closest('a,button')) return;
-      start = {x:event.clientX, y:event.clientY};
-    }, {passive:true});
-    outcome.addEventListener('pointerup', event => {
-      if (!start) return;
-      const dx = event.clientX - start.x, dy = event.clientY - start.y;
-      start = null;
-      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) select(active + (dx < 0 ? 1 : -1));
-    }, {passive:true});
-    outcome.addEventListener('pointercancel', () => { start = null; });
   });
-  document.querySelectorAll('[data-hero-product]').forEach(link => {
-    link.addEventListener('click', () => {
-      const index = slides.findIndex(slide => slide.dataset.product === link.dataset.heroProduct);
-      if (index !== -1) select(index);
+  dialog.querySelector('.drawer-brand').addEventListener('click', event => { event.preventDefault(); closeProduct(); });
+  dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const bounds = dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeProduct();
+  });
+  // Native Escape/cancel closes the modal; close also covers programmatic closure.
+  dialog.addEventListener('close', () => {
+    document.documentElement.classList.remove('product-modal-open');
+    document.documentElement.style.removeProperty('--product-scrollbar-width');
+    if (origin?.isConnected) origin.focus({preventScroll:true});
+  });
+  detailPrevious.addEventListener('click', () => showProduct(detailIndex - 1, true));
+  detailNext.addEventListener('click', () => showProduct(detailIndex + 1, true));
+  products.forEach((product, index) => {
+    product.link.setAttribute('aria-haspopup', 'dialog');
+    product.link.setAttribute('aria-controls', 'product-dialog');
+    product.link.addEventListener('click', event => {
+      // Preserve normal open-in-new-tab/copy-link behavior for canonical destinations.
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      openProduct(index, product.link);
     });
+    product.detail.hidden = true;
+    product.card.querySelector('[data-card-action]').textContent = `Discover ${product.name}`;
   });
-  container.classList.add('product-slider-ready');
+  dialog.id = 'product-dialog';
+  document.querySelector('.gallery-controls').hidden = false;
+  document.querySelector('.enhanced-gallery-hint').hidden = false;
+  updateGallery();
 })();
