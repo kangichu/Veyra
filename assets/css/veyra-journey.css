@@ -1,0 +1,66 @@
+/* A quiet visual spine; sections remain in ordinary document flow. */
+.veyra-company .site-current{display:block;z-index:2;opacity:.65;}
+.veyra-company .site-current__lines{opacity:.28;stroke-width:1;}
+.veyra-company .site-current__trace{animation:none;stroke-dasharray:none;stroke-width:1.5;opacity:.75;}
+.veyra-company .journey-node{fill:var(--ink);stroke:var(--ember);stroke-width:1;opacity:.45;}
+.veyra-company .journey-node[data-passed]{fill:var(--ember);opacity:.9;}
+.product-hierarchy{display:flex;flex-wrap:wrap;gap:20px 36px;list-style:none;padding:0;margin:0 0 32px;color:var(--white);}
+.product-hierarchy li{font-family:'Space Grotesk',sans-serif;font-size:17px;}
+.product-hierarchy small{display:block;font:9px/1.8 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--fog);margin-bottom:5px;}
+.product-hierarchy li:not(:last-child)::after{content:'→';color:var(--ember);margin-left:28px;}
+.domain-current b{color:var(--white);font-weight:500;}
+.veyra-company .narrative-flow{gap:28px;}
+.veyra-company .narrative-flow li{position:relative;min-width:0;}
+.veyra-company .narrative-flow li:not(:last-child)::after{content:'';position:absolute;left:100%;top:50%;height:1px;width:29px;background:var(--ember);border:0;margin:0;display:block;transform-origin:left center;}
+.veyra-company .narrative-flow li:last-child::after{display:none;}
+.veyra-company .product-flow.narrative-flow{grid-template-columns:repeat(4,minmax(0,1fr));}
+.veyra-company .integration-path.product-flow{grid-template-columns:repeat(5,minmax(0,1fr));}
+.narrative-flow.journey-play li:not(:last-child)::after{animation:journey-connector 450ms ease both;animation-delay:var(--connector-delay,0ms);}
+@keyframes journey-connector{from{transform:scaleX(0);opacity:.3;}to{transform:scaleX(1);opacity:1;}}
+.search-journey{position:relative;padding-left:20px;}
+.search-journey::before{content:'';position:absolute;top:24px;bottom:24px;left:0;width:1px;background:var(--line-strong);}
+.search-journey .demo-step{position:relative;}
+.search-journey .demo-step::before{content:'';position:absolute;left:-24px;top:45px;width:7px;height:7px;background:var(--ink);border:1px solid var(--ember);border-radius:50%;}
+.search-journey .demo-step[data-journey-played]::before{background:var(--ember);}
+.veyra-company .demo-criteria{grid-template-columns:repeat(3,minmax(0,1fr));}
+.veyra-company .processing-layers{gap:24px;}
+.processing-stages{display:flex;flex-wrap:wrap;list-style:none;gap:12px 20px;padding:0;margin:24px 0;font-size:13px;line-height:1.6;color:var(--white);}
+.processing-stages li:not(:last-child)::after{content:'→';color:var(--ember);margin-left:18px;}
+.processing-output{grid-column:1/-1;text-align:center;position:relative;border-top:1px solid var(--line-strong)!important;}
+.processing-output::before{content:'↓';position:absolute;top:-22px;left:calc(50% - 16px);width:32px;background:var(--ink);color:var(--ember);font-size:24px;}
+.veyra-company #deployment .deployment-boundary{grid-template-columns:minmax(0,1fr) 160px minmax(0,1fr);gap:24px;align-items:stretch;}
+.veyra-company #deployment .customer-boundary{border:1px solid var(--ember);}
+.veyra-company #deployment .tandish-boundary{border-style:dashed;}
+.control-relationship{align-self:center;text-align:center;color:var(--fog);}
+.control-relationship>span{display:block;font-size:32px;color:var(--ember);margin-bottom:14px;}
+.control-relationship p{font-size:12px;line-height:1.7;}
+.control-relationship small{display:block;font-size:10px;line-height:1.6;margin-top:8px;}
+.deployment-boundary.journey-play .control-relationship>span{animation:control-release 650ms ease 350ms both;}
+@keyframes control-release{from{clip-path:inset(0 0 0 100%);opacity:.2;}to{clip-path:inset(0);opacity:1;}}
+.plan-addition{font-weight:500;color:var(--white)!important;}
+.plan-addition>span{color:var(--ember);}
+.real-estate-plans article{border-top:2px solid var(--ember);}
+.domain-zoom{margin:44px 0 32px;max-width:900px;}
+.zoom-platform,.zoom-domain,.zoom-current{padding:28px;border:1px solid var(--line-strong);border-radius:9px;}
+.zoom-platform{background:var(--card-bg);}
+.zoom-domain{margin-top:24px;background:var(--ink-2);}
+.zoom-current{margin-top:24px;max-width:460px;border-color:var(--ember);background:var(--ink);}
+.domain-zoom p{font-size:14px;color:var(--fog);line-height:1.8;margin-top:10px;}
+.zoom-current h3{font:500 28px/1.3 'Space Grotesk',sans-serif;margin-top:12px;letter-spacing:-.03em;}
+.domain-continuation{padding-left:28px;border-left:1px dashed var(--ember);margin-left:28px;padding-top:20px;}
+.industry-recognition{list-style:none;display:flex;flex-wrap:wrap;gap:12px 28px;padding:0;margin-top:28px;color:var(--white);font:500 18px/1.5 'Space Grotesk',sans-serif;}
+.industry-recognition li{padding-bottom:12px;border-bottom:1px solid var(--line-strong);}
+@media(max-width:1100px){.veyra-company .integration-path.product-flow{grid-template-columns:minmax(0,1fr);max-width:740px;}.veyra-company .integration-path li{min-height:0;}.veyra-company .integration-path li:not(:last-child)::after{left:50%;top:100%;width:1px;height:29px;transform-origin:center top;}.integration-path.journey-play li:not(:last-child)::after{animation-name:journey-connector-vertical;}.veyra-company #deployment .deployment-boundary{grid-template-columns:minmax(0,1fr) 110px minmax(0,1fr);gap:16px;}}
+@media(max-width:1000px){.veyra-company .product-flow.narrative-flow:not(.integration-path){grid-template-columns:minmax(0,1fr);}.veyra-company .product-flow.narrative-flow li{min-height:0;}.veyra-company .product-flow.narrative-flow li:not(:last-child)::after{left:50%;top:100%;width:1px;height:29px;transform-origin:center top;}.product-flow.narrative-flow.journey-play li:not(:last-child)::after{animation-name:journey-connector-vertical;}}
+@media(max-width:760px){.veyra-company .demo-criteria{grid-template-columns:repeat(2,minmax(0,1fr));}.veyra-company .narrative-flow{gap:20px;}.veyra-company .narrative-flow li:not(:last-child)::after{left:50%;top:100%;width:1px;height:21px;transform-origin:center top;}.narrative-flow.journey-play li:not(:last-child)::after{animation-name:journey-connector-vertical;animation-duration:260ms;}.veyra-company #deployment .deployment-boundary{display:flex;flex-direction:column;gap:20px;}.tandish-boundary{order:0;}.control-relationship{order:1;}.customer-boundary{order:2;}.control-relationship>span{transform:rotate(-90deg);}.control-relationship p{font-size:13px;}.processing-stages{flex-direction:column;gap:12px;}.processing-stages li:not(:last-child)::after{content:'↓';margin-left:12px;}.zoom-platform,.zoom-domain,.zoom-current{padding:20px;}.zoom-domain,.zoom-current{margin-top:20px;}.domain-continuation{margin-left:20px;padding-left:20px;}.industry-recognition{flex-direction:column;gap:12px;font-size:18px;}.product-hierarchy{gap:16px 24px;}.product-hierarchy li:not(:last-child)::after{margin-left:14px;}.search-journey{padding-left:16px;}.search-journey .demo-step::before{left:-20px;}}
+@media(max-width:480px){.veyra-company .demo-criteria{grid-template-columns:minmax(0,1fr);}}
+@keyframes journey-connector-vertical{from{transform:scaleY(0);opacity:.3;}to{transform:scaleY(1);opacity:1;}}
+@media(prefers-reduced-motion:reduce){.veyra-company,.veyra-company *{scroll-behavior:auto!important;}.veyra-company [data-journey] *,.veyra-company [data-journey] *::before,.veyra-company [data-journey] *::after{animation:none!important;transition:none!important;}.veyra-company .site-current__trace{display:none;}.veyra-company .journey-node{opacity:.8;}.search-journey .demo-step::before{background:var(--ember);}}
+
+.narrative-flow>li.journey-part:not(:last-child)::after{animation:journey-connector-vertical 260ms ease both;}
+@media(prefers-reduced-motion:reduce){.narrative-flow>li.journey-part::after{animation:none!important;}}
+/* A straight path has no horizontal bounding box for a gradient: use solid ink. */
+.veyra-company .site-current__lines{stroke:var(--ember);opacity:1;}
+.veyra-company .site-current__lines>path{opacity:.18;}
+.veyra-company .site-current__trace{stroke:var(--ember);}
+@media(prefers-reduced-motion:reduce){.veyra-company,.veyra-company *,.veyra-company *::before,.veyra-company *::after{animation:none!important;transition:none!important;}}

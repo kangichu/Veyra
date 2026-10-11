@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Veyra by Tandish — domain-extensible intelligence</title>
+  <desc id="description">AI that runs inside your walls. Shared Veyra infrastructure plus industry-specific Domain understanding. Real Estate is the first production Domain.</desc>
+  <defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0H0V60" fill="none" stroke="#F5F4EF" stroke-opacity=".035"/></pattern></defs>
+  <rect width="1200" height="630" fill="#08090C"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <g font-family="Arial,sans-serif">
+    <text x="64" y="70" fill="#F5F4EF" font-size="28" font-weight="600" letter-spacing="-1">tandish<tspan fill="#FF8F5E">.</tspan><tspan font-size="18" fill="#ABB1BC" font-weight="400" letter-spacing="0"> / Veyra</tspan></text>
+    <text x="64" y="118" fill="#FF8F5E" font-size="13" letter-spacing="2.3">DOMAIN-EXTENSIBLE INTELLIGENCE PLATFORM</text>
+    <text x="60" y="221" fill="#F5F4EF" font-size="76" font-weight="600" letter-spacing="-3">AI that runs</text>
+    <text x="60" y="306" fill="#FF8F5E" font-size="76" font-weight="600" letter-spacing="-3">inside your walls.</text>
+    <g transform="translate(64 365)">
+      <rect width="470" height="104" rx="9" fill="#111317" stroke="#383A40"/>
+      <text x="24" y="34" fill="#FF8F5E" font-size="11" letter-spacing="1.5">VEYRA PLATFORM</text>
+      <text x="24" y="72" fill="#F5F4EF" font-size="24">Shared intelligence infrastructure</text>
+      <text x="499" y="63" fill="#FF8F5E" font-size="28">+</text>
+      <rect x="542" width="530" height="104" rx="9" fill="#111317" stroke="#383A40"/>
+      <text x="566" y="34" fill="#FF8F5E" font-size="11" letter-spacing="1.5">INDUSTRY DOMAIN</text>
+      <text x="566" y="72" fill="#F5F4EF" font-size="24">Industry-specific understanding</text>
+    </g>
+    <path d="M64 513H1136" stroke="#383A40"/>
+    <text x="64" y="560" fill="#ABB1BC" font-size="18">First production Domain: <tspan fill="#F5F4EF">Real Estate</tspan></text>
+    <text x="1136" y="560" fill="#ABB1BC" font-size="18" text-anchor="end">tandish.com/veyra/</text>
+  </g>
+</svg>
