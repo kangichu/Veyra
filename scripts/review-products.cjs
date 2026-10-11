@@ -72,9 +72,9 @@ async function structure(page) {
   for(const width of [1440,390,375]){
    await page.setViewportSize({width,height:900});await page.locator('#products').scrollIntoViewIfNeeded();await page.waitForTimeout(500);
    await page.locator('#products').screenshot({path:path.join(out,'gallery-'+width+'.png'),style:'.company-header,.skip-link,#scrollTop{visibility:hidden!important}'});
-   const trigger=page.locator('[data-open-product]').first();await trigger.click();await page.waitForTimeout(450);
+   const trigger=page.locator('[data-open-product]').first();await trigger.click();await page.waitForTimeout(650);
    check('Modal visible '+width,await page.locator('dialog').evaluate(d=>d.open&&d.matches(':modal')));
-   const dimensions=await page.locator('dialog').boundingBox();check('Drawer size '+width,width>760?dimensions.width/width>=.55&&dimensions.width/width<=.7:Math.abs(dimensions.width-width)<20);
+   const dimensions=await page.locator('dialog').boundingBox();check('Drawer anchored right '+width,Math.abs(dimensions.x+dimensions.width-width)<2);check('Drawer size '+width,width>760?dimensions.width/width>=.55&&dimensions.width/width<=.7:Math.abs(dimensions.width-width)<20);
    check('Persistent product CTA '+width,await page.locator('.drawer-cta').isVisible()&&(await page.locator('.drawer-cta').getAttribute('href')).includes('/veyra/'));
    check('Drawer starts at top '+width,await page.locator('.drawer-content').evaluate(e=>e.scrollTop===0));
    check('Close receives opening focus '+width,await page.locator('.drawer-close').evaluate(e=>e===document.activeElement));
@@ -92,12 +92,12 @@ async function structure(page) {
   await page.setViewportSize({width:1440,height:900});await page.locator('[data-open-product]').first().focus();await page.keyboard.press('End');await page.waitForTimeout(500);
   check('Gallery End key selects last card',await page.locator('[data-open-product]').last().evaluate(e=>e===document.activeElement));
   check('Gallery count updates',await page.locator('.gallery-count').textContent()==='02 / 02');
-  await page.locator('[data-open-product]').last().click();await page.waitForTimeout(450);await page.mouse.click(1400,400);check('Backdrop closes modal',await page.locator('dialog').evaluate(d=>!d.open));
+  await page.locator('[data-open-product]').last().click();await page.waitForTimeout(650);await page.mouse.click(20,400);check('Backdrop closes modal',await page.locator('dialog').evaluate(d=>!d.open));
   await page.locator('[data-gallery-prev]').click();await page.waitForTimeout(500);check('Gallery previous button returns first',await page.locator('.gallery-count').textContent()==='01 / 02');
   await page.locator('[data-gallery-next]').click();await page.waitForTimeout(500);check('Gallery next button reaches last',await page.locator('.gallery-count').textContent()==='02 / 02');
   await page.locator('[data-gallery-prev]').click();await page.waitForTimeout(500);await page.locator('#product-track').hover();await page.mouse.wheel(400,0);await page.waitForTimeout(500);check('Native horizontal wheel movement',await page.locator('#product-track').evaluate(e=>e.scrollLeft>0));
   await page.locator('#themeToggle').click();await page.waitForTimeout(500);await page.screenshot({path:path.join(out,'light-home.png'),fullPage:true});
-  await page.locator('[data-open-product]').first().click();await page.waitForTimeout(450);await page.screenshot({path:path.join(out,'light-drawer.png')});await page.keyboard.press('Escape');
+  await page.locator('[data-open-product]').first().click();await page.waitForTimeout(650);await page.screenshot({path:path.join(out,'light-drawer.png')});await page.keyboard.press('Escape');
   await ctx.close();
   for(const [name,options] of [['no-js',{javaScriptEnabled:false}],['reduced',{reducedMotion:'reduce'}],['no-dialog',{}]]){
    const c=await context(browser,{...options,viewport:{width:390,height:844}});
