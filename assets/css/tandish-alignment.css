@@ -1,0 +1,5 @@
+/* A compact platform model before the property example; Saelis stays distinct. */
+.home-model{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:18px 0;margin-bottom:20px;font:9px/1.5 'JetBrains Mono',monospace;color:var(--fog)}
+.home-model span{display:grid;gap:4px}.home-model b{font-family:Inter,sans-serif;font-size:12px;color:var(--white);font-weight:500}.home-model i{color:var(--ember);font-style:normal}.home-model span:last-child b{color:var(--ember)}
+.window-veyra .home-model{padding:14px 0;margin-bottom:10px;font-size:8px}.window-veyra .home-model b{font-size:10px}
+@media(max-width:600px){.home-model{display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:8px;padding:16px 0}.home-model i{display:none}.home-model b{font-size:11px}.window-veyra .home-model{gap:10px;padding:12px 0}}

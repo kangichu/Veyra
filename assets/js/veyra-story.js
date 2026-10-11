@@ -16,6 +16,9 @@
     const buttons = [...list.querySelectorAll('button')];
     const panels = [...system.querySelectorAll('.tab-panel')];
     list.setAttribute('role', 'tablist');
+    const vertical = matchMedia('(min-width:801px)');
+    const orient = () => list.setAttribute('aria-orientation', system.classList.contains('capability-system') && vertical.matches ? 'vertical' : 'horizontal');
+    orient(); vertical.addEventListener('change', orient);
     const activate = selected => {
       buttons.forEach((button, i) => {
         button.setAttribute('aria-selected', String(i === selected));
@@ -36,8 +39,8 @@
       button.addEventListener('click', () => activate(i));
       button.addEventListener('keydown', event => {
         let next;
-        if (event.key === 'ArrowRight') next = (i + 1) % buttons.length;
-        if (event.key === 'ArrowLeft') next = (i + buttons.length - 1) % buttons.length;
+        if (event.key === 'ArrowRight' || (event.key === 'ArrowDown' && list.getAttribute('aria-orientation') === 'vertical')) next = (i + 1) % buttons.length;
+        if (event.key === 'ArrowLeft' || (event.key === 'ArrowUp' && list.getAttribute('aria-orientation') === 'vertical')) next = (i + buttons.length - 1) % buttons.length;
         if (event.key === 'Home') next = 0;
         if (event.key === 'End') next = buttons.length - 1;
         if (next !== undefined) { event.preventDefault(); activate(next); buttons[next].focus(); }
@@ -55,18 +58,26 @@
     fields.forEach((field, i) => document.querySelector(`[data-${field}]`).textContent = examples[button.dataset.example][i]);
     document.querySelectorAll('[data-example]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));
     document.querySelector('[data-bedrooms]').textContent = button.dataset.example === 'house' ? '4' : '3';
+    const panel = document.querySelector('.estate-system .tab-panel');
+    panel.classList.remove('entering');
+    requestAnimationFrame(() => panel.classList.add('entering'));
     document.getElementById('example-status').textContent = `${examples[button.dataset.example][0]} selected. Recommendations and price context updated.`;
   }));
   if (typeof window.IntersectionObserver === 'function') {
     const index = [...document.querySelectorAll('.model-index li')];
     const observer = new IntersectionObserver(entries => {
-      entries.filter(entry => entry.isIntersecting).forEach(entry => index.forEach((item, i) => item.classList.toggle('active', i === Number(entry.target.dataset.stage))));
+      entries.filter(entry => entry.isIntersecting).forEach(entry => {
+        const active = Number(entry.target.dataset.stage);
+        index.forEach((item, i) => item.classList.toggle('active', i === active));
+        document.querySelectorAll('[data-stage]').forEach(step => step.classList.toggle('is-current', step === entry.target));
+        document.querySelector('[data-anchor-state]').textContent = ['Platform / Foundation', 'Capabilities / Shared intelligence', 'Domains / Industry context', 'Real Estate / In production'][active];
+      });
     }, { rootMargin: '-15% 0px -45% 0px' });
     document.querySelectorAll('[data-stage]').forEach(step => observer.observe(step));
     const reveal = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add('assembled'); reveal.unobserve(entry.target); }
+      if (entry.isIntersecting) { entry.target.classList.add('assembled', 'in-view'); reveal.unobserve(entry.target); }
     }), { threshold: .25 });
-    document.querySelectorAll('.domain-layer, .zoom-out').forEach(element => reveal.observe(element));
+    document.querySelectorAll('.domain-layer, .zoom-out, .estate, .beyond, .architecture').forEach(element => reveal.observe(element));
   }
   const trace = document.querySelector('.story-trace span');
   let pending = false;

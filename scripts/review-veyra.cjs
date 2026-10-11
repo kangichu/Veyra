@@ -25,6 +25,10 @@ async function route(request) {
 async function context(browser, options={}) {
   const ctx = await browser.newContext(options);
   await ctx.route('**/*',route);
+  await ctx.addInitScript(() => {
+    window.reviewCLS = 0;
+    if (typeof PerformanceObserver === 'function') new PerformanceObserver(list => list.getEntries().forEach(entry => { if (!entry.hadRecentInput) window.reviewCLS += entry.value; })).observe({type:'layout-shift',buffered:true});
+  });
   ctx.on('page', page => {
     page.on('pageerror',error=>errors.push(error.message));
     page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
@@ -65,11 +69,12 @@ async function structure(page) {
   check('FAQ collapsed by default',await page.locator('.faq-list details[open]').count()===0);
   for(const width of [1440,1280,1024,768,390,375]){
    await page.setViewportSize({width,height:900});await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(500);
-   const m=await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,height:document.documentElement.scrollHeight}));metrics.push(m);check('No overflow '+width,m.scrollWidth===width);
+   const m=await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,height:document.documentElement.scrollHeight,cls:window.reviewCLS}));metrics.push(m);check('No overflow '+width,m.scrollWidth===width);check('Stable layout '+width,m.cls<.01);
    await page.screenshot({path:path.join(out,'veyra-'+width+'.png'),fullPage:true});
   }
   await page.setViewportSize({width:1440,height:1000});
   for(const id of ['platform','real-estate','integration','domains','faq','walkthrough']){await page.locator('#'+id).scrollIntoViewIfNeeded();await page.waitForTimeout(500);await page.locator('#'+id).screenshot({path:path.join(out,id+'.png')});}
+  await page.locator('.capability-system [role=tab]').first().focus();await page.keyboard.press('ArrowDown');check('Vertical capability keyboard navigation',await page.locator('.capability-system [role=tab]').nth(1).getAttribute('aria-selected')==='true');
   const tabs=page.locator('.estate-system [role=tab]');await tabs.nth(0).click();await page.locator('[data-example=house]').click();
   const property=await page.locator('.selected-property').textContent();await tabs.nth(1).click();check('Persistent selected property',property===await page.locator('.selected-property').textContent());
   check('Recommendation context updates',await page.locator('[data-alt-name]').textContent()==='Another Karen family home');
@@ -79,6 +84,7 @@ async function structure(page) {
   await page.locator('#theme-toggle').click();check('Theme control',await page.locator('html').getAttribute('data-theme')==='light');
   await page.waitForTimeout(600);await page.screenshot({path:path.join(out,'light-1440.png'),fullPage:true});
   await load(page,'/');check('Homepage Veyra entity',await page.evaluate(()=>[...document.querySelectorAll('script[type="application/ld+json"]')].some(e=>JSON.parse(e.textContent)['@id']==='https://tandish.com/#veyra')));
+  for(const width of [1440,390,375]){await page.setViewportSize({width,height:900});await page.waitForTimeout(500);check('Homepage no overflow '+width,await page.evaluate(()=>document.documentElement.scrollWidth===innerWidth));await page.screenshot({path:path.join(out,'home-'+width+'.png'),fullPage:true});}
   await ctx.close();
   for(const [name,options] of [['reduced',{reducedMotion:'reduce'}],['no-js',{javaScriptEnabled:false}]]){
    const c=await context(browser,{...options,viewport:{width:390,height:844}});const p=await c.newPage();await load(p);
