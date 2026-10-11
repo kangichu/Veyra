@@ -138,7 +138,6 @@ to{opacity:1;transform:translateX(0)}
 .zoom-domain{border:1px solid var(--line);margin-top:16px;padding:16px;background:var(--ink)}
 .zoom-estate{border:1px solid var(--ember);margin-top:15px;padding:15px;font:21px 'Space Grotesk';letter-spacing:-.04em;max-width:260px;color:var(--white)}
 .zoom-estate small{display:block;font:8px 'JetBrains Mono';letter-spacing:0;text-transform:uppercase;color:var(--ember);margin-top:6px}
-.zoom-direction{font-size:70px;line-height:1;color:var(--ember)}
 .beyond-content{display:grid;grid-template-columns:1.15fr .85fr;gap:100px}
 .beyond-content>div>p{font-size:13px}
 .recognition{list-style:none;margin:22px 0;counter-reset:recognition}
@@ -288,7 +287,6 @@ to{opacity:1;transform:translateX(0)}
 .zoom-platform{padding:13px;font-size:8px}
 .zoom-domain{padding:12px;margin-top:12px}
 .zoom-estate{font-size:20px;padding:12px}
-.zoom-direction{font-size:42px}
 .beyond-content{display:block}
 .beyond-content h2{font-size:35px;margin-bottom:25px}
 .beyond-content>div>p{font-size:12px}
@@ -314,8 +312,6 @@ to{opacity:1;transform:translateX(0)}
 
 /* Targeted relationship reveals, once per chapter; information stays visible. */
 .enhanced .domain-layer.assembled{animation:panel-in .45s ease both}
-.enhanced .zoom-out.assembled .zoom-domain{animation:panel-in .5s ease both}
-.enhanced .zoom-out.assembled .zoom-estate{animation:panel-in .6s ease both}
 
 @media(max-width:600px){.tab-list button,.example-picker button{min-height:44px}
 .criteria{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -380,3 +376,23 @@ to{opacity:1;transform:translateX(0)}
 .model-step>p:not(.eyebrow){margin:14px 0}.model-step{padding-bottom:22px;margin-bottom:22px}.capability-system{margin-top:18px}.model-step .eyebrow{margin-bottom:15px}.beyond{padding-top:55px;padding-bottom:55px}.final-cta{padding-top:55px;padding-bottom:55px}
 @media(max-width:600px){.chapter{padding-top:36px;padding-bottom:36px}.model-step{padding-bottom:18px;margin-bottom:18px}.chapter-anchor .identity{margin:20px 0}.anchor-system{margin:14px 0}.model-index{margin-bottom:20px}.shared-layer{margin-top:16px;padding:10px;font-size:8px}.zoom-out{margin-top:15px}.zoom-caption{margin-bottom:24px}.recognition{margin:16px 0}.recognition li{padding-top:9px;padding-bottom:9px}.faq-chapter h2{margin-bottom:20px}}
 .veyra-story:not(.enhanced) .capability-system{display:block}.veyra-story:not(.enhanced) .capability-system .tab-panel{border-top:1px solid var(--line)}
+/* Native anchor scrolling, including navigation and back-to-top links. */
+html:has(body.veyra-story){scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html:has(body.veyra-story){scroll-behavior:auto}}
+
+/* Read the nested model outward; no floating navigation-like arrow. */
+.zoom-out{display:block;max-width:800px}
+.enhanced .zoom-out.assembled .zoom-estate{animation:layer-context .4s ease both}
+.enhanced .zoom-out.assembled .zoom-domain{animation:layer-context .5s .08s ease both}
+.enhanced .zoom-out.assembled .zoom-platform{animation:layer-context .6s .12s ease both}
+@keyframes layer-context{from{border-color:var(--ember);box-shadow:inset 0 0 0 1px var(--ember)}to{box-shadow:inset 0 0 0 0 transparent}}
+/* One aligned two-column composition for the future-Domain story. */
+.beyond{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);column-gap:70px;align-items:start}
+.beyond>.eyebrow{grid-column:1/-1}
+.beyond>.zoom-out{grid-column:1;grid-row:2;margin:0 0 18px;max-width:none}
+.beyond>.zoom-caption{grid-column:1;grid-row:3}
+.beyond>.beyond-content{display:contents}
+.beyond-content>h2{grid-column:1;grid-row:4}
+.beyond-content>div{grid-column:2;grid-row:2/5}
+@media(max-width:1100px){.beyond{column-gap:40px}}
+@media(max-width:800px){.beyond{display:block}.beyond>.zoom-out{margin-bottom:18px}.beyond-content>h2{margin-bottom:25px}.beyond-content>div{margin-top:25px}}

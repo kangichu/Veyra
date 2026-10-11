@@ -3,3 +3,12 @@
 .home-model span{display:grid;gap:4px}.home-model b{font-family:Inter,sans-serif;font-size:12px;color:var(--white);font-weight:500}.home-model i{color:var(--ember);font-style:normal}.home-model span:last-child b{color:var(--ember)}
 .window-veyra .home-model{padding:14px 0;margin-bottom:10px;font-size:8px}.window-veyra .home-model b{font-size:10px}
 @media(max-width:600px){.home-model{display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:8px;padding:16px 0}.home-model i{display:none}.home-model b{font-size:11px}.window-veyra .home-model{gap:10px;padding:12px 0}}
+/* Inset the preview hierarchy to match the workflow, with flexible text tracks. */
+.window-veyra .home-model{display:grid;grid-template-columns:minmax(0,.8fr) auto minmax(0,1.2fr) auto minmax(0,1fr) auto minmax(0,1.35fr);gap:10px;margin:0 30px;padding:18px 0;align-items:start}
+.window-veyra .home-model span{min-width:0;overflow-wrap:break-word}
+.window-veyra .home-model i{align-self:center}
+@media(max-width:1100px){.window-veyra .home-model{margin-inline:20px;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px}.window-veyra .home-model i{display:none}}
+@media(max-width:600px){.window-veyra .home-model{padding:14px 0;gap:12px 18px}}
+
+.company-site #themeToggle{display:grid;place-items:center;width:32px;height:32px;min-height:32px;padding:0;border:1px solid var(--line);border-radius:50%;font:15px/1 Inter,sans-serif;letter-spacing:0;color:var(--white);background:transparent;flex-shrink:0}
+@media(max-width:600px){.company-site #themeToggle{width:29px;height:29px;min-height:29px}}

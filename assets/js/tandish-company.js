@@ -2,7 +2,7 @@
  const button=document.getElementById('themeToggle');
  function applyTheme(theme){
    document.documentElement.dataset.theme=theme;
-   button.textContent=theme==='dark'?'LIGHT':'DARK';
+   button.textContent='◐';
    button.setAttribute('aria-label',theme==='dark'?'Switch to light theme':'Switch to dark theme');
    try{localStorage.setItem('veyra-theme',theme);}catch{}
  }
