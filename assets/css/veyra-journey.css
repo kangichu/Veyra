@@ -40,7 +40,7 @@
 .plan-addition{font-weight:500;color:var(--white)!important;}
 .plan-addition>span{color:var(--ember);}
 .real-estate-plans article{border-top:2px solid var(--ember);}
-.domain-zoom{margin:44px 0 32px;max-width:900px;}
+.domain-zoom{margin:28px 0 24px;max-width:900px;}
 .zoom-platform,.zoom-domain,.zoom-current{padding:28px;border:1px solid var(--line-strong);border-radius:9px;}
 .zoom-platform{background:var(--card-bg);}
 .zoom-domain{margin-top:24px;background:var(--ink-2);}
@@ -64,3 +64,7 @@
 .veyra-company .site-current__lines>path{opacity:.18;}
 .veyra-company .site-current__trace{stroke:var(--ember);}
 @media(prefers-reduced-motion:reduce){.veyra-company,.veyra-company *,.veyra-company *::before,.veyra-company *::after{animation:none!important;transition:none!important;}}
+
+/* Short capability chapters need less separation than the longer product story. */
+.veyra-company :is(#recommendations,#price-intelligence){padding-block:clamp(40px,4vw,56px);}
+@media(max-width:760px){.veyra-company :is(#recommendations,#price-intelligence){padding-block:40px;}}
