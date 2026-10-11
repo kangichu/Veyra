@@ -2,7 +2,8 @@
 <html lang="en" data-theme="dark">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HL6HNDN540"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HL6HNDN540">
+</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -18,7 +19,7 @@
   } catch (_) {}
 </script>
 <title>Veyra | Domain-Extensible Intelligence Platform by Tandish</title>
-<meta name="description" content="Veyra is a self-hosted, domain-extensible intelligence platform. Real Estate is its first production Domain, with plan-dependent Search, Recommendations and Price Intelligence.">
+<meta name="description" content="Veyra is a self-hosted, domain-extensible intelligence platform. Real Estate is its first production Domain, with Search, Recommendations and Price Intelligence through an enabled Domain.">
 <meta name="author" content="Tandish Group">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#08090C" media="(prefers-color-scheme: dark)">
@@ -35,7 +36,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Tandish">
 <meta property="og:title" content="Veyra | Domain-Extensible Intelligence Platform by Tandish">
-<meta property="og:description" content="Veyra is a self-hosted, domain-extensible intelligence platform. Real Estate is its first production Domain, with plan-dependent Search, Recommendations and Price Intelligence.">
+<meta property="og:description" content="Veyra is a self-hosted, domain-extensible intelligence platform. Real Estate is its first production Domain, with Search, Recommendations and Price Intelligence through an enabled Domain.">
 <meta property="og:url" content="https://tandish.com/veyra/">
 <meta property="og:image" content="https://tandish.com/assets/images/veyra-og.png">
 <meta property="og:image:type" content="image/png">
@@ -47,16 +48,16 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@tandish">
 <meta name="twitter:title" content="Veyra | Domain-Extensible Intelligence Platform by Tandish">
-<meta name="twitter:description" content="Veyra is a self-hosted, domain-extensible intelligence platform. Real Estate is its first production Domain, with plan-dependent Search, Recommendations and Price Intelligence.">
+<meta name="twitter:description" content="Veyra is a self-hosted, domain-extensible intelligence platform. Real Estate is its first production Domain, with Search, Recommendations and Price Intelligence through an enabled Domain.">
 <meta name="twitter:image" content="https://tandish.com/assets/images/veyra-og.png">
 <meta name="twitter:image:alt" content="Veyra by Tandish. A self-hosted intelligence platform specialized through Domains. Real Estate is the first production Domain.">
 
 <link rel="preload" href="../assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/fonts.css?v=3">
-<link rel="stylesheet" href="../assets/css/veyra-experience.v1.css?v=28">
-<link rel="stylesheet" href="../assets/css/veyra-product.css?v=5">
+
+
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -134,43 +135,37 @@
   }
 }
 </script>
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "@id": "https://tandish.com/veyra/#faq",
-  "url": "https://tandish.com/veyra/#future",
-  "name": "Veyra deployment and integration FAQs",
-  "inLanguage": "en",
+  "url": "https://tandish.com/veyra/#faq",
   "isPartOf": {
     "@id": "https://tandish.com/veyra/#webpage"
-  },
-  "about": {
-    "@id": "https://tandish.com/#veyra"
   },
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Where does property data live?",
+      "name": "Which Domains are available today?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Customer property data and local intelligence are processed in the customer-controlled Veyra environment. Your source data remains authoritative; Veyra maintains its own local representations and indexes. Review access, external connections and operational arrangements for your deployment."
+        "text": "Real Estate is the first and only production Domain today. Other Domains require development and validation. Capability scope, including Advanced Intelligence, depends on the enabled Domain, configuration and commercial agreement."
       }
     },
     {
       "@type": "Question",
-      "name": "Is Veyra fully air-gapped?",
+      "name": "Where does our data live?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Periodic communication with the Tandish control plane is part of commercial licensing and rights validation. An offline grace mechanism exists, but Veyra is not designed for permanent disconnection. Supported local models run locally after acquisition."
+        "text": "Customer data, local representations, indexes and intelligence workloads stay in the customer-controlled Veyra environment. Your source data remains authoritative. Access and external connections are reviewed for your deployment."
       }
     },
     {
       "@type": "Question",
-      "name": "How is Veyra deployed?",
+      "name": "How is Veyra deployed? Is it air-gapped?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Veyra uses a containerized customer deployment with Docker. V1 assumes one active engine-platform replica per installation. Your team configures TLS and controls hosting, networking and storage; logs use the customer or container environment."
+        "text": "Veyra uses Docker in customer-controlled infrastructure. V1 assumes one active engine-platform replica per installation. Your team manages TLS, hosting, networking, storage and local logs. Periodic Tandish communication validates licensing and rights; an offline grace mechanism exists, but permanent disconnection is not supported. Supported local models run locally after acquisition."
       }
     },
     {
@@ -178,443 +173,420 @@
       "name": "How does our application integrate?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Your application backend connects to the local Veyra /v1 API using project API keys, then presents the returned search results or recommendations in your own interface. Your team maps listing data, manages imports and makes the required application changes. Price intelligence is available where configured and licensed."
+        "text": "Your backend connects to the local /v1 API using project API keys. Your team maps and imports data and presents results in your existing interface. Integration uses REST and JSON/CSV data flows; a generic database connector is not implied."
       }
     },
     {
       "@type": "Question",
-      "name": "What is the current product status?",
+      "name": "How are scope and responsibilities agreed?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Veyra is a self-hosted intelligence platform. Real Estate is its first and only production Domain, with Search, Recommendations, Price Intelligence and Advanced Intelligence offered through Real Estate plans. Availability depends on the licensed plan and deployment configuration. Additional industry Domains are not available today."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Who handles operation and support?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Your team retains control of its infrastructure. Deployment requirements and operational responsibilities are discussed with Tandish for your environment. Tandish controls licensed releases and update authority; no public support SLA or fixed deployment timeline is currently defined."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What happens after a walkthrough request?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Tandish reviews your data, workflows and existing applications. For Real Estate, we discuss a current deployment. For another industry, we explore whether a new Domain could be developed. The walkthrough covers fit, integration and hosting requirements, with next steps agreed together."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does Veyra replace our website or property management system?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Veyra adds property search and recommendations behind your existing application. Your team keeps its website, listing system and customer workflows, and integrates Veyra where search or recommendations are needed. It is not a complete website, CRM or property management system."
+        "text": "Deployment and capability scope are tailored to the enabled Domain and commercial agreement. Your team controls infrastructure operations; Tandish retains licensing, entitlements, signed releases and update authority. Support arrangements are agreed with Tandish; no public SLA or fixed deployment timeline is defined."
       }
     }
-  ],
-  "description": "Veyra is a self-hosted, domain-extensible intelligence platform. Real Estate is its first production Domain, with plan-dependent Search, Recommendations and Price Intelligence."
-}
-</script>
-<link rel="stylesheet" href="../assets/css/hero-design.css?v=12">
-<link rel="stylesheet" href="../assets/css/site-flow.css?v=11">
-<link rel="stylesheet" href="../assets/css/hero-atmosphere.css?v=6">
-<link rel="stylesheet" href="../assets/css/veyra-company.css?v=2">
-<link rel="stylesheet" href="../assets/css/back-to-top.css?v=1">
-<link rel="stylesheet" href="../assets/css/section-navigation.css?v=1">
-<link rel="stylesheet" href="../assets/css/platform-domain.css?v=3">
-<link rel="stylesheet" href="../assets/css/veyra-journey.css?v=2">
-</head><body class="product-page veyra-company">
+  ]
+}</script>
+<link rel="stylesheet" href="../assets/css/fonts.css?v=3">
+<link rel="stylesheet" href="../assets/css/veyra-experience.v1.css?v=28">
+<link rel="stylesheet" href="../assets/css/veyra-story.css?v=1">
+</head>
+<body class="veyra-story">
 <a class="veyra-skip" href="#top">Skip to content</a>
-
-<button id="scrollTop" class="back-to-top" type="button" aria-label="Scroll to top" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>Back to top</span></button>
-
-<header class="veyra-header"><nav aria-label="Main navigation"><a class="veyra-brand" href="/">tandish<span>.</span><small>/ Veyra</small></a><div class="veyra-nav-links"><a href="#platform">The platform</a><a href="#integration">Integration</a><a href="#plans">Real Estate plans</a></div><div class="veyra-nav-actions"><button id="themeToggle" type="button" aria-label="Toggle light and dark theme">LIGHT</button><a href="#walkthrough">Let’s talk <span aria-hidden="true">↗</span></a></div></nav></header>
-
+<header class="story-header">
+<a class="wordmark" href="../">tandish<span> / Veyra</span>
+</a>
+<nav aria-label="Main navigation">
+<a href="#platform">Platform</a>
+<a href="#real-estate">Real Estate</a>
+<a href="#integration">How it fits</a>
+</nav>
+<button id="theme-toggle" type="button" aria-label="Switch color theme">◐</button>
+<a class="header-contact" href="#walkthrough">Let’s talk ↗</a>
+</header>
 <main id="top" tabindex="-1">
-  <svg class="site-current" viewBox="0 0 1400 5000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <defs><linearGradient id="site-current-ink" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-opacity=".72"/><stop offset=".18" stop-opacity=".48"/><stop offset=".38" stop-opacity=".12"/><stop offset=".62" stop-opacity=".12"/><stop offset=".82" stop-opacity=".48"/><stop offset="1" stop-opacity=".72"/>
-    </linearGradient></defs>
-    <g class="site-current__lines" stroke="url(#site-current-ink)"></g>
-    <path class="site-current__trace" stroke="url(#site-current-ink)"/>
-  </svg>
-  <section id="hero" class="veyra-introduction" aria-labelledby="veyraHeroTitle"><div class="veyra-hero-inner"><p class="product-eyebrow">VEYRA / DOMAIN-EXTENSIBLE INTELLIGENCE PLATFORM</p><h1 id="veyraHeroTitle">AI that runs<br><span>inside your walls.</span></h1><p class="veyra-hero-description">Veyra is a self-hosted intelligence platform specialized through industry-specific Domains, deployed inside infrastructure you control. Real Estate is the first production Domain.</p><div class="veyra-hero-actions"><a href="#platform" class="veyra-primary-link">Explore Veyra <span aria-hidden="true">↓</span></a><a href="#walkthrough" class="veyra-text-link">Request a walkthrough <span aria-hidden="true">↗</span></a></div><div class="veyra-facts"><span><i></i>Production Domain: Real Estate</span><span>Designed for industry Domains</span><span>Self-hosted · API-first</span></div></div></section>
-
-<section id="platform" class="product-section" aria-labelledby="platform-title">
-<div class="product-section-inner">
-<p class="product-eyebrow">What Veyra is</p>
-<ol class="product-hierarchy" aria-label="Company, platform and Domain hierarchy"><li><small>COMPANY</small>Tandish</li><li><small>PLATFORM</small>Veyra</li><li><small>SPECIALIZATION</small>Industry Domain</li></ol>
-<h2 id="platform-title">One intelligence platform.<br>Specialized by Domain.</h2>
-<p class="product-lead">Veyra provides reusable intelligence infrastructure: turning data into searchable representations and connecting retrieval to intelligence workflows. A Domain gives that foundation the understanding an industry needs.</p>
-<div data-journey="composition" class="domain-equation" role="group" aria-label="Veyra platform plus industry Domain produces specialized intelligence">
-<div>
-<span class="product-number">VEYRA PLATFORM</span>
-<h3>Shared infrastructure</h3>
-<p>Processing, embeddings, indexing and retrieval, with a customer-controlled runtime and deployment foundation.</p>
+<div class="story-trace" aria-hidden="true">
+<span>
+</span>
 </div>
-<span class="equation-symbol" aria-hidden="true">+</span>
-<div>
-<span class="product-number">INDUSTRY DOMAIN</span>
-<h3>Specific understanding</h3>
-<p>Your industry’s entities, terminology, fields, constraints, relevance rules, workflows and capabilities.</p>
+<section class="story-hero" id="hero" aria-labelledby="hero-title">
+<p class="eyebrow">Veyra · Self-hosted intelligence platform</p>
+<h1 id="hero-title">AI that runs<br>
+<em>inside your walls.</em>
+</h1>
+<p class="hero-copy">Intelligence that understands your industry.<br>Running in infrastructure you control.</p>
+<div class="actions">
+<a class="button primary" href="#platform">Explore Veyra <span>↓</span>
+</a>
+<a class="text-link" href="#walkthrough">Discuss your deployment ↗</a>
 </div>
-<span class="equation-symbol" aria-hidden="true">→</span>
-<div class="domain-current">
-<span class="product-number">INDUSTRY-SPECIFIC INTELLIGENCE</span>
-<h3>Platform + Domain</h3>
-<p><b>Current production Domain: Real Estate.</b> The first implementation of this model, and the only production Domain today.</p>
-</div>
-</div>
-<p class="product-lead">Different industries define relevance differently. Domains connect those differences to the same platform, rather than assuming any data works out of the box. Additional Domains would require dedicated development and validation.</p>
+<div class="hero-foot">
+<span>Built by Tandish</span>
+<span>Platform → Capabilities → Domains</span>
+<span>Your environment. Your operations.</span>
 </div>
 </section>
-<section id="real-estate" class="product-section product-section-alt" aria-labelledby="real-estate-title">
-<div class="product-section-inner">
-<p class="product-eyebrow">First production Domain / Real Estate</p>
-<h2 id="real-estate-title">Real Estate.<br>The first Domain in practice.</h2>
-<p class="product-lead">The Real Estate Domain understands listings, property types, locations, bedrooms, amenities, prices and property characteristics. It interprets structured constraints and relationships between listings. Depending on plan and configuration, the Domain enables Search, Recommendations, Price Intelligence and Advanced Intelligence.</p>
-<ol data-journey="flow" class="product-flow narrative-flow" aria-label="Property data becomes Real Estate intelligence">
-<li>
-<strong>Property data</strong>
-<br>Listings, prices, locations, amenities and property details</li>
-<li>
-<strong>Real Estate Domain</strong>
-<br>Property meaning, fields and constraints</li>
-<li>
-<strong>Veyra platform</strong>
-<br>Shared processing, indexing and retrieval</li>
-<li>
-<strong>Domain intelligence</strong>
-<br>Search, recommendations and price insight, depending on plan</li>
-</ol>
-<p class="product-lead">This is what Veyra looks like when it is specialized for an industry. Your application builds the customer experience around the intelligence returned by Veyra.</p>
-<div class="veyra-hero-preview">
-<div class="preview-bar">
-<b>Veyra <span>/ Real Estate Domain</span>
-</b>
-<span>Customer application example</span>
+<section class="chapter overview" id="platform" aria-labelledby="platform-title">
+<div class="chapter-anchor">
+<p class="eyebrow">01 / The platform</p>
+<h2 id="platform-title">One platform.<br>Industry understanding.</h2>
+<p>Veyra provides the intelligence infrastructure. Domains give it the context to work in your industry.</p>
+<div class="identity">
+<span class="identity-name">Veyra<span class="copper">.</span>
+</span>
+<span>Domain-extensible<br>intelligence platform</span>
 </div>
-<div class="preview-content">
-<div class="preview-request">
-<span class="demo-label">A REQUEST IN EVERYDAY LANGUAGE</span>
-<p>“A three-bedroom apartment in Westlands under KES 18M.”</p>
-<div class="preview-tags">
-<span>Westlands</span>
-<span>3 bedrooms</span>
-<span>Under KES 18M</span>
-</div>
-</div>
-<div class="preview-connection">
-<span aria-hidden="true">→</span>
-<small>SEARCH YOUR LISTINGS</small>
-</div>
-<div class="preview-property">
-<div class="property-illustration" aria-hidden="true">
-<i>
-</i>
-<i>
-</i>
-<i>
-</i>
-<i>
-</i>
-<i>
-</i>
-<i>
-</i>
-</div>
-<div>
-<span class="demo-label">SAMPLE LISTING / FULL MATCH</span>
-<h3>Westlands apartment</h3>
-<p>3 bedrooms · 2 bathrooms · Balcony</p>
-<strong>KES 16.8M</strong>
-</div>
-</div>
-</div>
-<div class="preview-bottom">
-<span>Your interface stays in place.</span>
-<span>Your backend connects to Veyra.</span>
-<span>Your data stays authoritative.</span>
-</div>
-</div>
-</div>
-</section>
-  <section id="story" class="product-section veyra-demo" aria-labelledby="demoTitle">
-    <div class="product-section-inner">
-      <div class="demo-heading">
-        <div>
-          <p class="product-eyebrow">Real Estate / Semantic Search</p>
-          <h2 id="demoTitle">From property intent<br>to relevant listings.</h2>
-        </div>
-        <p class="demo-disclaimer">An illustrative interface with sample listings.<br>These examples are not live search results.</p>
-      </div>
-      <div id="demoExamples" class="demo-examples" role="group" aria-label="Choose a sample property search" hidden>
-        <span>Explore an example</span>
-        <button type="button" data-example="apartment" aria-pressed="true" aria-controls="demoJourney">An apartment</button>
-        <button type="button" data-example="house" aria-pressed="false" aria-controls="demoJourney">A family home</button>
-      </div>
-      <div class="search-comparison"><p><strong>Traditional filters</strong><br>Westlands · 3 bedrooms · Under KES 18M</p><p><strong>With Veyra</strong><br>Add meaning and property preferences: “A balcony would be a plus.” Search interprets supported criteria, preserves hard constraints and ranks listings by semantic relevance, beyond exact keywords.</p></div><div id="demoJourney" class="demo-journey search-journey">
-        <section data-journey="search" class="demo-step" aria-labelledby="describeTitle">
-          <div class="demo-step-heading"><span class="product-number">01 / Describe</span><h3 id="describeTitle">Start with what<br>you have in mind.</h3><p>A request in everyday language.</p></div>
-          <div class="demo-request">
-            <span class="demo-label">Your property search</span>
-            <blockquote id="demoQuery">A three-bedroom apartment in Westlands under KES 18M. A balcony would be a plus.</blockquote>
-            <span class="demo-request-note">One request. The details together.</span>
-          </div>
-        </section>
-        <section data-journey="search" class="demo-step" aria-labelledby="understandTitle">
-          <div class="demo-step-heading"><span class="product-number">02 / Understand</span><h3 id="understandTitle">Give the request<br>structure.</h3><p>Identify the criteria that guide the search.</p></div>
-          <dl class="demo-criteria">
-            <div><dt>Property type</dt><dd id="demoType">Apartment</dd></div>
-            <div><dt>Location</dt><dd id="demoLocation">Westlands</dd></div>
-            <div><dt>Bedrooms</dt><dd id="demoBedrooms">3 bedrooms</dd></div>
-            <div><dt>Budget</dt><dd id="demoBudget">Under KES 18M</dd></div>
-            <div><dt>Preference</dt><dd id="demoPreference">Balcony</dd></div>
-          </dl>
-        </section>
-        <section data-journey="search" class="demo-step demo-step-results" aria-labelledby="resultsTitle">
-          <div class="demo-step-heading"><span class="product-number">03 / Discover</span><h3 id="resultsTitle">Bring relevant<br>listings forward.</h3><p>See which requirements each result meets, and where an alternative falls short.</p></div>
-          <div class="demo-results">
-            <article class="demo-listing"><div class="demo-listing-top"><span class="demo-label">Sample listing 01</span><span id="demoMatch0">FULL MATCH</span></div><h4 id="demoName0">Westlands apartment</h4><p id="demoDetails0" class="demo-listing-details">3 bedrooms &middot; 2 bathrooms &middot; Westlands &middot; Balcony</p><p id="demoPrice0" class="demo-listing-price">KES 16.8M</p><p id="demoReason0" class="demo-listing-reason">Matches property type, location, bedrooms and budget, with the preferred balcony.</p></article>
-            <article class="demo-listing"><div class="demo-listing-top"><span class="demo-label">Sample listing 02</span><span id="demoMatch1">WEAK MATCH</span></div><h4 id="demoName1">Westlands apartment</h4><p id="demoDetails1" class="demo-listing-details">3 bedrooms &middot; 3 bathrooms &middot; Westlands &middot; No balcony</p><p id="demoPrice1" class="demo-listing-price">KES 17.5M</p><p id="demoReason1" class="demo-listing-reason">Meets the required property type, location, bedrooms and budget, but lacks the preferred balcony.</p></article>
-          </div>
-        </section>
-      </div>
-      <div class="product-note">
-        <strong>Know what kind of result came back.</strong>
-        <p><b>Full match:</b> satisfies the explicit requirements. <b>Weak match:</b> meets required constraints but may miss softer preferences.</p>
-        <p><b>Relaxed match:</b> an alternative that falls outside an explicit requirement, labeled to make the compromise clear.</p>
-        <p><b>Conflicting query:</b> the request contains contradictory requirements. <b>No match:</b> no acceptable result was found within the bounded search.</p>
-      </div>
-      <p id="demoStatus" class="demo-sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
-      <div class="demo-footer"><p>See how this could fit your own property data and application.</p><a href="#walkthrough" class="veyra-text-link">Request a walkthrough <span aria-hidden="true">&#8599;</span></a></div>
-    </div>
-  </section>
-
-<section id="recommendations" class="product-section" aria-labelledby="recommendations-title">
-<div class="product-section-inner">
-<p class="product-eyebrow">Real Estate / Recommendations</p>
-<h2 id="recommendations-title">A property they like.<br>Relevant alternatives.</h2>
-<p class="product-lead">Continue from the property found in Search. With Professional and above, use a viewed property’s content and characteristics to surface relevant alternatives. Recommendations are content-based, rather than a behavioral profile of each buyer.</p>
-<ol data-journey="branch" class="capability-flow narrative-flow" aria-label="Content-based property recommendations">
-<li><span id="recommendationSource">Selected Westlands apartment</span><br>
-<small>Illustrative property from Search</small>
-</li>
-<li>Real Estate Recommendations<br>
-<small>Compare listing content</small>
-</li>
-<li>Relevant alternatives<br>
-<small>Returned to your application</small>
+<ol class="model-index">
+<li>Platform</li>
+<li>Capabilities</li>
+<li>Domains</li>
+<li>Real Estate <small>Current Domain</small>
 </li>
 </ol>
 </div>
+<div class="model-content">
+<article class="model-step" data-stage="0">
+<p class="eyebrow">Platform / Shared foundation</p>
+<h3>Intelligence, with a common foundation.</h3>
+<p>One local runtime brings together retrieval, models and APIs. Your applications use this foundation through an enabled Domain.</p>
+<div class="foundation">
+<span>Retrieval</span>
+<span>Models</span>
+<span>APIs</span>
+<strong>Veyra infrastructure</strong>
+</div>
+</article>
+<article class="model-step" data-stage="1">
+<p class="eyebrow">Capabilities / What Veyra can do</p>
+<h3>A shared set of intelligence capabilities.</h3>
+<div class="tab-system capability-system" data-tabs>
+<div class="tab-list" aria-label="Veyra capabilities">
+<button type="button">Search</button>
+<button type="button">Recommendations</button>
+<button type="button">Price Intelligence</button>
+<button type="button">Advanced Intelligence</button>
+</div>
+<div class="tab-panel">
+<span class="panel-symbol" aria-hidden="true">↗</span>
+<h4>From intent to relevant information.</h4>
+<p>Understand a request, apply constraints and retrieve relevant information through the Domain.</p>
+</div>
+<div class="tab-panel">
+<span class="panel-symbol" aria-hidden="true">↔</span>
+<h4>Expand from what is already relevant.</h4>
+<p>Discover alternatives using relationships and relevance defined by the Domain.</p>
+</div>
+<div class="tab-panel">
+<span class="panel-symbol" aria-hidden="true">≈</span>
+<h4>Put price into context.</h4>
+<p>Apply Domain-specific price models and comparisons to the data available.</p>
+</div>
+<div class="tab-panel">
+<span class="panel-symbol" aria-hidden="true">+</span>
+<h4>Extend the intelligence layer.</h4>
+<p>Additional intelligence capabilities where enabled by the Domain and commercial configuration.</p>
+</div>
+</div>
+<p class="caption">Capability availability follows the enabled Domain and commercial agreement.</p>
+</article>
+<article class="model-step" data-stage="2">
+<p class="eyebrow">Domains / How Veyra understands</p>
+<h3>Capabilities need context.</h3>
+<p>A Domain specializes the platform with the language, structure and rules of an industry.</p>
+<div class="domain-layer">
+<span>Terminology</span>
+<span>Entities</span>
+<span>Structured fields</span>
+<span>Constraints</span>
+<span>Relationships</span>
+<span>Workflows</span>
+<span>Relevance rules</span>
+</div>
+<div class="domain-result">
+<span>Shared capabilities</span>
+<span aria-hidden="true">+</span>
+<span>Domain understanding</span>
+<strong>Industry-relevant intelligence</strong>
+</div>
+</article>
+<article class="model-step current-domain" data-stage="3">
+<p class="eyebrow">Current Domain / In production</p>
+<h3>Real Estate.</h3>
+<p>The first production Domain. A concrete implementation of Veyra’s intelligence capabilities in the language of property.</p>
+<a class="text-link" href="#real-estate">See the Domain in practice ↓</a>
+</article>
+</div>
 </section>
-<section id="price-intelligence" class="product-section product-section-alt" aria-labelledby="price-intelligence-title">
-<div class="product-section-inner">
-<p class="product-eyebrow">Real Estate / Price Intelligence</p>
-<h2 id="price-intelligence-title">Property data.<br>Price perspective.</h2>
-<p class="product-lead">Add a price perspective to the same property context. Business and Enterprise plans connect property characteristics and location to estimates, comparisons and insight. Price Intelligence is available through the API where licensed and configured; evaluate it against your property data and intended use.</p>
-<ol data-journey="flow" class="capability-flow narrative-flow" aria-label="Property inputs to Price Intelligence outputs">
-<li><span id="priceContext">Westlands property context</span><br>
-<small>Location, characteristics and property data</small>
-</li>
-<li>Price Intelligence<br>
-<small>Real Estate Domain capability</small>
-</li>
-<li>Estimate · comparison · insight<br>
-<small>Context for property decisions</small>
-</li>
-</ol>
-<aside class="product-note">
-<strong>Advanced Intelligence</strong>
-<p>The Enterprise Real Estate plan adds Advanced Intelligence. Discuss the capability scope and configuration for your deployment with Tandish.</p>
+<section class="chapter estate" id="real-estate" aria-labelledby="estate-title">
+<div class="chapter-intro">
+<div>
+<p class="eyebrow">02 / Veyra in Real Estate</p>
+<h2 id="estate-title">One property.<br>A connected intelligence story.</h2>
+</div>
+<p>The Domain understands listings, property types, locations, bedrooms, amenities, prices and property characteristics. See how that context carries across three capabilities.</p>
+</div>
+<div class="estate-context">
+<span>Listings</span>
+<span>Location</span>
+<span>Property type</span>
+<span>Bedrooms</span>
+<span>Amenities</span>
+<span>Price</span>
+</div>
+<div class="property-story">
+<aside class="selected-property">
+<div class="property-art" aria-hidden="true">
+<div class="sun">
+</div>
+<div class="building">
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+</div>
+<span>01 / Selected property</span>
+</div>
+<div class="property-info">
+<p class="eyebrow">The context that stays with you</p>
+<h3 data-property-name>Westlands apartment</h3>
+<p data-property-facts>3 bedrooms · 2 bathrooms · Balcony</p>
+<strong data-property-price>KES 16.8M</strong>
+<span class="match-label">Full match</span>
+<p class="caption">Illustrative listing, not live inventory.</p>
+</div>
+</aside>
+<div class="tab-system estate-system" data-tabs>
+<div class="tab-list" aria-label="Real Estate story">
+<button type="button">01 Search</button>
+<button type="button">02 Recommendations</button>
+<button type="button">03 Price Intelligence</button>
+</div>
+<div class="tab-panel">
+<p class="eyebrow">Describe → Understand → Discover</p>
+<h3>Start with what you have in mind.</h3>
+<div class="example-picker" hidden>
+<span>Try a request</span>
+<button type="button" data-example="apartment" aria-pressed="true">Apartment</button>
+<button type="button" data-example="house" aria-pressed="false">Family home</button>
+</div>
+<blockquote data-query>“A three-bedroom apartment in Westlands under KES 18M. A balcony would be a plus.”</blockquote>
+<div class="criteria">
+<div>
+<small>Property</small>
+<span data-type>Apartment</span>
+</div>
+<div>
+<small>Location</small>
+<span data-location>Westlands</span>
+</div>
+<div>
+<small>Bedrooms</small>
+<span data-bedrooms>3</span>
+</div>
+<div>
+<small>Budget</small>
+<span data-budget>Under KES 18M</span>
+</div>
+<div>
+<small>Preference</small>
+<span data-preference>Balcony</span>
+</div>
+</div>
+<div class="result-handoff">
+<span aria-hidden="true">↙</span>
+<div>
+<strong>A relevant property, with an honest match.</strong>
+<p>The selected listing meets the hard constraints and the stated preference.</p>
+</div>
+</div>
+<details class="inline-detail">
+<summary>What if there isn’t a full match?</summary>
+<p>Veyra distinguishes full, weak and relaxed matches, and can return no match. Missing preferences and relaxed constraints should remain visible rather than being presented as exact results.</p>
+</details>
+</div>
+<div class="tab-panel">
+<p class="eyebrow">Recommendations / From the selected property</p>
+<h3>A property they like.<br>Relevant alternatives.</h3>
+<p>Keep the property context. Explore alternatives using the Domain’s relationships, characteristics and relevance rules.</p>
+<div class="alternative">
+<span class="mini-building" aria-hidden="true">▥</span>
+<div>
+<small>Illustrative alternative</small>
+<h4 data-alt-name>Another Westlands apartment</h4>
+<p data-alt-facts>3 bedrooms · 3 bathrooms · No balcony</p>
+<strong data-alt-price>KES 17.5M</strong>
+</div>
+</div>
+<p class="context-note" data-alt-note>Within the same budget and location. The missing balcony is a visible tradeoff.</p>
+<p class="caption">Recommendation relevance depends on the available data and enabled configuration.</p>
+</div>
+<div class="tab-panel">
+<p class="eyebrow">Price Intelligence / Same property context</p>
+<h3>A price needs perspective.</h3>
+<p>Bring the selected property’s characteristics and location together with relevant data.</p>
+<div class="price-context">
+<div>
+<small>Selected listing</small>
+<strong data-price-context>Westlands · 3 bedrooms</strong>
+<span data-asking>KES 16.8M asking price</span>
+</div>
+<span aria-hidden="true">↓</span>
+<div>
+<small>Domain-specific intelligence</small>
+<strong>Price perspective</strong>
+<p>Estimates · Comparisons · Insight</p>
+</div>
+</div>
+<p class="caption">Illustrative workflow, not a valuation. Outputs depend on data coverage, models and enabled capability scope.</p>
+</div>
+</div>
+</div>
+<p class="sr-only" id="example-status" aria-live="polite">
+</p>
+</section>
+<section class="chapter architecture" id="integration" aria-labelledby="integration-title">
+<div class="chapter-intro">
+<div>
+<p class="eyebrow">03 / How Veyra fits</p>
+<h2 id="integration-title">Your systems.<br>Intelligence inside your boundary.</h2>
+</div>
+<p>Connect your existing experience to Veyra through your backend. Keep operational data and intelligence workloads in infrastructure you control.</p>
+</div>
+<div class="architecture-layout">
+<div class="customer-boundary">
+<p class="boundary-label">Customer-controlled environment</p>
+<div class="system-flow">
+<div>
+<small>Your experience</small>
+<h3>Website. CRM.<br>Portal. Internal tools.</h3>
+<p>Your application backend</p>
+</div>
+<span class="flow-arrow" aria-hidden="true">→</span>
+<div class="engine">
+<span class="engine-brand">Veyra<span class="copper">.</span>
+</span>
+<span>Local /v1 API</span>
+<span>Enabled Domain</span>
+<span>Intelligence runtime</span>
+</div>
+</div>
+<div class="local-assets">
+<span>Data</span>
+<span>Indexes</span>
+<span>Credentials</span>
+<span>Workloads</span>
+</div>
+<p class="caption">Your source systems remain authoritative. Veyra maintains local representations and indexes.</p>
+</div>
+<aside class="control-plane">
+<p class="eyebrow">Tandish control plane</p>
+<h3>Commercial rights.<br>Release authority.</h3>
+<ul>
+<li>Licensing &amp; entitlements</li>
+<li>Signed releases</li>
+<li>Update authority</li>
+</ul>
+<div class="control-connector" aria-hidden="true">← →</div>
+<p class="caption">Periodic rights validation and controlled software updates. Separate from local operational data.</p>
 </aside>
 </div>
+<details class="inline-detail technical">
+<summary>Deployment and integration details</summary>
+<p>Containerized deployment with Docker; V1 assumes one active engine-platform replica. Your team configures TLS, networking, hosting, storage and local logs, maps data imports and connects its backend using project API keys. REST and JSON/CSV flows support integration; a generic database connector is not implied.</p>
+<p>Periodic licensing communication is required, with an offline grace mechanism. Veyra is not designed for permanent disconnection. Supported local models operate locally after acquisition.</p>
+</details>
 </section>
-<section id="how-it-works" class="product-section" aria-labelledby="how-it-works-title">
-<div class="product-section-inner">
-<p class="product-eyebrow">How Veyra works</p>
-<h2 id="how-it-works-title">Domain understanding.<br>Platform infrastructure.</h2>
-<p class="product-lead">The Domain interprets the data and applies industry rules. Veyra provides the infrastructure that makes the resulting intelligence available to your systems.</p>
-<div data-journey="lanes" class="processing-layers">
+<section class="chapter beyond" id="domains" aria-labelledby="domains-title">
+<p class="eyebrow">04 / Beyond Real Estate</p>
+<div class="zoom-out" aria-label="Real Estate is a Domain within Veyra">
+<div class="zoom-platform">
+<span>Veyra / Shared intelligence</span>
+<div class="zoom-domain">
+<span>Domain / Industry understanding</span>
+<div class="zoom-estate">Real Estate <small>Production</small>
+</div>
+</div>
+</div>
+<span class="zoom-direction" aria-hidden="true">↗</span>
+</div>
+<div class="beyond-content">
+<h2 id="domains-title">What would Veyra understand<br>in your industry?</h2>
 <div>
-<span class="product-number">DOMAIN-SPECIFIC WORK</span>
-<h3>Industry understanding</h3><ol class="processing-stages"><li>Interpret</li><li>Normalize</li><li>Apply Domain rules</li></ol>
-<p>Real Estate maps listing fields, property terminology and constraints to supported intelligence capabilities.</p>
+<p>A Domain gives the platform the context that makes your work specific.</p>
+<ol class="recognition">
+<li>Your data structures.</li>
+<li>Your terminology.</li>
+<li>Your constraints.</li>
+<li>Your workflows.</li>
+<li>Your recurring decisions.</li>
+</ol>
+<p class="caption">Real Estate is the only production Domain today. Another industry starts with discovery, Domain development and validation—not a ready-made deployment.</p>
+<a class="text-link" href="#walkthrough">Explore a possible Domain ↗</a>
 </div>
+</div>
+</section>
+<section class="chapter faq-chapter" id="faq" aria-labelledby="faq-title">
 <div>
-<span class="product-number">VEYRA PLATFORM INFRASTRUCTURE</span>
-<h3>Shared infrastructure</h3><ol class="processing-stages"><li>Embeddings</li><li>Vector index</li><li>Retrieval / runtime</li></ol>
-<p>Shared processing, indexing and runtime infrastructure support the enabled Domain’s search and intelligence workflows.</p>
+<p class="eyebrow">05 / A few practical questions</p>
+<h2 id="faq-title">Clear answers.<br>Before you commit.</h2>
 </div>
-<div class="processing-output"><span class="product-number">TOGETHER</span><h3>Domain intelligence</h3><p>The Domain specializes Veyra’s infrastructure for the industry’s decisions and workflows.</p></div>
-</div>
-<details class="integration-details">
-<summary>Real Estate search: retrieval and result handling</summary>
-<div>
-<p>The Domain extracts supported property criteria using deterministic rules and canonical property semantics. Semantic similarity and structured fields surface candidates; explicit requirements are checked before valid candidates are ordered by relevance.</p>
-<p>Outcome validation distinguishes full, weak and relaxed matches, contradictory queries and no-match results. The API returns the outcome state so your application can explain compromises. Query coverage and search quality continue to be refined.</p>
-</div>
+<div class="faq-list">
+<details>
+<summary>Which Domains are available today?</summary>
+<p>Real Estate is the first and only production Domain today. Other Domains require development and validation. Capability scope, including Advanced Intelligence, depends on the enabled Domain, configuration and commercial agreement.</p>
+</details>
+<details>
+<summary>Where does our data live?</summary>
+<p>Customer data, local representations, indexes and intelligence workloads stay in the customer-controlled Veyra environment. Your source data remains authoritative. Access and external connections are reviewed for your deployment.</p>
+</details>
+<details>
+<summary>How is Veyra deployed? Is it air-gapped?</summary>
+<p>Veyra uses Docker in customer-controlled infrastructure. V1 assumes one active engine-platform replica per installation. Your team manages TLS, hosting, networking, storage and local logs. Periodic Tandish communication validates licensing and rights; an offline grace mechanism exists, but permanent disconnection is not supported. Supported local models run locally after acquisition.</p>
+</details>
+<details>
+<summary>How does our application integrate?</summary>
+<p>Your backend connects to the local /v1 API using project API keys. Your team maps and imports data and presents results in your existing interface. Integration uses REST and JSON/CSV data flows; a generic database connector is not implied.</p>
+</details>
+<details>
+<summary>How are scope and responsibilities agreed?</summary>
+<p>Deployment and capability scope are tailored to the enabled Domain and commercial agreement. Your team controls infrastructure operations; Tandish retains licensing, entitlements, signed releases and update authority. Support arrangements are agreed with Tandish; no public SLA or fixed deployment timeline is defined.</p>
 </details>
 </div>
 </section>
-  <section id="integration" class="product-section product-section-alt">
-    <div class="product-section-inner">
-      <p class="product-eyebrow">How it fits your systems</p>
-      <h2>Keep your systems.<br>Connect Domain intelligence.</h2>
-      <p class="product-lead">Your website, CRM, portal or internal application connects through your backend to the Veyra API. The API returns intelligence from the enabled Domain — Real Estate today. Your systems remain authoritative for source data and customer workflows.</p>
-      <ol data-journey="integration" class="product-flow narrative-flow integration-path" aria-label="Customer systems connect through the customer backend and Veyra API to enabled Domain intelligence"><li><strong>Your systems</strong><br>Website · CRM · portal · internal app</li><li><strong>Customer backend</strong><br>Your application logic</li><li><strong>Veyra API</strong><br>Inside your environment</li><li><strong>Enabled Domain</strong><br>Real Estate today</li><li><strong>Intelligence returned</strong><br>Presented in your interface</li></ol>
-      <div class="product-grid product-grid-two">
-        <article><h3>Your team keeps control.</h3><p>You continue to manage your listings, application and customer workflows. Your team controls the hosting, networking, storage and access for the Veyra deployment.</p></article>
-        <article><h3>Constraint-aware results.</h3><p>Explicit requirements are checked separately from softer preferences so results can distinguish a full match from a compromise. Your application receives the outcome state alongside the results.</p></article>
-      </div>
-      <div class="product-grid">
-        <article><span class="product-number">01 / Prepare</span><h3>Connect your listing data.</h3><p>Map the property fields Veyra needs and agree how new or changed listings reach the search engine.</p></article>
-        <article><span class="product-number">02 / Integrate</span><h3>Connect your backend.</h3><p>Your developers connect to Veyra's API and adapt the search or recommendations interface in the website or tools your team already uses.</p></article>
-        <article><span class="product-number">03 / Evaluate</span><h3>Check it against your workflow.</h3><p>Use representative listings and search requests to evaluate relevance, supported criteria and operational requirements before planning a rollout.</p></article>
-      </div>
-      <details class="integration-details"><summary>Details for your technical team</summary><div><p>Your backend calls the local <code>/v1</code> API with project API keys. Projects hold the datasets, index bindings and local configuration used by search and recommendations. Local administration manages projects and application access within your deployment.</p><p>Veyra is deployed with Docker on customer-controlled infrastructure. Listing imports use REST, JSON or CSV approaches. Data mapping, updates and application changes require integration work; a generic direct database connector is not currently available.</p><p>Hosting requirements, security configuration, licensing and operational responsibilities are reviewed for your deployment.</p></div></details>
-    </div>
-  </section>
-  <section id="deployment" class="product-section">
-    <div class="product-section-inner">
-      <p class="product-eyebrow">Deployment &amp; operation</p>
-      <h2>Local intelligence.<br>Defined responsibilities.</h2>
-      <p class="product-lead">Your operational data, indexes and customer-specific intelligence stay inside infrastructure you control. Tandish provides the licensing and release control plane; intelligence workloads run in your customer environment.</p>
-      <div data-journey="boundary" class="product-grid product-grid-two deployment-boundary">
-        <article class="customer-boundary"><span class="product-number">CUSTOMER ENVIRONMENT</span><h3>Your environment</h3><ul><li>Veyra runtime, operational data and indexes.</li><li>Customer-side credentials and intelligence workloads.</li><li>Docker/containerized customer deployment.</li><li>One active engine-platform replica per V1 installation.</li><li>Customer-configured TLS, hosting, network and storage.</li><li>Logs in the customer or container environment.</li><li>Local models operate locally after acquisition.</li></ul></article>
-        <div class="control-relationship" aria-label="Tandish sends licensed releases and update authority to the customer environment"><span aria-hidden="true">←</span><p>Licensing &amp; signed releases</p><small>Control relationship only</small></div><article class="tandish-boundary"><span class="product-number">TANDISH CONTROL PLANE</span><h3>Tandish's role</h3><ul><li>Commercial licensing and entitlements.</li><li>Signed software releases and update authority.</li><li>A separate minimal deployment agent for controlled container updates.</li><li>Deployment and operational requirements discussed for your environment.</li></ul></article>
-      </div>
-      <aside class="product-note"><strong>Self-hosted does not mean permanently disconnected.</strong><p>Periodic communication with Tandish is part of licensing and rights validation. An offline grace mechanism exists; Veyra is not a fully air-gapped product. Security and compliance depend on the deployment, configuration and operational arrangements.</p></aside>
-    </div>
-  </section>
-<section id="plans" class="product-section product-section-alt" aria-labelledby="plans-title">
-<div class="product-section-inner">
-<p class="product-eyebrow">Veyra / Real Estate plans</p>
-<h2 id="plans-title">Start with Search.<br>Build on intelligence.</h2>
-<p class="product-lead">Current commercial plans for Veyra’s Real Estate Domain. Each level builds on the last. These capabilities and plans do not define packaging for additional Domains.</p>
-<div data-journey="ladder" class="real-estate-plans">
-<article>
-<p class="product-number">REAL ESTATE DOMAIN</p>
-<h3>Starter</h3>
-<p>Search foundation</p>
-<ul>
-<li class="plan-addition"><span aria-hidden="true">+</span> Search</li>
-</ul>
-<a class="veyra-text-link" href="mailto:hello@tandish.com?subject=Veyra%20Real%20Estate%20Starter%20plan">Contact Sales <span aria-hidden="true">↗</span>
-</a>
-</article>
-<article>
-<p class="product-number">REAL ESTATE DOMAIN</p>
-<h3>Professional</h3>
-<p>Adds Recommendations</p>
-<ul>
-<li>Search</li>
-<li class="plan-addition"><span aria-hidden="true">+</span> Recommendations</li>
-</ul>
-<a class="veyra-text-link" href="mailto:hello@tandish.com?subject=Veyra%20Real%20Estate%20Professional%20plan">Contact Sales <span aria-hidden="true">↗</span>
-</a>
-</article>
-<article>
-<p class="product-number">REAL ESTATE DOMAIN</p>
-<h3>Business</h3>
-<p>Adds Price Intelligence</p>
-<ul>
-<li>Search</li>
-<li>Recommendations</li>
-<li class="plan-addition"><span aria-hidden="true">+</span> Price Intelligence</li>
-</ul>
-<a class="veyra-text-link" href="mailto:hello@tandish.com?subject=Veyra%20Real%20Estate%20Business%20plan">Contact Sales <span aria-hidden="true">↗</span>
-</a>
-</article>
-<article>
-<p class="product-number">REAL ESTATE DOMAIN</p>
-<h3>Enterprise</h3>
-<p>Adds Advanced Intelligence</p>
-<ul>
-<li>Search</li>
-<li>Recommendations</li>
-<li>Price Intelligence</li>
-<li class="plan-addition"><span aria-hidden="true">+</span> Advanced Intelligence</li>
-</ul>
-<a class="veyra-text-link" href="mailto:hello@tandish.com?subject=Veyra%20Real%20Estate%20Enterprise%20plan">Contact Sales <span aria-hidden="true">↗</span>
-</a>
-</article>
+<section class="chapter final-cta" id="walkthrough" aria-labelledby="cta-title">
+<div>
+<p class="eyebrow">06 / Start a conversation</p>
+<h2 id="cta-title">See where Veyra fits<br>in your business.</h2>
 </div>
+<div>
+<p>Explore a current Real Estate deployment, or discuss what a Domain for your industry would need to understand.</p>
+<a class="button primary" href="mailto:hello@tandish.com?subject=Discuss%20Veyra">Discuss Veyra <span>↗</span>
+</a>
+<p class="caption">We’ll review data, workflows, integration and hosting. Scope and next steps are agreed together.</p>
 </div>
 </section>
-  <section id="future" class="x236">
-    <div class="x237"><div class="x238"><span class="x32"></span>Before you deploy</div><h2 class="x239">Clear answers.<br>Before you commit.</h2></div>
-    <div id="faqList" class="x240">
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-0" aria-expanded="true" aria-controls="faq-answer-0"><span class="product-number">01</span><span class="product-faq-question">Where does property data live?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-0" role="region" aria-labelledby="faq-question-0" aria-hidden="false" style="max-height:none;opacity:1;"><p>Customer property data and local intelligence are processed in the customer-controlled Veyra environment. Your source data remains authoritative; Veyra maintains its own local representations and indexes. Review access, external connections and operational arrangements for your deployment.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-1" aria-expanded="true" aria-controls="faq-answer-1"><span class="product-number">02</span><span class="product-faq-question">Is Veyra fully air-gapped?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" aria-hidden="false" style="max-height:none;opacity:1;"><p>No. Periodic communication with the Tandish control plane is part of commercial licensing and rights validation. An offline grace mechanism exists, but Veyra is not designed for permanent disconnection. Supported local models run locally after acquisition.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-2" aria-expanded="true" aria-controls="faq-answer-2"><span class="product-number">03</span><span class="product-faq-question">How is Veyra deployed?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra uses a containerized customer deployment with Docker. V1 assumes one active engine-platform replica per installation. Your team configures TLS and controls hosting, networking and storage; logs use the customer or container environment.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-3" aria-expanded="true" aria-controls="faq-answer-3"><span class="product-number">04</span><span class="product-faq-question">How does our application integrate?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="false" style="max-height:none;opacity:1;"><p>Your application backend connects to the local Veyra /v1 API using project API keys, then presents the returned search results or recommendations in your own interface. Your team maps listing data, manages imports and makes the required application changes. Price intelligence is available where configured and licensed.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-4" aria-expanded="true" aria-controls="faq-answer-4"><span class="product-number">05</span><span class="product-faq-question">What is the current product status?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra is a self-hosted intelligence platform. Real Estate is its first and only production Domain, with Search, Recommendations, Price Intelligence and Advanced Intelligence offered through Real Estate plans. Availability depends on the licensed plan and deployment configuration. Additional industry Domains are not available today.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-5" aria-expanded="true" aria-controls="faq-answer-5"><span class="product-number">06</span><span class="product-faq-question">Who handles operation and support?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-5" role="region" aria-labelledby="faq-question-5" aria-hidden="false" style="max-height:none;opacity:1;"><p>Your team retains control of its infrastructure. Deployment requirements and operational responsibilities are discussed with Tandish for your environment. Tandish controls licensed releases and update authority; no public support SLA or fixed deployment timeline is currently defined.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-6" aria-expanded="true" aria-controls="faq-answer-6"><span class="product-number">07</span><span class="product-faq-question">What happens after a walkthrough request?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-6" role="region" aria-labelledby="faq-question-6" aria-hidden="false" style="max-height:none;opacity:1;"><p>Tandish reviews your data, workflows and existing applications. For Real Estate, we discuss a current deployment. For another industry, we explore whether a new Domain could be developed. The walkthrough covers fit, integration and hosting requirements, with next steps agreed together.</p></div></div>
-      <div class="product-faq-item"><h3><button class="faq-btn product-faq-button" id="faq-question-7" aria-expanded="true" aria-controls="faq-answer-7"><span class="product-number">08</span><span class="product-faq-question">Does Veyra replace our website or property management system?</span><span class="faq-plus" aria-hidden="true">+</span></button></h3><div class="faq-panel product-faq-panel" id="faq-answer-7" role="region" aria-labelledby="faq-question-7" aria-hidden="false" style="max-height:none;opacity:1;"><p>Veyra adds property search and recommendations behind your existing application. Your team keeps its website, listing system and customer workflows, and integrates Veyra where search or recommendations are needed. It is not a complete website, CRM or property management system.</p></div></div>
-    </div>
-  </section>
-<section id="domains" class="product-section product-section-alt" aria-labelledby="domains-title">
-<div class="product-section-inner">
-<p class="product-eyebrow">Beyond Real Estate</p>
-<h2 id="domains-title">What would Veyra understand<br>in your industry?</h2>
-<div data-journey="zoom" class="domain-zoom" role="group" aria-label="Real Estate is one Domain implementation within the Veyra platform">
-<div class="zoom-platform"><span class="product-number">PLATFORM / VEYRA</span><p>Shared intelligence infrastructure</p>
-<div class="zoom-domain"><span class="product-number">DOMAIN / INDUSTRY SPECIALIZATION</span><p>Data, terminology, constraints and workflows</p>
-<div class="zoom-current"><span class="product-number">CURRENT PRODUCTION DOMAIN</span><h3>Real Estate</h3></div></div></div>
-<p class="domain-continuation">Additional industry Domains would be specialized individually. They are not available today.</p></div>
-
-<p class="product-lead">A Domain connects an industry’s understanding to Veyra’s shared intelligence infrastructure. What would that mean for your business?</p>
-<ul class="industry-recognition"><li>Your data structures.</li><li>Your terminology.</li><li>Your constraints.</li><li>Your workflows.</li><li>Your recurring decisions.</li></ul>
-<aside class="product-note">
-<strong>Real Estate is where Veyra starts, not where its architecture ends.</strong>
-<p>Domain extensibility is part of Veyra’s design. Real Estate is the only production Domain today. Additional Domains are not available today. New Domains require scoping, development and validation; no launch dates are committed.</p>
-</aside>
-<a class="veyra-text-link" href="#walkthrough">Discuss your industry with Tandish <span aria-hidden="true">↗</span>
-</a>
-</div>
-</section>
-  <section id="walkthrough" class="x241" aria-labelledby="walkthroughTitle">
-    <div class="closing-contact-inner">
-      <div class="closing-contact-heading">
-        <div class="x242"><span class="x32"></span>Veyra by Tandish</div>
-        <h2 id="walkthroughTitle" class="x243">See where Veyra fits in your business.</h2>
-      </div>
-      <div class="closing-contact-details">
-        <p class="x244">Discuss a production Real Estate deployment, or explore whether a new Domain could be developed for your industry. Tell us about your data, workflows and recurring decisions. We’ll review fit, integration and deployment requirements. Real Estate is the only production Domain today.</p>
-        <div class="closing-contact-actions">
-          <a href="mailto:hello@tandish.com?subject=Veyra%20deployment%20or%20Domain%20enquiry" class="waitlist-submit x248 x246">Discuss a deployment or Domain</a>
-          <a href="mailto:hello@tandish.com" class="link x249">or reach us directly at hello@tandish.com</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
 </main>
-
-<footer class="x250">
-  <div class="x251">Tandish Group</div>
-  <div class="x252">
-    <a href="#deployment" class="link">Deployment</a>
-    <a href="#integration" class="link">Integration</a>
-    <a href="#walkthrough" class="link">Walkthrough</a>
-    <a href="/#approach" class="link">Tandish</a>
-    <a href="#story" class="link">Search demo</a>
-    <a href="#future" class="link">FAQs</a>
-    <a href="https://medium.com/@_tandish_" class="link">Articles on Medium</a>
-  </div>
-  <div class="x253">© 2026 Tandish Group</div>
+<footer class="story-footer">
+<a class="wordmark" href="../">tandish<span> / Veyra</span>
+</a>
+<p>Focused software. Considered intelligence.</p>
+<a href="mailto:hello@tandish.com">hello@tandish.com ↗</a>
+<a href="#top">Back to top ↑</a>
 </footer>
-
-<script defer src="../assets/js/veyra-experience.v1.js?v=33"></script>
-<script defer src="../assets/js/veyra-demo.js?v=3"></script>
-
-
-<script defer src="../assets/js/back-to-top.js?v=1"></script>
-<script defer src="../assets/js/veyra-journey.js?v=1"></script>
+<script src="../assets/js/veyra-story.js?v=1" defer>
+</script>
 </body>
 </html>
