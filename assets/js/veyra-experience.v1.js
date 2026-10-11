@@ -10,7 +10,7 @@
     });
   }
   // Preserve previously shared homepage links after moving product sections.
-  const legacySections = {'#who':'#audience','#veyra':'#hero','#veyra-arch':'#deployment','#eng':'#integration','#capabilities':'#integration'};
+  const legacySections = {'#audience':'#real-estate','#status':'#plans','#who':'#real-estate','#veyra':'#hero','#veyra-arch':'#deployment','#eng':'#integration','#capabilities':'#integration'};
   const productHashes = ['#veyra','#who','#story','#veyra-arch','#eng','#capabilities','#future'];
   if (!document.body.classList.contains('product-page') && productHashes.includes(location.hash)) {
     const productPath = location.protocol === 'file:' ? 'veyra/index.html' : '/veyra/';
