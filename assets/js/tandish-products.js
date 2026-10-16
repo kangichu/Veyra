@@ -31,11 +31,20 @@
   const position = index => Math.min(track.scrollWidth - track.clientWidth, products[index].card.offsetLeft - products[0].card.offsetLeft);
   const updateGallery = () => {
     pending = false;
+    const overflowing = track.scrollWidth > track.clientWidth + 2;
+    document.querySelector('.gallery-controls').hidden = !overflowing;
     const distances = products.map((_, index) => Math.abs(position(index) - track.scrollLeft));
     galleryIndex = distances.indexOf(Math.min(...distances));
     previous.disabled = track.scrollLeft < 2;
     next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
-    count.textContent = `${number(galleryIndex + 1)} / ${number(products.length)}`;
+    const bounds = track.getBoundingClientRect();
+    const visible = products.map((product, index) => {
+      const card = product.card.getBoundingClientRect();
+      return Math.min(card.right, bounds.right) - Math.max(card.left, bounds.left) >= card.width / 2 ? index : -1;
+    }).filter(index => index >= 0);
+    const first = visible[0] ?? galleryIndex;
+    const last = visible.at(-1) ?? first;
+    count.textContent = `${number(first + 1)}${last > first ? '–' + number(last + 1) : ''} / ${number(products.length)}`;
   };
   const moveGallery = index => {
     galleryIndex = Math.max(0, Math.min(products.length - 1, index));
@@ -131,7 +140,6 @@
     product.card.querySelector('[data-card-action]').textContent = `Discover ${product.name}`;
   });
   dialog.id = 'product-dialog';
-  document.querySelector('.gallery-controls').hidden = false;
   document.querySelector('.enhanced-gallery-hint').hidden = false;
   updateGallery();
 })();

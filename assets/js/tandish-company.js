@@ -21,5 +21,34 @@
      observer.unobserve(entry.target);
    }
  },{threshold:.1});
- document.querySelectorAll('.approach-grid>div').forEach(el=>observer.observe(el));
+ document.querySelectorAll('.approach-stage').forEach(el=>observer.observe(el));
+})();
+
+/* Section wayfinding and reading progress. Native anchors and details remain
+   functional when JavaScript or IntersectionObserver is unavailable. */
+(() => {
+ const sections = [...document.querySelectorAll('main>section[id]')];
+ const links = [...document.querySelectorAll('.company-nav-links a, .nav-contact')];
+ const trace = document.querySelector('.company-trace>span');
+ const main = document.querySelector('main');
+ if (!sections.length || !trace || !main) return;
+ let scheduled = false;
+ const update = () => {
+   scheduled = false;
+   const readingLine = innerHeight * .3;
+   let active = sections[0].id;
+   for (const section of sections) if (section.getBoundingClientRect().top <= readingLine) active = section.id;
+   links.forEach(link => {
+     if (link.hash === '#' + active) link.setAttribute('aria-current', 'location');
+     else link.removeAttribute('aria-current');
+   });
+   const bounds = main.getBoundingClientRect();
+   const progress = Math.max(0, Math.min(1, (innerHeight * .75 - bounds.top) / bounds.height));
+   trace.style.transform = `scaleY(${progress})`;
+ };
+ const schedule = () => { if (!scheduled) { scheduled = true; requestAnimationFrame(update); } };
+ addEventListener('scroll', schedule, {passive:true});
+ addEventListener('resize', schedule);
+ document.querySelectorAll('.approach-stage').forEach(stage => stage.addEventListener('toggle', schedule));
+ update();
 })();

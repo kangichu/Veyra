@@ -91,8 +91,12 @@ async function structure(page) {
   }
   await page.setViewportSize({width:1440,height:900});await page.locator('[data-open-product]').first().focus();await page.keyboard.press('End');await page.waitForTimeout(500);
   check('Gallery End key selects last card',await page.locator('[data-open-product]').last().evaluate(e=>e===document.activeElement));
-  check('Gallery count updates',await page.locator('.gallery-count').textContent()==='02 / 02');
+  check('Both desktop products fit',await page.locator('#product-track').evaluate(e=>e.scrollWidth<=e.clientWidth+2));
+  check('Desktop hides unnecessary gallery controls',await page.locator('.gallery-controls').isHidden());
+  check('Products separated from contact',await page.locator('#products').evaluate(e=>getComputedStyle(e).borderBottomWidth==='1px'&&getComputedStyle(e).borderBottomStyle==='solid'));
+  check('Products remain third section',await page.locator('main>section').evaluateAll(sections=>sections[2].id==='products'&&sections[3].id==='contact'));
   await page.locator('[data-open-product]').last().click();await page.waitForTimeout(650);await page.mouse.click(20,400);check('Backdrop closes modal',await page.locator('dialog').evaluate(d=>!d.open));
+  await page.setViewportSize({width:390,height:900});await page.waitForTimeout(150);
   await page.locator('[data-gallery-prev]').click();await page.waitForTimeout(500);check('Gallery previous button returns first',await page.locator('.gallery-count').textContent()==='01 / 02');
   await page.locator('[data-gallery-next]').click();await page.waitForTimeout(500);check('Gallery next button reaches last',await page.locator('.gallery-count').textContent()==='02 / 02');
   await page.locator('[data-gallery-prev]').click();await page.waitForTimeout(500);await page.locator('#product-track').hover();await page.mouse.wheel(400,0);await page.waitForTimeout(500);check('Native horizontal wheel movement',await page.locator('#product-track').evaluate(e=>e.scrollLeft>0));
@@ -114,7 +118,7 @@ async function structure(page) {
    const c=await context(browser,{viewport:{width:1280,height:900},reducedMotion:'reduce'});await c.route('http://website.test/',r=>r.fulfill({contentType:'text/html',body:html.replace('</div><p class="gallery-hint">',extra+'</div><p class="gallery-hint">')}));const p=await c.newPage();await load(p,'/');
    check('Scale '+total+' products configured',await p.locator('[data-product]').count()===total);
    await p.locator('[data-open-product]').first().focus();await p.keyboard.press('End');await p.waitForTimeout(150);
-   check('Scale '+total+' keyboard/count',await p.locator('.gallery-count').textContent()===String(total).padStart(2,'0')+' / '+String(total).padStart(2,'0'));
+   check('Scale '+total+' keyboard/count',await p.locator('.gallery-count').textContent()===String(total-1).padStart(2,'0')+'–'+String(total).padStart(2,'0')+' / '+String(total).padStart(2,'0'));
    check('Scale '+total+' last next disabled',await p.locator('[data-gallery-next]').isDisabled());
    await p.locator('[data-gallery-prev]').click();await p.waitForTimeout(150);check('Scale '+total+' previous moves',!(await p.locator('[data-gallery-next]').isDisabled()));
    await p.locator('[data-open-product]').last().click();await p.locator('[data-detail-next]').click();check('Scale '+total+' drawer wraps',await p.locator('.drawer-count').textContent()==='01 / '+String(total).padStart(2,'0'));
