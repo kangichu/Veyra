@@ -28,6 +28,7 @@
   let galleryIndex = 0;
   let detailIndex = 0;
   let origin = null;
+  let closing = false;
   let pending = false;
   let expanded = false;
   const number = value => String(value).padStart(2, '0');
@@ -88,6 +89,9 @@
     detailIndex = (index + products.length) % products.length;
     const product = products[detailIndex];
     const body = product.content.cloneNode(true);
+    dialog.querySelector('[data-drawer-product]').textContent = product.name;
+    const wordmark = body.querySelector('[data-detail-name]');
+    if (wordmark) wordmark.firstChild.textContent = product.name;
     const title = body.querySelector('[data-detail-title]');
     title.id = 'drawer-title';
     title.tabIndex = -1;
@@ -109,17 +113,33 @@
     if (switching) title.focus({preventScroll:true});
   };
   const openProduct = (index, trigger) => {
+    if (dialog.open) return;
     origin = trigger;
     showProduct(index);
     document.documentElement.style.setProperty('--product-scrollbar-width', `${innerWidth - document.documentElement.clientWidth}px`);
     dialog.showModal();
     document.documentElement.classList.add('product-modal-open');
+    // Establish the offscreen position before transitioning into the top layer.
+    dialog.getBoundingClientRect();
+    getComputedStyle(dialog, '::backdrop').opacity;
+    dialog.classList.add('is-visible');
     close.focus({preventScroll:true});
     content.scrollTop = 0;
     requestAnimationFrame(() => { if (dialog.open) content.scrollTop = 0; });
   };
-  const closeProduct = () => dialog.close();
+  const closeProduct = () => {
+    if (!dialog.open || closing) return;
+    closing = true;
+    dialog.classList.remove('is-visible');
+    // Keep the modal and scroll lock in place until the exit finishes. Reversing
+    // the transition also makes a close during entry continue without a jump.
+    const motions = dialog.getAnimations();
+    Promise.allSettled(motions.map(motion => motion.finished)).then(() => {
+      if (closing && dialog.open) dialog.close();
+    });
+  };
   close.addEventListener('click', closeProduct);
+  dialog.addEventListener('cancel', event => { event.preventDefault(); closeProduct(); });
   dialog.addEventListener('keydown', event => {
     if (event.key !== 'Tab') return;
     const focusable = [...dialog.querySelectorAll('a[href],button:not(:disabled),[tabindex="0"]')].filter(element => element.getClientRects().length);
@@ -137,8 +157,10 @@
     const bounds = dialog.getBoundingClientRect();
     if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeProduct();
   });
-  // Native Escape/cancel closes the modal; close also covers programmatic closure.
+  // Clean up after the exit, including direct programmatic closure.
   dialog.addEventListener('close', () => {
+    closing = false;
+    dialog.classList.remove('is-visible');
     document.documentElement.classList.remove('product-modal-open');
     document.documentElement.style.removeProperty('--product-scrollbar-width');
     if (origin?.isConnected) origin.focus({preventScroll:true});

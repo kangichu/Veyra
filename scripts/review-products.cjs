@@ -85,7 +85,15 @@ async function structure(page) {
   for(const width of [1440,390,375]){
    await page.setViewportSize({width,height:900});await page.locator('#products').scrollIntoViewIfNeeded();await page.waitForTimeout(500);
    await page.locator('#products').screenshot({path:path.join(out,'gallery-'+width+'.png'),style:'.company-header,.skip-link,#scrollTop{visibility:hidden!important}'});
-   const trigger=page.locator('[data-open-product]').first();await trigger.click();await page.waitForTimeout(650);
+   const trigger=page.locator('[data-open-product]').first();await trigger.click();
+   check('Drawer slides in '+width,await page.locator('dialog').evaluate(d=>{
+    const motion=d.getAnimations().find(a=>a.transitionProperty==='transform');
+    if(!motion)return false;
+    motion.pause();motion.currentTime=motion.effect.getTiming().duration/2;
+    const x=new DOMMatrixReadOnly(getComputedStyle(d).transform).m41;
+    motion.play();return x>0&&x<d.offsetWidth;
+   }));
+   await page.waitForTimeout(650);
    check('Modal visible '+width,await page.locator('dialog').evaluate(d=>d.open&&d.matches(':modal')));
    const dimensions=await page.locator('dialog').boundingBox();check('Drawer anchored right '+width,Math.abs(dimensions.x+dimensions.width-width)<2);check('Drawer size '+width,width>760?dimensions.width/width>=.55&&dimensions.width/width<=.7:Math.abs(dimensions.width-width)<20);
    check('Persistent product CTA '+width,await page.locator('.drawer-cta').isVisible()&&(await page.locator('.drawer-cta').getAttribute('href')).includes('/veyra/'));
@@ -98,7 +106,16 @@ async function structure(page) {
    await page.locator('[data-detail-next]').click();check('Last product wraps to first '+width,(await page.locator('#drawer-title').textContent()).includes('intelligence'));
    await page.locator('[data-detail-prev]').click();check('Previous wraps to last '+width,(await page.locator('.drawer-count').textContent())==='02 / 02');
    for(let i=0;i<12;i++){await page.keyboard.press('Tab');check('Modal retains keyboard focus '+width+' '+i,await page.evaluate(()=>!!document.activeElement.closest('dialog')));}
-   await page.keyboard.press('Escape');await page.waitForTimeout(100);check('Escape closes '+width,await page.locator('dialog').evaluate(d=>!d.open));
+   await page.keyboard.press('Escape');
+   check('Drawer slides out while retaining modal lock '+width,await page.locator('dialog').evaluate(d=>{
+    const motion=d.getAnimations().find(a=>a.transitionProperty==='transform');
+    if(!motion)return false;
+    motion.pause();motion.currentTime=motion.effect.getTiming().duration/2;
+    const x=new DOMMatrixReadOnly(getComputedStyle(d).transform).m41;
+    const locked=d.matches(':modal')&&document.documentElement.classList.contains('product-modal-open');
+    motion.play();return locked&&x>0&&x<d.offsetWidth;
+   }));
+   await page.waitForFunction(()=>!document.querySelector('dialog').open);check('Escape closes '+width,await page.locator('dialog').evaluate(d=>!d.open));
    check('Focus restored to card '+width,await trigger.evaluate(e=>e===document.activeElement));
    check('Page scroll restored '+width,await page.evaluate(()=>!document.documentElement.classList.contains('product-modal-open')));
   }
@@ -108,7 +125,7 @@ async function structure(page) {
   check('Desktop hides unnecessary gallery controls',await page.locator('.gallery-controls').isHidden());
   check('Products separated from contact',await page.locator('#products').evaluate(e=>getComputedStyle(e).borderBottomWidth==='1px'&&getComputedStyle(e).borderBottomStyle==='solid'));
   check('Products remain third section',await page.locator('main>section').evaluateAll(sections=>sections[2].id==='products'&&sections[3].id==='contact'));
-  await page.locator('[data-open-product]').last().click();await page.waitForTimeout(650);await page.mouse.click(20,400);check('Backdrop closes modal',await page.locator('dialog').evaluate(d=>!d.open));
+  await page.locator('[data-open-product]').last().click();await page.waitForTimeout(650);await page.mouse.click(20,400);await page.waitForFunction(()=>!document.querySelector('dialog').open);check('Backdrop closes modal',await page.locator('dialog').evaluate(d=>!d.open));
   await page.setViewportSize({width:390,height:900});await page.waitForTimeout(150);
   await page.locator('[data-gallery-prev]').click();await page.waitForTimeout(500);check('Gallery previous button returns first',await page.locator('.gallery-count').textContent()==='01 / 02');
   await page.locator('[data-gallery-next]').click();await page.waitForTimeout(500);check('Gallery next button reaches last',await page.locator('.gallery-count').textContent()==='02 / 02');
