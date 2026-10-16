@@ -8,6 +8,17 @@ const out = process.env.GALLERY_REVIEW_OUTPUT || '/private/tmp/tandish-gallery-r
 fs.mkdirSync(out,{recursive:true});
 const errors = [], checks = [], metrics = [];
 const check = (name, value) => {assert.ok(value,name);checks.push(name);};
+async function checkProductEntry(page, direction, label) {
+ const state=await page.locator('.drawer-content .product-detail-body').evaluate(body=>{
+  const motion=body.getAnimations().find(a=>a.animationName==='product-switch');
+  if(!motion)return null;
+  motion.pause();motion.currentTime=motion.effect.getTiming().duration/2;
+  const style=getComputedStyle(body);
+  const state={x:new DOMMatrixReadOnly(style.transform).m41,opacity:Number(style.opacity)};
+  motion.play();return state;
+ });
+ check(label,!!state&&state.x*direction>0&&state.opacity>0&&state.opacity<1);
+}
 async function route(request) {
   const url = new URL(request.request().url());
   if (url.hostname !== 'website.test') return request.fulfill({status:204,body:''});
@@ -100,11 +111,18 @@ async function structure(page) {
    check('Drawer starts at top '+width,await page.locator('.drawer-content').evaluate(e=>e.scrollTop===0));
    check('Close receives opening focus '+width,await page.locator('.drawer-close').evaluate(e=>e===document.activeElement));
    await page.screenshot({path:path.join(out,'veyra-drawer-'+width+'.png')});
-   await page.locator('[data-detail-next]').click();await page.waitForTimeout(350);
+   await page.locator('[data-detail-next]').click();await checkProductEntry(page,1,'Next enters from right '+width);await page.waitForTimeout(450);
    check('Next switches directly to Saelis '+width,(await page.locator('#drawer-title').textContent()).includes('shared interest'));
    await page.screenshot({path:path.join(out,'saelis-drawer-'+width+'.png')});
    await page.locator('[data-detail-next]').click();check('Last product wraps to first '+width,(await page.locator('#drawer-title').textContent()).includes('intelligence'));
-   await page.locator('[data-detail-prev]').click();check('Previous wraps to last '+width,(await page.locator('.drawer-count').textContent())==='02 / 02');
+   await page.locator('[data-detail-prev]').click();await checkProductEntry(page,-1,'Previous enters from left '+width);check('Previous wraps to last '+width,(await page.locator('.drawer-count').textContent())==='02 / 02');
+   await page.evaluate(()=>{
+    document.querySelector('[data-detail-next]').click();
+    document.querySelector('[data-detail-next]').click();
+    document.querySelector('[data-detail-prev]').click();
+   });
+   check('Rapid navigation leaves only the selected product '+width,await page.locator('.drawer-content .product-detail-body').count()===1&&(await page.locator('.drawer-count').textContent())==='01 / 02');
+   await checkProductEntry(page,-1,'Rapid navigation retains latest direction '+width);
    for(let i=0;i<12;i++){await page.keyboard.press('Tab');check('Modal retains keyboard focus '+width+' '+i,await page.evaluate(()=>!!document.activeElement.closest('dialog')));}
    await page.keyboard.press('Escape');
    check('Drawer slides out while retaining modal lock '+width,await page.locator('dialog').evaluate(d=>{

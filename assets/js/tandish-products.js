@@ -85,10 +85,11 @@
     products[index].link.focus({preventScroll:true});
     moveGallery(index);
   });
-  const showProduct = (index, switching = false) => {
+  const showProduct = (index, direction = 0) => {
     detailIndex = (index + products.length) % products.length;
     const product = products[detailIndex];
     const body = product.content.cloneNode(true);
+    if (direction) body.dataset.enterFrom = direction > 0 ? 'right' : 'left';
     dialog.querySelector('[data-drawer-product]').textContent = product.name;
     const wordmark = body.querySelector('[data-detail-name]');
     if (wordmark) wordmark.firstChild.textContent = product.name;
@@ -104,13 +105,11 @@
     content.replaceChildren(body);
     dialog.dataset.tone = product.tone;
     content.scrollTop = 0;
-    content.classList.remove('switching');
-    if (switching && !reduced.matches) requestAnimationFrame(() => content.classList.add('switching'));
     dialog.querySelector('.drawer-count').textContent = `${number(detailIndex + 1)} / ${number(products.length)}`;
     detailPrevious.setAttribute('aria-label', `Previous product: ${products[(detailIndex - 1 + products.length) % products.length].name}`);
     detailNext.setAttribute('aria-label', `Next product: ${products[(detailIndex + 1) % products.length].name}`);
     detailPrevious.disabled = detailNext.disabled = products.length < 2;
-    if (switching) title.focus({preventScroll:true});
+    if (direction) title.focus({preventScroll:true});
   };
   const openProduct = (index, trigger) => {
     if (dialog.open) return;
@@ -165,8 +164,12 @@
     document.documentElement.style.removeProperty('--product-scrollbar-width');
     if (origin?.isConnected) origin.focus({preventScroll:true});
   });
-  detailPrevious.addEventListener('click', () => showProduct(detailIndex - 1, true));
-  detailNext.addEventListener('click', () => showProduct(detailIndex + 1, true));
+  const switchProduct = direction => {
+    if (!dialog.open || closing) return;
+    showProduct(detailIndex + direction, direction);
+  };
+  detailPrevious.addEventListener('click', () => switchProduct(-1));
+  detailNext.addEventListener('click', () => switchProduct(1));
   products.forEach((product, index) => {
     product.link.setAttribute('aria-haspopup', 'dialog');
     product.link.setAttribute('aria-controls', 'product-dialog');
