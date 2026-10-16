@@ -1,5 +1,7 @@
 # Veyra composition redesign — 11 October 2026
 
+> Status correction · 17 October 2026: Veyra is in active development. Real Estate is its first Domain, not a production release. Production-status statements below describe earlier copy and are superseded by this correction.
+
 1. **Old structure:** hero, platform, Real Estate, Search story, Recommendations, Price Intelligence, Domain infrastructure, integration, deployment, plans, FAQ, future Domains and CTA: 13 independently stacked sections.
 2. **New structure:** seven main sections: hero; coordinated platform/capabilities/Domains overview; Real Estate connected product story; integration/deployment architecture; Beyond Real Estate; supporting FAQ; final CTA.
 3. **Consolidation:** platform and Domain explanations share an anchored identity and four normal-scroll stages. Real Estate Search, Recommendations and Price Intelligence share one selected property. Integration, deployment and responsibilities share one boundary diagram.

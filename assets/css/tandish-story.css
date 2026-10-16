@@ -16,7 +16,7 @@
   height: 1px; background: var(--story-accent);
 }
 .company-editorial #themeToggle {
-  width: 36px; height: 36px; min-height: 36px; border: 1px solid var(--line);
+  width: 44px; height: 44px; min-height: 44px; border: 1px solid var(--line);
   border-radius: 50%; font-size: 16px; padding: 0;
 }
 .company-editorial main { position: relative; }
@@ -29,7 +29,7 @@
   display: block; height: 100%; width: 1px; background: var(--story-accent);
   transform: scaleY(0); transform-origin: top; opacity: .7;
 }
-.company-editorial .eyebrow { color: var(--story-accent); font-size: 10px; letter-spacing: .1em; }
+.company-editorial main .eyebrow { color: var(--story-accent); font-size: 10px; letter-spacing: .1em; }
 .company-editorial .eyebrow-dot { box-shadow: none; width: 5px; height: 5px; }
 .company-editorial .company-hero.type-hero {
   padding-top: 56px;
@@ -87,9 +87,6 @@
 .company-editorial .gallery-heading .section-heading { grid-template-columns: 1.05fr .95fr; gap: 0 80px; }
 .company-editorial .gallery-heading h2 { font-size: clamp(36px, 3.7vw, 53px); }
 .company-editorial .gallery-heading .section-heading>p:last-child { font-size: 14px; max-width: 43ch; }
-.company-editorial .gallery-product .product-window { border-radius: 3px; }
-.company-editorial .window-veyra { background: linear-gradient(150deg, color-mix(in srgb, var(--company-copper) 5%, var(--company-surface)), var(--company-surface) 55%); }
-.company-editorial .window-saelis { background: linear-gradient(150deg, color-mix(in srgb, var(--company-green) 5%, var(--company-surface)), var(--company-surface) 55%); }
 .company-editorial .gallery-product .product-window:focus-visible { outline-offset: -5px; }
 .company-editorial .company-contact { padding-block: 76px 88px; background: radial-gradient(ellipse at 0 100%, var(--story-wash), transparent 65%); }
 .contact-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 34px; }

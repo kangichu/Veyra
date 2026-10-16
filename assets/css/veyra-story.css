@@ -396,3 +396,7 @@ html:has(body.veyra-story){scroll-behavior:smooth}
 .beyond-content>div{grid-column:2;grid-row:2/5}
 @media(max-width:1100px){.beyond{column-gap:40px}}
 @media(max-width:800px){.beyond{display:block}.beyond>.zoom-out{margin-bottom:18px}.beyond-content>h2{margin-bottom:25px}.beyond-content>div{margin-top:25px}}
+
+/* Product status is visible before exploring capabilities. */
+.veyra-story .type-masthead{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.development-status{font:9px/1.6 'JetBrains Mono',monospace;color:var(--ember);border:1px solid var(--line-strong);padding:6px 10px;white-space:nowrap}

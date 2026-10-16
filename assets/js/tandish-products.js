@@ -18,6 +18,8 @@
   const previous = document.querySelector('[data-gallery-prev]');
   const next = document.querySelector('[data-gallery-next]');
   const count = document.querySelector('.gallery-count');
+  const toolbar = document.querySelector('.gallery-toolbar');
+  const viewToggle = document.querySelector('[data-gallery-view]');
   const announcement = document.querySelector('.gallery-announcement');
   const content = dialog.querySelector('.drawer-content');
   const close = dialog.querySelector('.drawer-close');
@@ -27,12 +29,15 @@
   let detailIndex = 0;
   let origin = null;
   let pending = false;
+  let expanded = false;
   const number = value => String(value).padStart(2, '0');
   const position = index => Math.min(track.scrollWidth - track.clientWidth, products[index].card.offsetLeft - products[0].card.offsetLeft);
   const updateGallery = () => {
     pending = false;
     const overflowing = track.scrollWidth > track.clientWidth + 2;
-    document.querySelector('.gallery-controls').hidden = !overflowing;
+    document.querySelector('.gallery-controls').hidden = expanded || !overflowing;
+    viewToggle.hidden = products.length <= 2;
+    toolbar.hidden = !overflowing && products.length <= 2;
     const distances = products.map((_, index) => Math.abs(position(index) - track.scrollLeft));
     galleryIndex = distances.indexOf(Math.min(...distances));
     previous.disabled = track.scrollLeft < 2;
@@ -48,13 +53,26 @@
   };
   const moveGallery = index => {
     galleryIndex = Math.max(0, Math.min(products.length - 1, index));
-    track.scrollTo({left: position(galleryIndex), behavior: reduced.matches ? 'instant' : 'smooth'});
+    if (expanded) products[galleryIndex].card.scrollIntoView({block:'nearest', behavior:reduced.matches ? 'instant' : 'smooth'});
+    else track.scrollTo({left: position(galleryIndex), behavior: reduced.matches ? 'instant' : 'smooth'});
     announcement.textContent = `${products[galleryIndex].name}, product ${galleryIndex + 1} of ${products.length}.`;
   };
+  viewToggle.addEventListener('click', () => {
+    expanded = !expanded;
+    track.classList.toggle('is-expanded', expanded);
+    viewToggle.setAttribute('aria-expanded', String(expanded));
+    viewToggle.textContent = expanded ? 'Show carousel' : 'View all products';
+    track.scrollLeft = 0;
+    galleryIndex = 0;
+    updateGallery();
+    announcement.textContent = expanded ? `Showing all ${products.length} products.` : 'Carousel view. Use the arrows to browse products.';
+  });
   previous.addEventListener('click', () => moveGallery(galleryIndex - 1));
   next.addEventListener('click', () => moveGallery(galleryIndex + 1));
   track.addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(updateGallery); } }, {passive:true});
   window.addEventListener('resize', updateGallery);
+  if (typeof ResizeObserver === 'function') new ResizeObserver(updateGallery).observe(track);
+  if (document.fonts?.ready) document.fonts.ready.then(updateGallery);
   track.addEventListener('keydown', event => {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
     if (event.target.closest('.product-fallback')) return;

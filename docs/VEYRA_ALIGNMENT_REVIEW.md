@@ -1,5 +1,7 @@
 # Veyra storytelling alignment — 11 October 2026
 
+> Status correction · 17 October 2026: Veyra is in active development. Real Estate is its first Domain, not a production release. Production-status statements below describe earlier copy and are superseded by this correction.
+
 1. **Previous composition:** seven sections with the right product model, understated capability tabs and a persistent property. The preceding mobile listing fix was present in the working tree and is preserved in this implementation commit.
 2. **Three acts:** explicit Chapter 01 / What Veyra is; Chapter 02 / What Veyra does; Chapter 03 / How Veyra fits. Future fit and the CTA continue the third act; FAQ remains supporting content. Existing section order and anchors retained.
 3. **Veyra anchor:** persistent desktop identity now includes shared infrastructure → industry Domain and a live current-stage label. Normal scrolling updates stage markers and the active border. No pinned timeline or forced navigation.

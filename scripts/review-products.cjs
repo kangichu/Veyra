@@ -63,7 +63,20 @@ async function structure(page) {
   check('Company and product structured data retained',result.schemas.some(s=>s['@type']==='Organization')&&result.schemas.some(s=>s['@type']==='WebSite')&&result.schemas.some(s=>s['@id']==='https://tandish.com/#veyra')&&JSON.stringify(result.schemas).includes('https://tandish.com/#saelis'));
   check('Expanded product chapters removed',await page.locator('.product-chapter,.hero-product-grid').count()===0);
   check('Only real products shipped',await page.locator('[data-product]').count()===2);
-  for(const width of [1440,1280,1024,768,390,375]){
+  check('Veyra status is active development',await page.locator('#product-veyra .status').textContent()==='Active development');
+  check('Approach has three explorable stages',await page.locator('.approach-stage').count()===3);
+  check('First approach stage readable on arrival',await page.locator('.approach-stage').first().getAttribute('open')!==null);
+  for(let i=1;i<3;i++){
+   const stage=page.locator('.approach-stage').nth(i);
+   await stage.locator('summary').focus();await page.keyboard.press('Enter');
+   check('Approach stage opens by keyboard '+i,await stage.locator('.stage-body').isVisible());
+   await page.keyboard.press('Enter');check('Approach stage closes by keyboard '+i,!(await stage.locator('.stage-body').isVisible()));
+  }
+  await page.locator('#approach').scrollIntoViewIfNeeded();await page.waitForTimeout(150);
+  check('Navigation reflects current section',await page.locator('.company-nav-links a[href="#approach"]').getAttribute('aria-current')==='location');
+  check('Contact offers relevant routes',await page.locator('.contact-route').count()===3);
+
+  for(const width of [1440,1280,1024,768,390,375,320]){
    await page.setViewportSize({width,height:900});await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(500);
    const metric=await page.evaluate(()=>({width:innerWidth,height:document.documentElement.scrollHeight,scrollWidth:document.documentElement.scrollWidth,cls:window.reviewCLS}));metrics.push(metric);
    check('No overflow '+width,metric.width===metric.scrollWidth);check('No layout shift '+width,metric.cls<.01);
@@ -108,21 +121,55 @@ async function structure(page) {
    if(name==='no-dialog')await c.addInitScript(()=>{HTMLDialogElement.prototype.showModal=undefined;Element.prototype.animate=undefined;window.IntersectionObserver=undefined;});
    const p=await c.newPage();await load(p,'/');
    if(name==='reduced'){await p.locator('[data-open-product]').first().click();check('Reduced motion opens immediately',await p.locator('dialog').evaluate(e=>getComputedStyle(e).animationName)==='none');await p.locator('[data-detail-next]').click();check('Reduced motion switches immediately',await p.locator('.drawer-content .product-detail-body').evaluate(e=>getComputedStyle(e).animationName)==='none');}
-   else{check(name+' cards keep canonical CTA',await p.locator('[data-open-product]').first().getAttribute('href')==='/veyra/');check(name+' native details available',await p.locator('[data-product-detail]:visible').count()===2);await p.locator('.product-fallback summary').first().click();check(name+' detail readable',await p.locator('.product-fallback[open] .detail-model').isVisible());}
+   else{check(name+' native approach works',await p.locator('.approach-stage').count()===3);await p.locator('.approach-stage').nth(1).locator('summary').click();check(name+' approach content readable',await p.locator('.approach-stage').nth(1).locator('.stage-body').isVisible());check(name+' cards keep canonical CTA',await p.locator('[data-open-product]').first().getAttribute('href')==='/veyra/');check(name+' native details available',await p.locator('[data-product-detail]:visible').count()===2);await p.locator('.product-fallback summary').first().click();check(name+' detail readable',await p.locator('.product-fallback[open] .detail-model').isVisible());}
    await p.screenshot({path:path.join(out,name+'.png'),fullPage:true});await c.close();
   }
-  // Temporary fixture-only products verify configuration scalability; never written to the site.
-  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');const base=html.match(/<article class="gallery-product"[\s\S]*?<\/article>/)[0];
-  for(const total of [4,8]){
-   let extra='';for(let i=3;i<=total;i++)extra+=base.replaceAll('product-veyra','product-fixture-'+i).replaceAll('card-veyra-title','card-fixture-title-'+i).replace('data-product="veyra"','data-product="fixture-'+i+'"').replace('data-product-name="Veyra"','data-product-name="Fixture '+i+'"');
-   const c=await context(browser,{viewport:{width:1280,height:900},reducedMotion:'reduce'});await c.route('http://website.test/',r=>r.fulfill({contentType:'text/html',body:html.replace('</div><p class="gallery-hint">',extra+'</div><p class="gallery-hint">')}));const p=await c.newPage();await load(p,'/');
+  // Temporary fixture-only products verify growth without publishing fake products.
+  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  const cards=html.match(/<article class="gallery-product"[\s\S]*?<\/article>/g);const base=cards[0];
+  for(const total of [1,3,4,8,12]){
+   let fixture=total===1?html.replace(cards[1],''):html;
+   let extra='';
+   for(let i=3;i<=total;i++){
+    const name=i===total?'A longer future product name':'Fixture '+i;
+    extra+=base.replaceAll('product-veyra','product-fixture-'+i).replaceAll('card-veyra-title','card-fixture-title-'+i).replace('data-product="veyra"','data-product="fixture-'+i+'"').replace('data-product-name="Veyra"','data-product-name="'+name+'"').replace('>Veyra<span','>'+name+'<span');
+   }
+   fixture=fixture.replace('</div><p class="gallery-hint">',extra+'</div><p class="gallery-hint">');
+   const c=await context(browser,{viewport:{width:1280,height:900},reducedMotion:'reduce'});
+   await c.route('http://website.test/',r=>r.fulfill({contentType:'text/html',body:fixture}));const p=await c.newPage();await load(p,'/');
    check('Scale '+total+' products configured',await p.locator('[data-product]').count()===total);
+   if(total===1){
+    check('Single product needs no gallery controls',await p.locator('.gallery-toolbar').isHidden());
+    await p.locator('[data-open-product]').first().click();
+    check('Single product drawer navigation disabled',await p.locator('[data-detail-next]').isDisabled()&&await p.locator('[data-detail-prev]').isDisabled());
+    await c.close();continue;
+   }
    await p.locator('[data-open-product]').first().focus();await p.keyboard.press('End');await p.waitForTimeout(150);
    check('Scale '+total+' keyboard/count',await p.locator('.gallery-count').textContent()===String(total-1).padStart(2,'0')+'–'+String(total).padStart(2,'0')+' / '+String(total).padStart(2,'0'));
    check('Scale '+total+' last next disabled',await p.locator('[data-gallery-next]').isDisabled());
    await p.locator('[data-gallery-prev]').click();await p.waitForTimeout(150);check('Scale '+total+' previous moves',!(await p.locator('[data-gallery-next]').isDisabled()));
    await p.locator('[data-open-product]').last().click();await p.locator('[data-detail-next]').click();check('Scale '+total+' drawer wraps',await p.locator('.drawer-count').textContent()==='01 / '+String(total).padStart(2,'0'));
    await p.locator('[data-detail-prev]').click();check('Scale '+total+' reverse wrap',await p.locator('.drawer-count').textContent()===String(total).padStart(2,'0')+' / '+String(total).padStart(2,'0'));
+   await p.keyboard.press('Escape');
+   await p.locator('[data-gallery-view]').click();
+   check('Scale '+total+' all-products state',await p.locator('[data-gallery-view]').getAttribute('aria-expanded')==='true');
+   check('Scale '+total+' all cards fit in rows',await p.locator('#product-track').evaluate(e=>e.scrollWidth<=e.clientWidth+2));
+   check('Scale '+total+' gallery arrows hidden in grid',await p.locator('.gallery-controls').isHidden());
+   const positions=await p.locator('.gallery-product').evaluateAll(items=>items.map(e=>e.getBoundingClientRect().top));
+   check('Scale '+total+' desktop has two columns',Math.abs(positions[0]-positions[1])<2&&positions[2]>positions[0]);
+   for(const width of [390,320]){
+    await p.setViewportSize({width,height:844});
+    check('Scale '+total+' mobile grid fits '+width,await p.evaluate(()=>document.documentElement.scrollWidth===innerWidth));
+    const rows=await p.locator('.gallery-product').evaluateAll(items=>items.map(e=>e.getBoundingClientRect().top));
+    check('Scale '+total+' mobile single column '+width,rows.every((top,i)=>i===0||top>rows[i-1]));
+   }
+   await p.locator('[data-open-product]').last().focus();await p.keyboard.press('Enter');
+   check('Scale '+total+' grid opens correct drawer',await p.locator('.drawer-count').textContent()===String(total).padStart(2,'0')+' / '+String(total).padStart(2,'0'));
+   await p.keyboard.press('Escape');check('Scale '+total+' grid focus restored',await p.locator('[data-open-product]').last().evaluate(e=>e===document.activeElement));
+   await p.locator('[data-gallery-view]').click();
+   check('Scale '+total+' carousel restored',await p.locator('[data-gallery-view]').getAttribute('aria-expanded')==='false');
+   await p.locator('[data-open-product]').first().focus();await p.keyboard.press('End');await p.waitForTimeout(150);
+   check('Scale '+total+' mobile reaches last product',await p.locator('.gallery-count').textContent()===String(total).padStart(2,'0')+' / '+String(total).padStart(2,'0'));
    check('Scale '+total+' no viewport overflow',await p.evaluate(()=>document.documentElement.scrollWidth===innerWidth));await c.close();
   }
   if(errors.length)console.error(errors);check('No browser errors',errors.length===0);fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks,metrics,errors},null,2));console.log(JSON.stringify({checks:checks.length,metrics,errors},null,2));

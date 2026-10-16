@@ -1,5 +1,7 @@
 # Tandish homepage product gallery — 11 October 2026
 
+> Status correction · 17 October 2026: Veyra is in active development. Real Estate is its first Domain, not a production release. Production-status statements below describe earlier copy and are superseded by this correction.
+
 1. **Old product structure:** hero → two product preview windows → full Veyra chapter → full Saelis chapter → approach → contact. Product details dominated the homepage and would add vertical length for every future product.
 2. **New structure:** preserved Tandish hero → Our Products editorial gallery → Our Approach → contact → footer. The detail panel opens only when selected. Approximately 1.9 cards are visible on wide desktop, 1.65 on smaller desktop/tablet, and one substantial card plus the next edge on mobile.
 3. **Old chapters removed:** both permanently expanded product chapters and the duplicate hero previews are deleted from the homepage. Their important content is condensed into the product detail interaction, with optional native disclosures as the fallback.

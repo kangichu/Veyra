@@ -1,5 +1,7 @@
 # Tandish / Veyra positioning review
 
+> Status correction · 17 October 2026: Veyra is in active development. Real Estate is its first Domain, not a production release. Production-status statements below describe earlier copy and are superseded by this correction.
+
 Completed 11 October 2026. Local implementation only; nothing pushed or published.
 
 ## Positioning and narrative

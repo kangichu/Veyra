@@ -70,7 +70,7 @@
         const active = Number(entry.target.dataset.stage);
         index.forEach((item, i) => item.classList.toggle('active', i === active));
         document.querySelectorAll('[data-stage]').forEach(step => step.classList.toggle('is-current', step === entry.target));
-        document.querySelector('[data-anchor-state]').textContent = ['Platform / Foundation', 'Capabilities / Shared intelligence', 'Domains / Industry context', 'Real Estate / In production'][active];
+        document.querySelector('[data-anchor-state]').textContent = ['Platform / Foundation', 'Capabilities / Shared intelligence', 'Domains / Industry context', 'Real Estate / Active development'][active];
       });
     }, { rootMargin: '-15% 0px -45% 0px' });
     document.querySelectorAll('[data-stage]').forEach(step => observer.observe(step));
