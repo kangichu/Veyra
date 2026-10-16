@@ -1,0 +1,43 @@
+/* A restrained typographic composition with a single, brief entrance. */
+.company-hero.type-hero,.story-hero.type-hero{position:relative;background:none;text-align:left;padding-top:70px;overflow:hidden}
+.type-masthead{margin-bottom:62px}
+.type-hero .type-masthead .eyebrow{margin:0;justify-content:flex-start}
+.type-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:80px;align-items:end}
+.company-hero.type-hero h1,.story-hero.type-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(76px,8.8vw,126px);font-weight:500;line-height:1.02;letter-spacing:-.065em;text-align:left;margin:0;max-width:none}
+.type-hero h1 .type-line{display:block;color:var(--white);max-width:none}
+.type-line>span{display:block}
+.company-hero.type-hero h1 .type-emphasis{color:var(--company-accent)}
+.story-hero.type-hero h1 .type-emphasis{color:var(--ember)}
+.type-hero h1 .type-subtitle,.type-hero h1 .type-pretitle{display:block;max-width:none;font-size:clamp(20px,2vw,28px);font-weight:400;line-height:1.4;letter-spacing:-.025em;color:var(--fog)}
+.type-hero h1 .type-subtitle{margin-top:30px}
+.type-hero h1 .type-pretitle{margin-bottom:20px}
+.story-hero.type-hero h1{font-size:clamp(72px,8.4vw,118px)}
+.type-aside{padding:25px 0 7px 32px;border-left:1px solid var(--line-strong);max-width:410px}
+.type-hero .company-hero-description,.type-hero .hero-copy{text-align:left;margin:0;font-size:15px;line-height:1.9;max-width:34ch;color:var(--fog)}
+.company-hero.type-hero .hero-links,.story-hero.type-hero .actions{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:12px;margin:30px 0 0}
+.type-hero .hero-links .button,.type-hero .actions .button{min-height:50px;min-width:205px}
+.company-hero.type-hero .hero-note,.story-hero.type-hero .hero-foot{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:90px;padding:24px 0 28px;border-top:1px solid var(--line);min-height:68px}
+.type-hero.is-arriving .type-line>span{animation:type-settle .85s cubic-bezier(.2,.7,.3,1) both}
+.type-hero.is-arriving .type-emphasis>span{animation-delay:.12s}
+.type-hero.is-arriving .type-aside{animation:type-settle .85s .2s cubic-bezier(.2,.7,.3,1) both}
+@keyframes type-settle{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:1600px){.company-hero.type-hero,.story-hero.type-hero{padding-top:90px}.type-masthead{margin-bottom:74px}.company-hero.type-hero .hero-note,.story-hero.type-hero .hero-foot{margin-top:110px}}
+@media(max-width:1100px) and (min-width:901px){.type-layout{gap:40px;grid-template-columns:minmax(0,1fr) 300px}.company-hero.type-hero h1{font-size:9.1vw}.story-hero.type-hero h1{font-size:8.6vw}.type-aside{padding-left:24px}}
+@media(max-width:900px){
+ .company-hero.type-hero,.story-hero.type-hero{padding-top:48px}
+ .type-masthead{margin-bottom:38px}
+ .type-hero .type-masthead .eyebrow{font-size:8px;letter-spacing:.06em}
+ .type-layout{grid-template-columns:1fr;gap:38px}
+ .company-hero.type-hero h1{font-size:clamp(62px,17.5vw,116px)}
+ .story-hero.type-hero h1{font-size:clamp(54px,16.5vw,110px)}
+ .type-hero h1 .type-subtitle,.type-hero h1 .type-pretitle{font-size:20px}
+ .type-hero h1 .type-subtitle{margin-top:22px}
+ .type-hero h1 .type-pretitle{margin-bottom:12px}
+ .type-aside{max-width:550px;padding:0;border:0}
+ .type-hero .company-hero-description,.type-hero .hero-copy{font-size:14px;max-width:43ch;line-height:1.85}
+ .company-hero.type-hero .hero-links,.story-hero.type-hero .actions{flex-direction:row;align-items:center;gap:10px 20px;margin-top:24px}
+ .company-hero.type-hero .hero-note,.story-hero.type-hero .hero-foot{margin-top:46px;padding:20px 0 24px;gap:15px;flex-direction:row}
+ .company-hero.type-hero .hero-note>span{max-width:24ch;font-size:9px}
+ .story-hero.type-hero .hero-foot>span:last-child{display:none}
+}
+@media(prefers-reduced-motion:reduce){.type-hero .type-line>span,.type-hero .type-aside{animation:none!important;transform:none!important;opacity:1!important}}
