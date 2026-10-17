@@ -16,7 +16,8 @@
 .gallery-count{font:10px 'JetBrains Mono',monospace;color:var(--fog);margin-right:14px;min-width:55px}
 .gallery-controls button{width:44px;height:44px;border:1px solid var(--line-strong);border-radius:50%;color:var(--white);background:transparent;cursor:pointer;font-size:18px}
 .gallery-controls button:disabled{opacity:.3;cursor:default}
-.product-track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent;padding:6px 3px 16px;margin:-6px -3px 0;overscroll-behavior-x:contain}
+.product-track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding:6px 3px 16px;margin:-6px -3px 0;overscroll-behavior-x:contain}
+.product-track::-webkit-scrollbar{display:none;width:0;height:0}
 .gallery-product{flex:0 0 calc((100% - 24px)/2);min-width:0;scroll-snap-align:start;scroll-margin-top:105px}
 /* Quiet product identities follow the page’s neutral palette and fine rules. */
 .gallery-product{--product-accent:var(--company-copper)}
