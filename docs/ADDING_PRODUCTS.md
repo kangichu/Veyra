@@ -4,7 +4,7 @@ Add one `article.gallery-product` inside `#product-track` in `index.html`, follo
 
 - Give the article a unique `id`, `data-product` and `data-product-name`.
 - Give its visible product name a unique ID and reference it in the article's `aria-labelledby`.
-- Keep the card brief: category, status, name, positioning line and destination link with `data-open-product`.
+- Keep the card brief: category, status, name, positioning line and destination link with `data-open-product`. Group the category/status row and product name inside `.product-cover`; place `.gallery-positioning` and `.window-footer` below it. Keep card surfaces neutral; the product tone is reserved for small accents, focus and hover states.
 - Put the detailed content in `details[data-product-detail]`, inside `.product-detail-body`. Include one `[data-detail-title]` heading and an `a.button` with the actual product destination. The drawer uses these for its title and persistent action. The optional `[data-detail-name]` wordmark and header breadcrumb automatically use `data-product-name`.
 - Use `data-product-tone="copper"` or `"green"` for the existing colour treatments. Add matching card styles in `tandish-products.css` and panel styles in `product-panels.css` when introducing another tone.
 - Keep the product's actual availability explicit. Veyra is in active development; Saelis is coming soon.
