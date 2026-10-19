@@ -31,6 +31,19 @@
 .button{display:inline-flex;align-items:center;justify-content:space-between;gap:35px;padding:14px 19px;font-size:12px;font-weight:600}
 .primary{background:var(--white);color:var(--ink)!important}
 .text-link{font-size:12px;font-weight:600;display:inline-block}
+.veyra-story .story-hero .type-aside{padding:0 0 4px 28px;border-left-color:color-mix(in srgb,var(--ember) 40%,transparent)}
+.veyra-story .type-aside>.eyebrow{font-size:9px!important;margin:0 0 16px}
+.veyra-story .type-aside .hero-conviction{font:500 clamp(25px,2.3vw,33px)/1.2 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:var(--white);margin:0 0 20px}
+.veyra-story .story-hero .hero-copy{font-size:13px;line-height:1.85;max-width:34ch}
+.veyra-story .story-hero .actions{margin-top:24px;gap:6px}
+.veyra-story .story-hero .actions .button{border:1px solid transparent;border-radius:6px;min-height:52px;padding:14px 22px;font-size:13px;font-weight:500;line-height:1.6}
+.veyra-story .story-hero .actions .button:hover{background:var(--ember);color:var(--ink)!important}
+.veyra-story .story-hero .actions .text-link{display:inline-flex;align-items:center;gap:18px;min-height:44px;font-size:12px;font-weight:400;color:var(--fog)}
+.veyra-story .story-hero .actions .text-link:hover{color:var(--white)}
+@media(max-width:900px){
+ .veyra-story .story-hero .type-aside{padding:0}
+ .veyra-story .type-aside .hero-conviction{font-size:26px}
+}
 .hero-foot{margin-top:75px;padding:18px 0;display:flex;justify-content:space-between;border-top:1px solid var(--line);font:9px 'JetBrains Mono',monospace;color:var(--fog-dim)}
 .chapter{padding:78px 0;border-bottom:1px solid var(--line);scroll-margin-top:24px}
 .overview{display:grid;grid-template-columns: .9fr 1.1fr;gap:110px;align-items:start}
