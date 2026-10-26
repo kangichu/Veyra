@@ -1,0 +1,19 @@
+/* Make every interactive control read as clickable on hover. */
+a[href],
+button:not(:disabled),
+summary,
+select,
+input[type='button'],
+input[type='submit'],
+input[type='reset'],
+label[for],
+[role='button'],
+[role='link'],
+[role='menuitem'] {
+  cursor: pointer !important;
+}
+
+button:disabled,
+[aria-disabled='true'] {
+  cursor: default !important;
+}
