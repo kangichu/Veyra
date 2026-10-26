@@ -3,7 +3,7 @@
 .type-masthead{margin-bottom:62px}
 .type-hero .type-masthead .eyebrow{margin:0;justify-content:flex-start}
 .type-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:80px;align-items:end}
-.company-hero.type-hero h1,.story-hero.type-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(76px,8.8vw,126px);font-weight:500;line-height:1.02;letter-spacing:-.065em;text-align:left;margin:0;max-width:none}
+.company-hero.type-hero h1,.story-hero.type-hero h1{font-family:'Inter',sans-serif;font-size:clamp(76px,8.8vw,126px);font-weight:500;line-height:1.02;letter-spacing:-.065em;text-align:left;margin:0;max-width:none}
 .type-hero h1 .type-line{display:block;color:var(--white);max-width:none}
 .type-line>span{display:block}
 .company-hero.type-hero h1 .type-emphasis{color:var(--company-accent)}
