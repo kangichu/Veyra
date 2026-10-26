@@ -13,7 +13,7 @@
 .gallery-view-toggle{font:12px Inter,sans-serif;color:var(--white);background:transparent;border:1px solid var(--line-strong);border-radius:5px;padding:10px 15px;min-height:44px;cursor:pointer}
 .gallery-view-toggle:hover{border-color:var(--company-accent)}
 .gallery-controls{margin-left:auto;display:flex;align-items:center;gap:10px;flex-shrink:0;padding-bottom:5px}
-.gallery-count{font:10px 'JetBrains Mono',monospace;color:var(--fog);margin-right:14px;min-width:55px}
+.gallery-count{font:10px 'Inter',sans-serif;color:var(--fog);margin-right:14px;min-width:55px}
 .gallery-controls button{width:44px;height:44px;border:1px solid var(--line-strong);border-radius:50%;color:var(--white);background:transparent;cursor:pointer;font-size:18px}
 .gallery-controls button:disabled{opacity:.3;cursor:default}
 .product-track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding:6px 3px 16px;margin:-6px -3px 0;overscroll-behavior-x:contain}
@@ -34,7 +34,7 @@
  color:var(--white);
 }
 .gallery-product .window-label{padding:0;border:0;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;flex-direction:row}
-.product-category{display:flex;align-items:center;gap:9px;font:9px/1.6 'JetBrains Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:var(--fog)}
+.product-category{display:flex;align-items:center;gap:9px;font:9px/1.6 'Inter',sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--fog)}
 .product-category::before{content:'';width:5px;height:5px;background:var(--product-accent);flex-shrink:0}
 .gallery-product .status{margin:0;padding:4px 8px;border:1px solid var(--line);border-radius:3px;font-size:9px;color:var(--fog);background:transparent}
 .product-name{display:block;font:500 clamp(36px,3.2vw,44px)/1.15 'Inter',sans-serif;letter-spacing:-.05em;color:var(--white);overflow-wrap:anywhere}

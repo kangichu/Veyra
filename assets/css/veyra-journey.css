@@ -6,7 +6,7 @@
 .veyra-company .journey-node[data-passed]{fill:var(--ember);opacity:.9;}
 .product-hierarchy{display:flex;flex-wrap:wrap;gap:20px 36px;list-style:none;padding:0;margin:0 0 32px;color:var(--white);}
 .product-hierarchy li{font-family:'Inter',sans-serif;font-size:17px;}
-.product-hierarchy small{display:block;font:9px/1.8 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--fog);margin-bottom:5px;}
+.product-hierarchy small{display:block;font:9px/1.8 'Inter',sans-serif;letter-spacing:.1em;color:var(--fog);margin-bottom:5px;}
 .product-hierarchy li:not(:last-child)::after{content:'→';color:var(--ember);margin-left:28px;}
 .domain-current b{color:var(--white);font-weight:500;}
 .veyra-company .narrative-flow{gap:28px;}

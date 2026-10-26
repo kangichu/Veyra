@@ -1,0 +1,105 @@
+/* Shared type scale for the Tandish and Veyra pages. */
+:root {
+  --type-body: 16px;
+  --type-body-leading: 1.7;
+  --type-h1: clamp(2.75rem, 5.6vw, 4.75rem);
+  --type-h2: clamp(2rem, 3.4vw, 3.25rem);
+  --type-h3: clamp(1.25rem, 1.8vw, 1.5rem);
+  --type-h4: 1.125rem;
+}
+
+.company-site,
+.product-page,
+.veyra-story {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: var(--type-body);
+  line-height: var(--type-body-leading);
+}
+
+.company-site :is(h1, h2),
+.product-page :is(h1, h2),
+.veyra-story :is(h1, h2) {
+  font-family: inherit !important;
+  font-size: var(--type-h1) !important;
+  font-weight: 600 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.035em !important;
+}
+
+.company-site :is(h2),
+.product-page :is(h2),
+.veyra-story :is(h2) {
+  font-size: var(--type-h2) !important;
+  line-height: 1.16 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.company-site :is(h3),
+.product-page :is(h3),
+.veyra-story :is(h3) {
+  font-family: inherit !important;
+  font-size: var(--type-h3) !important;
+  font-weight: 600 !important;
+  line-height: 1.35 !important;
+  letter-spacing: -0.015em !important;
+}
+
+.company-site :is(h4),
+.product-page :is(h4),
+.veyra-story :is(h4) {
+  font-family: inherit !important;
+  font-size: var(--type-h4) !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.company-site :is(
+  .company-hero-description,
+  .approach-intro > p:not(.eyebrow),
+  .section-heading > p:last-child,
+  .chapter-description,
+  .contact-grid > div > p:not(.eyebrow),
+  .type-aside .company-hero-description
+),
+.product-page :is(
+  .hero-summary,
+  .demo-disclaimer,
+  .demo-step-heading p,
+  .demo-footer p,
+  .integration-details p
+),
+.veyra-story :is(.company-hero-description, .chapter-description, .hero-conviction) {
+  font-size: var(--type-body) !important;
+  line-height: var(--type-body-leading) !important;
+}
+
+.company-site :is(.eyebrow, .mini-label, .product-category),
+.product-page :is(.eyebrow, .product-number, .product-eyebrow, .mini-label),
+.veyra-story :is(.eyebrow, .mini-label, .product-number) {
+  font-size: 0.6875rem !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Preserve the large display scale for the two primary hero statements. */
+.company-site .company-hero h1 {
+  font-size: clamp(80px, 8.7vw, 124px) !important;
+}
+
+.veyra-story .story-hero h1 {
+  font-size: clamp(72px, 8.4vw, 118px) !important;
+}
+
+@media (max-width: 1100px) {
+  .company-site .company-hero h1 { font-size: 9vw !important; }
+}
+
+@media (max-width: 900px) {
+  .company-site .company-hero h1 { font-size: clamp(64px, 13vw, 112px) !important; }
+}
+
+@media (max-width: 760px) {
+  .company-site .company-hero h1 { font-size: clamp(60px, 16vw, 100px) !important; }
+  .veyra-story .story-hero h1 { font-size: clamp(54px, 16.5vw, 110px) !important; }
+}
