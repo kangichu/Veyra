@@ -35,6 +35,8 @@
 .veyra-story .type-aside>.eyebrow{font-size:9px!important;margin:0 0 16px}
 .veyra-story .type-aside .hero-conviction{font:500 clamp(25px,2.3vw,33px)/1.2 'Inter',sans-serif;letter-spacing:-.04em;color:var(--white);margin:0 0 20px}
 .veyra-story .story-hero .hero-copy{font-size:13px;line-height:1.85;max-width:34ch}
+.veyra-story .story-hero .hero-plain-language{font-size:12px;line-height:1.75;max-width:34ch;margin:12px 0 0;color:var(--fog-dim)}
+.veyra-story .story-hero .hero-plain-language strong{font-weight:600;color:var(--white)}
 .veyra-story .story-hero .actions{margin-top:24px;gap:6px}
 .veyra-story .story-hero .actions .button{border:1px solid transparent;border-radius:6px;min-height:52px;padding:14px 22px;font-size:13px;font-weight:500;line-height:1.6}
 .veyra-story .story-hero .actions .button:hover{background:var(--ember);color:var(--ink)!important}

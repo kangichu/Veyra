@@ -1,0 +1,19 @@
+.product-audience { display: grid; gap: 10px; margin-top: 18px; }
+.product-audience > div { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; }
+.product-audience dt { color: var(--fog); font-size: 11px; font-weight: 600; }
+.product-audience dd { color: var(--white); font-size: 12px; line-height: 1.55; }
+.saelis-journey { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; padding-top: 16px; color: var(--company-green); font-size: 11px; line-height: 1.5; }
+.saelis-journey-label { margin-top: 16px; color: var(--fog); font-size: 11px; font-weight: 600; }
+.saelis-journey-label + .saelis-journey { padding-top: 6px; }
+.saelis-journey i { font-style: normal; color: var(--fog); }
+.gallery-product .gallery-positioning h3 { color: var(--white); }
+.gallery-product .product-audience { margin-bottom: 4px; }
+.company-editorial .company-hero .hero-links { align-items: flex-start; }
+.company-editorial .company-hero .hero-conviction { max-width: 17ch; }
+.company-editorial .company-hero .company-hero-description { max-width: 45ch; }
+@media (max-width: 900px) {
+  .product-audience > div { grid-template-columns: 80px minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .product-audience > div { grid-template-columns: 84px minmax(0, 1fr); }
+}
