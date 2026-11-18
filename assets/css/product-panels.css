@@ -1,6 +1,7 @@
 /* Product detail panels share a repeatable editorial layout and persistent actions. */
 .product-drawer,.product-detail-body{--panel-accent:var(--company-copper);--panel-wash:color-mix(in srgb,var(--panel-accent) 7%,transparent)}
 .product-drawer[data-tone="green"],.product-detail-body[data-tone="green"]{--panel-accent:var(--company-green)}
+.product-drawer[data-tone="blue"],.product-detail-body[data-tone="blue"]{--panel-accent:var(--company-accent)}
 .product-drawer{
  position:fixed;inset:0 0 0 auto;margin:0;padding:0;border:0;border-left:1px solid var(--line-strong);
  width:66vw;max-width:980px;height:100vh;height:100dvh;max-height:100vh;max-height:100dvh;

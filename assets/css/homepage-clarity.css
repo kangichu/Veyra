@@ -17,3 +17,5 @@
 @media (max-width: 640px) {
   .product-audience > div { grid-template-columns: 84px minmax(0, 1fr); }
 }
+
+.erty-journey { color: var(--company-accent); }

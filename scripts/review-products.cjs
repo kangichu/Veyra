@@ -73,7 +73,8 @@ async function structure(page) {
   check('Valid homepage semantics and anchors',result.h1===1&&!result.duplicateIds.length&&!result.missingAnchors.length&&!result.missingARIA.length);
   check('Company and product structured data retained',result.schemas.some(s=>s['@type']==='Organization')&&result.schemas.some(s=>s['@type']==='WebSite')&&result.schemas.some(s=>s['@id']==='https://tandish.com/#veyra')&&JSON.stringify(result.schemas).includes('https://tandish.com/#saelis'));
   check('Expanded product chapters removed',await page.locator('.product-chapter,.hero-product-grid').count()===0);
-  check('Only real products shipped',await page.locator('[data-product]').count()===2);
+  check('Only real products shipped',await page.locator('[data-product]').count()===3);
+  check('Erty status is open source, coming soon',await page.locator('#product-erty .status').textContent()==='Open source · Coming soon');
   check('Veyra status is active development',await page.locator('#product-veyra .status').textContent()==='Active development');
   check('Approach has three explorable stages',await page.locator('.approach-stage').count()===3);
   check('First approach stage readable on arrival',await page.locator('.approach-stage').first().getAttribute('open')!==null);
@@ -85,7 +86,7 @@ async function structure(page) {
   }
   await page.locator('#approach').scrollIntoViewIfNeeded();await page.waitForTimeout(150);
   check('Navigation reflects current section',await page.locator('.company-nav-links a[href="#approach"]').getAttribute('aria-current')==='location');
-  check('Contact offers relevant routes',await page.locator('.contact-route').count()===3);
+  check('Contact offers relevant routes',await page.locator('.contact-route').count()===4);
 
   for(const width of [1440,1280,1024,768,390,375,320]){
    await page.setViewportSize({width,height:900});await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(500);
@@ -112,16 +113,20 @@ async function structure(page) {
    check('Close receives opening focus '+width,await page.locator('.drawer-close').evaluate(e=>e===document.activeElement));
    await page.screenshot({path:path.join(out,'veyra-drawer-'+width+'.png')});
    await page.locator('[data-detail-next]').click();await checkProductEntry(page,1,'Next enters from right '+width);await page.waitForTimeout(450);
-   check('Next switches directly to Saelis '+width,(await page.locator('#drawer-title').textContent()).includes('shared interest'));
+   check('Next switches directly to Erty '+width,(await page.locator('#drawer-title').textContent()).includes('Every property'));
+   check('Erty CTA opens its page '+width,(await page.locator('.drawer-cta').getAttribute('href')).includes('erty/'));
+   await page.screenshot({path:path.join(out,'erty-drawer-'+width+'.png')});
+   await page.locator('[data-detail-next]').click();await page.waitForTimeout(450);
+   check('Next switches to Saelis '+width,(await page.locator('#drawer-title').textContent()).includes('shared interest'));
    await page.screenshot({path:path.join(out,'saelis-drawer-'+width+'.png')});
    await page.locator('[data-detail-next]').click();check('Last product wraps to first '+width,(await page.locator('#drawer-title').textContent()).includes('intelligence'));
-   await page.locator('[data-detail-prev]').click();await checkProductEntry(page,-1,'Previous enters from left '+width);check('Previous wraps to last '+width,(await page.locator('.drawer-count').textContent())==='02 / 02');
+   await page.locator('[data-detail-prev]').click();await checkProductEntry(page,-1,'Previous enters from left '+width);check('Previous wraps to last '+width,(await page.locator('.drawer-count').textContent())==='03 / 03');
    await page.evaluate(()=>{
     document.querySelector('[data-detail-next]').click();
     document.querySelector('[data-detail-next]').click();
     document.querySelector('[data-detail-prev]').click();
    });
-   check('Rapid navigation leaves only the selected product '+width,await page.locator('.drawer-content .product-detail-body').count()===1&&(await page.locator('.drawer-count').textContent())==='01 / 02');
+   check('Rapid navigation leaves only the selected product '+width,await page.locator('.drawer-content .product-detail-body').count()===1&&(await page.locator('.drawer-count').textContent())==='01 / 03');
    await checkProductEntry(page,-1,'Rapid navigation retains latest direction '+width);
    for(let i=0;i<12;i++){await page.keyboard.press('Tab');check('Modal retains keyboard focus '+width+' '+i,await page.evaluate(()=>!!document.activeElement.closest('dialog')));}
    await page.keyboard.press('Escape');
@@ -139,14 +144,14 @@ async function structure(page) {
   }
   await page.setViewportSize({width:1440,height:900});await page.locator('[data-open-product]').first().focus();await page.keyboard.press('End');await page.waitForTimeout(500);
   check('Gallery End key selects last card',await page.locator('[data-open-product]').last().evaluate(e=>e===document.activeElement));
-  check('Both desktop products fit',await page.locator('#product-track').evaluate(e=>e.scrollWidth<=e.clientWidth+2));
-  check('Desktop hides unnecessary gallery controls',await page.locator('.gallery-controls').isHidden());
+  check('Desktop keeps two columns and scrolls to the third product',await page.locator('#product-track').evaluate(e=>e.scrollWidth>e.clientWidth+2));
+  check('Desktop shows gallery controls for three products',await page.locator('.gallery-controls').isVisible()&&await page.locator('[data-gallery-view]').isVisible());
   check('Products separated from contact',await page.locator('#products').evaluate(e=>getComputedStyle(e).borderBottomWidth==='1px'&&getComputedStyle(e).borderBottomStyle==='solid'));
   check('Products remain third section',await page.locator('main>section').evaluateAll(sections=>sections[2].id==='products'&&sections[3].id==='contact'));
   await page.locator('[data-open-product]').last().click();await page.waitForTimeout(650);await page.mouse.click(20,400);await page.waitForFunction(()=>!document.querySelector('dialog').open);check('Backdrop closes modal',await page.locator('dialog').evaluate(d=>!d.open));
   await page.setViewportSize({width:390,height:900});await page.waitForTimeout(150);
-  await page.locator('[data-gallery-prev]').click();await page.waitForTimeout(500);check('Gallery previous button returns first',await page.locator('.gallery-count').textContent()==='01 / 02');
-  await page.locator('[data-gallery-next]').click();await page.waitForTimeout(500);check('Gallery next button reaches last',await page.locator('.gallery-count').textContent()==='02 / 02');
+  await page.locator('[data-gallery-prev]').click();await page.waitForTimeout(500);check('Gallery previous button steps back from the last product',await page.locator('.gallery-count').textContent()==='02 / 03');
+  await page.locator('[data-gallery-next]').click();await page.waitForTimeout(500);check('Gallery next button reaches last',await page.locator('.gallery-count').textContent()==='03 / 03');
   await page.locator('[data-gallery-prev]').click();await page.waitForTimeout(500);await page.locator('#product-track').hover();await page.mouse.wheel(400,0);await page.waitForTimeout(500);check('Native horizontal wheel movement',await page.locator('#product-track').evaluate(e=>e.scrollLeft>0));
   await page.locator('#themeToggle').click();await page.waitForTimeout(500);await page.screenshot({path:path.join(out,'light-home.png'),fullPage:true});
   await page.locator('[data-open-product]').first().click();await page.waitForTimeout(650);await page.screenshot({path:path.join(out,'light-drawer.png')});await page.keyboard.press('Escape');
@@ -156,16 +161,17 @@ async function structure(page) {
    if(name==='no-dialog')await c.addInitScript(()=>{HTMLDialogElement.prototype.showModal=undefined;Element.prototype.animate=undefined;window.IntersectionObserver=undefined;});
    const p=await c.newPage();await load(p,'/');
    if(name==='reduced'){await p.locator('[data-open-product]').first().click();check('Reduced motion opens immediately',await p.locator('dialog').evaluate(e=>getComputedStyle(e).animationName)==='none');await p.locator('[data-detail-next]').click();check('Reduced motion switches immediately',await p.locator('.drawer-content .product-detail-body').evaluate(e=>getComputedStyle(e).animationName)==='none');}
-   else{check(name+' native approach works',await p.locator('.approach-stage').count()===3);await p.locator('.approach-stage').nth(1).locator('summary').click();check(name+' approach content readable',await p.locator('.approach-stage').nth(1).locator('.stage-body').isVisible());check(name+' cards keep canonical CTA',await p.locator('[data-open-product]').first().getAttribute('href')==='/veyra/');check(name+' native details available',await p.locator('[data-product-detail]:visible').count()===2);await p.locator('.product-fallback summary').first().click();check(name+' detail readable',await p.locator('.product-fallback[open] .detail-model').isVisible());}
+   else{check(name+' native approach works',await p.locator('.approach-stage').count()===3);await p.locator('.approach-stage').nth(1).locator('summary').click();check(name+' approach content readable',await p.locator('.approach-stage').nth(1).locator('.stage-body').isVisible());check(name+' cards keep canonical CTA',/^(\/veyra\/|veyra\/index\.html)$/.test(await p.locator('[data-open-product]').first().getAttribute('href')));check(name+' native details available',await p.locator('[data-product-detail]:visible').count()===3);await p.locator('.product-fallback summary').first().click();check(name+' detail readable',await p.locator('.product-fallback[open] .detail-model').isVisible());}
    await p.screenshot({path:path.join(out,name+'.png'),fullPage:true});await c.close();
   }
   // Temporary fixture-only products verify growth without publishing fake products.
   const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
   const cards=html.match(/<article class="gallery-product"[\s\S]*?<\/article>/g);const base=cards[0];
+  const real=cards.length;
   for(const total of [1,3,4,8,12]){
-   let fixture=total===1?html.replace(cards[1],''):html;
+   let fixture=total===1?cards.slice(1).reduce((h,card)=>h.replace(card,''),html):html;
    let extra='';
-   for(let i=3;i<=total;i++){
+   for(let i=real+1;i<=total;i++){
     const name=i===total?'A longer future product name':'Fixture '+i;
     extra+=base.replaceAll('product-veyra','product-fixture-'+i).replaceAll('card-veyra-title','card-fixture-title-'+i).replace('data-product="veyra"','data-product="fixture-'+i+'"').replace('data-product-name="Veyra"','data-product-name="'+name+'"').replace('>Veyra<span','>'+name+'<span');
    }

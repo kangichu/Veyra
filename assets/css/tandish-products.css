@@ -22,6 +22,7 @@
 /* Quiet product identities follow the page’s neutral palette and fine rules. */
 .gallery-product{--product-accent:var(--company-copper)}
 .gallery-product[data-product-tone="green"]{--product-accent:var(--company-green)}
+.gallery-product[data-product-tone="blue"]{--product-accent:var(--company-accent)}
 .gallery-product .product-window{
  position:relative;height:100%;border:1px solid var(--line-strong);border-radius:4px;
  background:var(--company-surface);box-shadow:none;
